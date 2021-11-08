@@ -1,0 +1,132 @@
+#+TITLE: Source Code Quality impact @@latex:\\@@ on Pull Requests acceptance
+#+AUTHOR: Ondřej Kuhejda
+* Introduction
+** TODO Problem statement
+   - Is there some correlation between the source code quality and the pull request acceptance?
+   - Is code quality impact higher in projects that are using some particular programming language?
+   - Have projects which are using linters as part of the CI better code quality?
+   - Have projects which are using linters as part of the build process better code quality?
+* Pull request acceptance
+** Surveys
+   Kononenko et al.[[cite:shopify]] performed a study of open source project called
+   /Shopify/; they manually analyzed PR's and also surveyed /Shopify/
+   developers. They found out that developers associate the quality of PR with
+   the quality of its description and with the revertability and complexity of
+   the PR.
+
+   - Work Practices and Challenges in Pull-Based Development: The Integrator's Perspective[[cite:integrator]]
+   - Are You Still Working on This An Empirical Study on Pull Request Abandonment[[cite:abandonment]]
+   - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
+     - contains interesting table with factors that influences acceptance
+
+   Even though the different open-source communities solves the problem of pull
+   request acceptance in the different manner, three main governance styles can
+   be identified --- protective, equitable, lenient. Protective governance style
+   values trust in contributor-maintainer relationship.  Equitable governance
+   style tries to be unbiased towards the contributors; and the lenient style
+   prioritize growth and openness of the community[[cite:foss]].
+
+   Each style focuses on different aspects of the PR. Tsay et al.[[cite:social]] identified
+   following levels of social and technical factors that influences the
+   acceptance of the PR --- *repository level, submitter level, and PR level*.
+** TODO Repository level
+** TODO Submitter level
+** TODO Pull request level
+** Social and technical factors
+   PR's including more tests have higher chance to be accepted. With increasing
+   number of changed lines decreases the likelihood of PR acceptance. PR's of
+   submitters with higher social connection to the project, has higher
+   probability to be accepted.  More discussed PR's has smaller chance to be
+   accepted. Submitter status in general community also play role in the PR
+   acceptance. If submitter is also project collaborator, the likelihood that
+   the PR will be accepted increases by 63.3%. Popularity of the project also
+   influences acceptance rate --- projects with more stars have more rejected
+   PR's[[cite:social]].
+     - TODO I can use categories listed in this paper
+     - this study was replicated[[cite:personality]]
+
+   Users that contributed to a larger number of projects have higher chance that
+   their PR will be accepted.  PR's with only one commit has smaller chance to
+   be accepted[[cite:npm2]].
+
+   Programming language used in the project also influences the
+   acceptance of the PRs.[[cite:factors]]
+
+   - Pull Request Decision Explained: An Empirical Overview[[cite:empirical]]
+   - An Exploratory Study of the Pull-Based Software Development Model[[cite:explaratory]]
+   - Which Pull Requests Get Accepted and Why? A study of popular NPM Packages[[cite:npm]]
+   - Rejection Factors of Pull Requests Filed by Core Team Developers in Software Projects with High Acceptance Rates[[cite:developers]]
+   - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
+*** Discussion
+    Another study did not found large difference between accepted and rejected
+    PR's based on the number of comments.  But found that discussions in rejected
+    PR's are longer[[cite:discussion]].
+*** Social factors
+    Study showed that woman's PR are accepted more often, but only when they are
+    not identifiable as woman[[cite:gender]].
+
+    Personality traits also influence the PR acceptance. The /IBM Watson
+    Personality Insights/ were used to obtain personality traits of the PR
+    submitters by analyzing the user's comments. These traits were then used to
+    study the PR acceptance. It has been shown that conscientiousness,
+    neuroticism and extroversion are traits that have positive effects on PR
+    acceptance. Chance that PR will be accepted is also higher when submitter and
+    closer have different personalities[[cite:personality]].
+** Code quality
+   Trautsch et al.[[cite:pmd]] analyzed several open-source projects in regards to
+   usage of static analysis tools.  They found out that incorporating static
+   analysis tool in a build process reduces the defect density.
+
+   - Does code quality affect pull request acceptance?[[cite:quality]]
+   - How does code style inconsistency affect pull request integration?[[cite:style]]
+   - Wait for It: Determinants of Pull Request Evaluation Latency on GitHub[[cite:latency]]
+     - CI and latency
+* TODO Data sets
+  - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
+  - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
+  - https://zenodo.org/record/3858046
+  - https://github.com/XLipcak/rev-rec
+  - https://ghtorrent.org/
+  - Kalliamvakou et al. noted that data about PR's mined from GitHub are not always reliable,
+    because PR can be also merged using several different approaches.
+    - https://dl.acm.org/doi/10.1145/2597073.2597074
+    - [[cite:explaratory]]
+* Evaluation
+* Threads to validity
+* Conclusion
+** Future work
+* Setup :noexport:
+#+LATEX_CLASS: fithesis4
+#+LATEX_CLASS_OPTIONS: [digital,oneside,oldtable,nolof,nolot,nocover]
+#+LATEX_HEADER: \usepackage{style}
+#+BIND: org-latex-title-command ""
+#+BIND: org-latex-toc-command ""
+#+BIND: org-latex-with-hyperref nil
+#+BIND: org-latex-listings minted
+#+BIND: org-src-preserve-indentation nil
+#+BIND: org-edit-src-content-indentation 0
+# Local Variables:
+# mode: org
+# org-export-allow-bind-keywords: t
+# org-latex-classes: '("fithesis4" "\\documentclass{fithesis4}
+#                            [NO-DEFAULT-PACKAGES]
+#                            [NO-PACKAGES]"
+#                        ("\\chapter{%s}" . "\\chapter*{%s}")
+#                        ("\\section{%s}" . "\\section*{%s}")
+#                        ("\\subsection{%s}" . "\\subsection*{%s}")
+#                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+#                        ("\\paragraph{%s}" . "\\paragraph*{%s}")
+#                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# org-latex-pdf-process: ("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+#                         "biber %b"
+#                         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+#                         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+# display-line-numbers-width: 4
+# eval: (org-add-link-type "cite"
+#         (defun follow-cite (name))
+#         (defun export-cite (path desc format)
+#           (if (eq format 'latex)
+#           (if (or (not desc) (equal 0 (search "cite:" desc)))
+#             (format "~\\cite{%s}" path)
+#             (format "~\\cite[%s]{%s}" desc path)))))
+# End:

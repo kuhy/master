@@ -1,0 +1,70 @@
+\usepackage[main=english]{babel}
+\thesissetup{
+  date       = 2022/05/25,
+  university = mu,
+  faculty    = fi,
+  department = Department of Computer Systems and Communications,
+  type       = mgr,
+  gender     = m,
+  advisor    = Assistant professor Bruno Rossi,
+  keywords   = {%
+      code quality, pull request, static code analysis
+  },
+  abstract   = {%
+      TODO
+  },
+  thanks     = {%
+      I would like to thank my supervisor, Bruno Rossi,
+      for his guidance throughout the whole process.
+  },
+  bib        = bibliography.bib,
+}
+
+\usepackage{makeidx}
+\makeindex
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{tabularx}
+\newcommand\mc[1]{
+    \multicolumn{1}{c}{\scriptsize #1}}
+\usepackage{tabu}
+\usepackage{bigstrut}
+\usepackage{booktabs}
+\usepackage{listings}
+\lstset{
+  basicstyle      = \ttfamily,
+  identifierstyle = \color{black},
+  keywordstyle    = \color{blue},
+  keywordstyle    = {[2]\color{cyan}},
+  keywordstyle    = {[3]\color{olive}},
+  stringstyle     = \color{teal},
+  commentstyle    = \itshape\color{magenta},
+  breaklines      = true,
+}
+\usepackage[htt]{hyphenat}
+\usepackage{floatrow}
+\usepackage{blindtext}
+\newcommand{\blind}[1][1]{\textcolor{gray}{\blindtext[{#1}]{}}}
+\usepackage{todonotes}
+\floatsetup[table]{capposition=top}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,quotes,patterns.meta,automata,arrows,calc}
+\tikzset{%
+    box/.style = {draw,
+        rounded corners,
+        minimum width=22mm,
+        minimum height=5mm,
+        align=center},
+    >={Latex[length=3mm]}
+}
+%\usepackage{minted}
+\usepackage[most, minted]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbset{colback=black!3!white,breakable}
+\usemintedstyle{friendly}
+\setminted{breaklines, fontsize=\footnotesize, numbersep=8mm}
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}}
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
