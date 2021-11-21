@@ -5,127 +5,128 @@
    - Is there some correlation between the source code quality and the pull request acceptance?
    - Which issues/code smells affect the PR acceptance most?
    - Is code quality impact higher in projects that are using some particular programming language?
-   - Is there a better code quality in project which are using linters as part of their CI?
-   - Is there a better code quality in project which are using linters as part of their build process?
-   - Does code smells leads to a longer discussion about the PR?
+   - Is there a better code quality in projects which are using linters as part of their CI?
+   - Is there a better code quality in projects which are using linters as part of their build process?
+   - Does code smells lead to a longer discussion about PR?
 * TODO Pull-based development
   - Wait for It: Determinants of Pull Request Evaluation Latency on GitHub[[cite:latency]]
     - CI and latency
 * TODO Code quality
   Trautsch et al.[[cite:pmd]] analyzed several open-source projects in regards to
-  usage of static analysis tools.  They found out that incorporating static
+  usage of static analysis tools.  They found out that incorporating a static
   analysis tool in a build process reduces the defect density.
 * Pull request acceptance
-  Pull request acceptance is a problem that was studied multiple times. Several
-  surveys were performed in order to understand why are pull requests being
-  rejected.
+  Pull request acceptance is a problem that has been studied multiple
+  times. Several surveys were performed in order to understand why pull requests
+  are being rejected.
 
-  Gousios et al.[[cite:integrator]] surveyd hundreds of integrators to found out
+  Gousios et al.[[cite:integrator]] surveyed hundreds of integrators to find out
   their reasons behind the PR rejection. Code quality was stated as the main
-  reason by most of the integrators; code style was on the second place.
+  reason by most of the integrators; code style was in the second place.
   Factors that integrators examine the most when evaluating the code quality are
   style conformance and test coverage.
 
-  Kononenko et al.[[cite:shopify]] performed a study of an open source project
+  Kononenko et al.[[cite:shopify]] performed a study of an open-source project
   called /Shopify/; they manually analyzed PR's and also surveyed /Shopify/
   developers. They found out that developers associate the quality of PR with
   the quality of its description and with the revertability and complexity of
   the PR.
 
   The reasons why contributors abandon their PRs were also
-  studied[[cite:abandonment]]. The reason number one was the ``Lack of answer from
-  integrators.''; moreover, the ``Lack of time'' and that ``Pull request is
+  studied[[cite:abandonment]]. The reason number one was the ``Lack of answers from
+  integrators.''; moreover, the ``Lack of time'' and the ``Pull request is
   obsolete'' was also often stated as the main reason.
 
-  Even though the different open-source communities solves the problem of pull
-  request acceptance in the different manner, three main governance styles can
-  be identified --- protective, equitable, lenient. Protective governance style
-  values trust in contributor-maintainer relationship.  Equitable governance
-  style tries to be unbiased towards the contributors; and the lenient style
-  prioritize growth and openness of the community[[cite:foss]].  Each style focuses
-  on different aspects of the PR. Tsay et al.[[cite:social]] identified following
-  levels of social and technical factors that influences the acceptance of the
-  PR --- /repository level/, /submitter level/, and the /pull request level/.
+  Even though the different open-source communities solve the problem of pull
+  request acceptance in a different manner, three main governance styles can be
+  identified --- protective, equitable, lenient. Protective governance style
+  values trust in the contributor-maintainer relationship. The equitable
+  governance style tries to be unbiased towards the contributors, and the
+  lenient style prioritizes the growth and openness of the community[[cite:foss]].
+  Each style focuses on different aspects of PR. Tsay et al.[[cite:social]]
+  identified the following levels of social and technical factors that influence
+  the acceptance of the PR --- /repository level/, /submitter level/, and the
+  /pull request level/.
 ** Repository level
-   The /repository level/ is interested in the aspects of the repository itself
-   such as the repository age, number of collaborators or number of stars on the
-   GitHub.
+   The /repository level/ is interested in the aspects of the repository itself,
+   such as the repository age, number of collaborators, or number of stars on
+   the GitHub.
 
-   For instance, programming language used in the project also influences the
-   acceptance of the PRs. Pull requests containing Java, JavaScript
-   or C++ code have smaller chance to be accepted than PRs containing the code
+   For instance, the programming language used in the project also influences
+   the acceptance of the PRs. Pull requests containing Java, JavaScript, or C++
+   code have a smaller chance to be accepted than PRs containing the code
    written in Go or Scala[[cite:factors]].
 
-   Furthermore, older projects and projects with large team have significantly
-   smaller acceptance rate[[cite:social]].
+   Furthermore, older projects and projects with a large team have a
+   significantly lower acceptance rate[[cite:social]].
 
-   Popularity of the project also influences acceptance rate --- projects with
-   more stars have more rejected PR's[[cite:social]].
+   The popularity of the project also influences the acceptance rate ---
+   projects with more stars have more rejected PRs[[cite:social]].
 ** Submitter level
    The /submitter level/ is concerned about the submitter's status in the
    general community and his status in the project itself. There are several
-   parameters that can be considered when evaluating submitter's status.
+   parameters that can be considered when evaluating the submitter's status.
 
-   PR's of submitters with higher social connection to the project, has higher
-   probability to be accepted[[cite:social]].
+   PRs of submitters with higher social connection to the project have a higher
+   probability of being accepted[[cite:social]].
 
-   Submitter status in general community plays important role in the PR
-   acceptance. If submitter is also project collaborator, the likelihood that
-   the PR will be accepted increases by 63.3%[[cite:social]].
+   Submitter status in the general community plays an important role in PR
+   acceptance. If the submitter is also a project collaborator, the likelihood
+   that the PR will be accepted increases by 63.3%[[cite:social]].
 
-   Moreover, users that contributed to a larger number of projects have higher
+   Moreover, users that contributed to a larger number of projects have a higher
    chance that their PR will be accepted[[cite:npm2]].
 
-   The gender of the submitter is another factor that plays role in the PR
-   acceptance. Study showed that woman's PR are accepted more often, but only
-   when they are not identifiable as woman[[cite:gender]].
+   The gender of the submitter is another factor that plays a role in PR
+   acceptance. A study showed that woman's PR are accepted more often, but only
+   when they are not identifiable as a woman[[cite:gender]].
 
-   Personality traits also influence the PR acceptance. The /IBM Watson
-   Personality Insights/ were used to obtain personality traits of the PR
-   submitters by analyzing the user's comments. These traits were then used to
-   study the PR acceptance. It has been shown that conscientiousness,
-   neuroticism and extroversion are traits that have positive effects on PR
-   acceptance. Chance that PR will be accepted is also higher when submitter and
-   closer have different personalities[[cite:personality]].
+   Personality traits also influence PR acceptance. The /IBM Watson Personality
+   Insights/ were used to obtain the personality traits of the PR submitters by
+   analyzing the user's comments. These traits were then used to study PR
+   acceptance. It has been shown that conscientiousness, neuroticism, and
+   extroversion are traits that have positive effects on PR acceptance. The
+   chance that PR will be accepted is also higher when the submitter and closer
+   have different personalities[[cite:personality]].
 ** Pull request level
    The /pull request level/ is interested in the data that are connected to the
-   PR itself.  For instance, on the /PR level/, on can study if there is
-   correlation between the PR acceptance and the number of GitHub comments in
+   PR itself.  For instance, on the /PR level/, one can study if there is
+   a correlation between PR acceptance and the number of GitHub comments in
    the PR. Another parameter that can be used is ``Number of Files Changed'' or
    ``Number of Commits''.
 
-   One of the factors that negatively influences the acceptance rate is the
+   One of the factors that negatively influence the acceptance rate is the
    already mentioned number of commits in the pull request. The high number of
    commits decreases the probability of acceptance. On the other hand, PR's with
-   only one commit are exceptions --- they have smaller chance to be accepted
-   than pull requests which contains two commits[[cite:npm2]].
+   only one commit are exceptions --- they have a smaller chance to be accepted
+   than pull requests which contain two commits[[cite:npm2]].
 
-   Another observation is that more discussed PR's has smaller chance to be
-   accepted[[cite:social]].  Another study did not found large difference between
-   accepted and rejected PR's based on the number of comments; but found that
-   discussions in rejected PR's have longer duration[[cite:discussion]].
+   Another observation is that more discussed PR's has a smaller chance to be
+   accepted[[cite:social]].  Another study did not find a large difference between
+   accepted and rejected PR's based on the number of comments but found that
+   discussions in rejected PR's have a longer duration[[cite:discussion]].
 
-   Proper testing is the crucial part in every project and therefore it also
-   influences the pull request acceptance.  PR's including more tests have
-   higher chance to be accepted and with increasing number of changed lines
+   Proper testing is the crucial part of every project, and therefore it also
+   influences the pull request acceptance.  PR's including more tests have a
+   higher chance to be accepted, and an increasing number of changed lines
    decreases the likelihood of PR acceptance[[cite:social]].
 
-   Testing plays significant role in discovering bugs, and therefore leads to
-   the higher code quality. On the other hand, lot of test cases does not have
-   to mean that code has a high quality. The code quality is very important
-   factor on the /pull request level/ and therefore is the main interest of this
-   study.  Works that are also interested in the code quality and the pull
+   Testing plays a significant role in discovering bugs and therefore leads to
+   higher code quality. On the other hand, many test cases do not have
+   to mean that code has a high quality. The code quality is an essential
+   factor on the /pull request level/, therefore, is this study's main interest.
+   Works that are also interested in the code quality and the pull
    request acceptance are examined in the following chapter.
 
-   Another factor that is closely tied to the code quality is the code style.
+   Another factor that is closely tied to code quality is the code style.
    This factor has a small (but not negligible) negative effect on
-   acceptance. This means that PRs that have larger code style inconsistency
-   (with the code base) have smaller chance to be accepted[[cite:style]].
+   acceptance. This means that PRs with larger code style inconsistency
+   (with the codebase) have a smaller chance of being accepted[[cite:style]].
 ** TODO Code quality
-   Although the most of the integrators view the code quality as the most
-   important factor regarding the PR acceptance, to the best of my knowledge,
-   only one study was performed to discover whether there is an connection between the
-   PR's acceptance and the its quality.
+   Although most integrators view code quality as the most important factor
+   regarding PR acceptance, to the best of my knowledge, only one study was
+   performed to discover whether there is a connection between the PR's
+   acceptance and its quality.
    - Does code quality affect pull request acceptance?[[cite:quality]]
 ** TODO Unsorted
    - study ``Influence of Social and Technical Factors''[[cite:social]] was replicated[[cite:personality]]
