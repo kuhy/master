@@ -8,13 +8,50 @@
    - Is there a better code quality in projects which are using linters as part of their CI?
    - Is there a better code quality in projects which are using linters as part of their build process?
    - Does code smells lead to a longer discussion about PR?
-* TODO Pull-based development
-  - Wait for It: Determinants of Pull Request Evaluation Latency on GitHub[[cite:latency]]
-    - CI and latency
-* TODO Code quality
-  Trautsch et al.[[cite:pmd]] analyzed several open-source projects in regards to
-  usage of static analysis tools.  They found out that incorporating a static
-  analysis tool in a build process reduces the defect density.
+* Code quality in pull-based development
+  The pull-based development model created novel ways how can developers
+  interact between each other. Instead of pushing code changes (patches) into
+  one central repository, developers can work in more decentralized and
+  distributed way. This is mainly done by using distributed version control
+  systems such as Git. Git enables developers to clone repositories and thus to
+  work independently on projects. Furthermore, the Git's branching model helps
+  developers to keep track of repository changes and helps to handle the
+  conflicts between the different changes of the same code base.
+
+  To furthermore ease the complicated process of resolving conflicts between
+  different changes (of the same code base) and to provide a more user-friendly
+  environment for developers, platforms such as GitHub was created. These
+  platforms adds new ways how the developers can interact beyond the basic
+  functionality of Git:
+  - The forks enables to create the server-side copy of the repository.
+  - Pull requests (on some platforms called merge requests) enables to merge code directly on the platform.
+  - Users can report issues found in the projects; therefore, platform can also serve as a bug-tracking system.
+  - The comments can be added to the pull requests and issues in order to build up social interaction between developers.
+  - Users can star projects and follow other users, projects, pull requests or issues.
+
+  In this study, I choose to use GitHub as the main source for data
+  mining. GitHub is one of the leading platforms that enables pull-based
+  collaboration between developers. GitHub hosts huge amount of publicly
+  available repositories and GitHub also provides public REST API that can be
+  easily leveraged for data mining.
+
+  The aim of this thesis is to obtain large amount of data about GitHub projects
+  and analyze the pull request in regard of their code quality. How the code
+  quality can be analyzed and how the GitHub platforms contributes to quality of
+  the code itself is discussed in the following chapters.
+**** TODO cite: An Exploratory Study of the Pull-based Software Development Model
+** TODO Code quality
+** TODO GitHub
+   - GitHub issues and code quality
+   - Ways to merge code
+     - An Exploratory Study of the Pull-based Software Development Model
+   - PRs and code review
+   - PRs CI/CD and code quality
+     - Wait for It: Determinants of Pull Request Evaluation Latency on GitHub[[cite:latency]]
+       - CI and latency
+     - Trautsch et al.[[cite:pmd]] analyzed several open-source projects in regards to
+       usage of static analysis tools.  They found out that incorporating a static
+       analysis tool in a build process reduces the defect density.
 * Pull request acceptance
   Pull request acceptance is a problem that has been studied multiple
   times. Several surveys were performed in order to understand why pull requests
@@ -138,6 +175,7 @@
    - Which Pull Requests Get Accepted and Why? A study of popular NPM Packages[[cite:npm]]
    - Rejection Factors of Pull Requests Filed by Core Team Developers in Software Projects with High Acceptance Rates[[cite:developers]]
    - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
+** TODO Create table that compares already performed studies with my thesis
 * Data mining
   #+BEGIN_EXPORT latex
   \begin{figure}[htb]\centering
