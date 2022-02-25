@@ -15,7 +15,11 @@
   },
   thanks     = {%
       I would like to thank my supervisor, Bruno Rossi,
-      for his guidance throughout the whole process.
+      for his guidance throughout the whole process.\newline
+
+      \noindent
+      Computational resources were supplied by the project ``e-Infrastruktura CZ''
+      supported by the Ministry of Education, Youth and Sports of the Czech Republic.
   },
   bib        = bibliography.bib,
 }
@@ -26,6 +30,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{pifont}
 \usepackage{url}
 \usepackage{tabularx}
 \newcommand\mc[1]{
@@ -51,7 +56,10 @@
 \usepackage{todonotes}
 \floatsetup[table]{capposition=top}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,quotes,patterns.meta,automata,arrows,calc}
+\usetikzlibrary{
+    positioning,arrows.meta,quotes,patterns.meta,
+    automata,arrows,calc,shapes.symbols,fit
+}
 \tikzset{%
     box/.style = {draw,
         rounded corners,
@@ -60,6 +68,7 @@
         align=center},
     >={Latex[length=3mm]}
 }
+\tikzstyle{container}=[draw, rectangle, dashed, inner sep=1em]
 %\usepackage{minted}
 \usepackage[most, minted]{tcolorbox}
 \tcbuselibrary{breakable}

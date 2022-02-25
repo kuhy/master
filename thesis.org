@@ -138,20 +138,133 @@
    - Which Pull Requests Get Accepted and Why? A study of popular NPM Packages[[cite:npm]]
    - Rejection Factors of Pull Requests Filed by Core Team Developers in Software Projects with High Acceptance Rates[[cite:developers]]
    - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
-* TODO Data sets
-  - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
-  - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
-  - https://zenodo.org/record/3858046
-  - https://github.com/XLipcak/rev-rec
-  - https://ghtorrent.org/
-  - Kalliamvakou et al. noted that data about PR's mined from GitHub are not always reliable,
-    because PR can be also merged using several different approaches.
-    - https://dl.acm.org/doi/10.1145/2597073.2597074
-    - [[cite:explaratory]]
+* Data mining
+  #+BEGIN_EXPORT latex
+  \begin{figure}[htb]\centering
+  \begin{tikzpicture}
+  \node (n1) [align=center] {Project\\name};
+  \node (n2) [box, above=of n1, align=center] {\texttt{gh\_info.py}};
+  \node (n3) [cloud, draw, above=of n2, align=center] {GHTorrent\\database};
+  \node (n4) [right=of n2, align=center] {Pull requests\\information};
+  \node (n5) [box, right=of n4] {\texttt{git-contrast}};
+  \node (n6) [cloud, draw, above=of n5] {Linters};
+  \node (n7) [below=of n5, align=center] {Pull requests\\code quality};
+  \node (n8) [below=of n4, align=center] {Project\\information};
+
+  \node [container, fit=(n1)(n2)(n3)(n4)(n5)(n6)(n7)(n8)] {};
+  \node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
+
+  \draw[->] (n1) to (n2);
+  \draw[<->] (n2) to (n3);
+  \draw[->] (n2) to (n4);
+  \draw[->] (n4) to (n5);
+  \draw[<->] (n5) to (n6);
+  \draw[->] (n5) to (n7);
+  \draw[->] (n2) to (n8);
+  \end{tikzpicture}
+  \caption{The \texttt{pr\_quality.py} workflow}\label{workflow}
+  \end{figure}
+  #+END_EXPORT
+  Information about the pull requests are retrieved using the =pr_quality.py=
+  script. This scripts takes names of the projects that will be analyzed as the
+  input and it outputs the JSON files containing the requested data. This script
+  uses internally two other scripts --- =gh_info.py= and =git-contrast=.
+
+  =gh_info.py= is responsible for querying the GHTorrent database in order to
+  obtain data about the projects. The GHTorrent database is an offline mirror of
+  data offered through the Github REST API. =gh_info.py= returns a JSON file
+  with the information about the project such as number of stars, number of
+  contributors or information about pull requests and their commits.
+
+  However, the Github REST API lacks the information about the code quality of
+  the pull requests. This is where the =git-contrast= comes into the play.
+  =git-contrast= is the command-line application which analyzes the code quality
+  of the given pull request using the external linters. This application is
+  further discussed in the following sections.
+** GHTorrent database
+   As stated before, the script called =gh_info.py= uses the GHTorrent database
+   in order to retrieve GitHub data. GitHub REST API can be leveraged to obtain
+   many interesting factors which can possibly influence the acceptance of pull
+   requests. All the data that are obtained using the =gh_info.py= are listed
+   in the following table:
+   #+CAPTION: Data retrieved from the GHTorrent
+   #+ATTR_LaTeX: :align |llc|
+   |--------------------+---------------------------+-----------|
+   | Level              | Variable                  | Factor    |
+   |--------------------+---------------------------+-----------|
+   |--------------------+---------------------------+-----------|
+   | Repository level   | Project name              | \ding{55} |
+   |                    | Programming language      | \ding{51} |
+   |                    | Time of creation          | \ding{51} |
+   |                    | Number of forks           | \ding{51} |
+   |                    | Number of commits         | \ding{51} |
+   |                    | Number of project members | \ding{51} |
+   |                    | Number of watchers        | \ding{51} |
+   |--------------------+---------------------------+-----------|
+   | Submitter level    | Username                  | \ding{55} |
+   |                    | Number of followers       | \ding{51} |
+   |                    | Status in the project     | \ding{51} |
+   |--------------------+---------------------------+-----------|
+   | Pull request level | Pull request ID           | \ding{55} |
+   |                    | Is PR accepted?           | \ding{51} |
+   |                    | Time opened               | \ding{51} |
+   |                    | Head repository           | \ding{55} |
+   |                    | Head commit               | \ding{55} |
+   |                    | Base commit               | \ding{55} |
+   |                    | Number of commits         | \ding{51} |
+   |                    | Number of comments        | \ding{51} |
+   |--------------------+---------------------------+-----------|
+
+   Variables marked with ticks (\ding{51}) are later used as an statistical data
+   for analysis of pull request acceptance or as factors that can influence code
+   quality. Other variables (\ding{55}) are not meant to be used as an part of
+   an data analysis itself, but are kept here for better orientation; and some
+   of them are later used by the =git-contrast= tool (in order to pull the
+   commits which will be subsequently analyzed by linters).
+** =git-contrast=
+   =git-contrast= is the command line application that I implemented in order to
+   be able to analyze the code quality of the given pull request. =git-contrast=
+   expects two commit hashes on the input and returns the information about the
+   change in code quality between these commits on the output. This is done by
+   running the linter on the files in the state of the first commit and then in
+   the state of the second commit. The number of found code quality issues is
+   then written to the standard output.
+
+   To measure the change of the quality in the pull request, we simple run the
+   =git-contrast= on the ``head commit'' and the ``base commit'' of the given
+   pull request. =git-contrast= supports several linters; which linter will be
+   used is determined by the file extension of the tested file. Linters that are
+   supported by =git-contrast= are listed in the following table:
+   #+CAPTION: Linters supported by the =git-contrast=
+   #+ATTR_LaTeX: :align |lll|
+   |------------+-----------------------+-----------------------|
+   | Linter     | Programming languages | File extensions       |
+   |------------+-----------------------+-----------------------|
+   |------------+-----------------------+-----------------------|
+   | *Cppcheck* | C/C++                 | =.c=, =.cpp= and =.h= |
+   | *HLint*    | Haskell               | =.hs=                 |
+   | *ktlint*   | Kotlin                | =.kt= and =.kts=      |
+   | *PMD*      | Java                  | =.java=               |
+   | *Pylint*   | Python                | =.py=                 |
+   |------------+-----------------------+-----------------------|
+** TODO Projects selection
+   - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
+   - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
+   - https://zenodo.org/record/3858046
+   - https://github.com/XLipcak/rev-rec
+   - https://ghtorrent.org/
+     - https://github.com/gousiosg/pullreqs
+     - How can I cite this work? (on the web)
+   - Kalliamvakou et al. noted that data about PR's mined from GitHub are not always reliable,
+     because PR can be also merged using several different approaches.
+     - https://dl.acm.org/doi/10.1145/2597073.2597074
+     - [[cite:explaratory]]
+* Data analysis
 * Evaluation
-* Threads to validity
+** Threads to validity
 * Conclusion
 ** Future work
+* Appendix
 * Setup :noexport:
 #+LATEX_CLASS: fithesis4
 #+LATEX_CLASS_OPTIONS: [digital,oneside,oldtable,nolof,nolot,nocover]
