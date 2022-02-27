@@ -40,7 +40,56 @@
   quality can be analyzed and how the GitHub platforms contributes to quality of
   the code itself is discussed in the following chapters.
 **** TODO cite: An Exploratory Study of the Pull-based Software Development Model
-** TODO Code quality
+** Code quality
+   Code quality is very important aspect of every program --- software with high
+   code quality has competitive advantage, is more stable and is also more
+   maintainable then software which is poorly written.
+
+   To be able to evaluate the software in regard of its quality, there needs to
+   be some way how can be code quality measured. The testing can be used exactly
+   for this purpose --- as a tool for measuring the quality of the source code.
+   There are multiple ways how can be testing performed. Testing techniques can
+   be divided into two categories: static and dynamic testing techniques.
+
+   In order to use dynamic testing techniques on large number of programs, there
+   are two large obstacles --- the program needs to be executed and there needs
+   to be some inputs (with expected outputs) that can be then used for testing.
+   Program execution can be problematic. Some programs needs to be compiled
+   before they can be executed; others requires special environment for its
+   execution (specific hardware, operating system or shared libraries required
+   by the program). Moreover, the most of the programs does not have sets of
+   input that can be used for testing. There exists some techniques that can be
+   used also without the predefined inputs such as fuzzing, but these techniques
+   are usually time-consuming. Because of that, dynamic testing techniques are
+   not viable option when dealing with the large number of programs.
+
+   On the other hand, static testing methods suits the analysis of the large
+   number of programs better. Static techniques include usage formal and
+   informal reviews, walkthroughs and inspections; however, these techniques are
+   performed by humans and therefore are not usable for large datasets. Because
+   of that, in this thesis, the quality of the given source code is evaluated
+   using the tools for automatic static analysis (called linters). Linters are
+   used to find defects and code smells in the source code without the need of
+   source code's execution.
+
+   There are several categories of issues which can be detected using linters.
+   Source code can be checked if it follows a conventions of the given
+   programming language. For instance, Python has an official style guide for
+   Python code --- PEP 8[fn::https://www.python.org/dev/peps/pep-0008/]. This
+   guide defines the conventions that should be followed such as proper
+   indentation of the code blocks, maximum line length or naming conventions.
+
+   Furthermore, code can be analyzed against refactoring related checks; for
+   instance linter can detect if some part of the code is redundant and
+   therefore could be omitted. Linters can also detect actual errors such as
+   type mismatches or syntax errors.
+
+   However, it is important to note that not all linters have the same
+   capabilities. Number of issues which can be detected by the given linter also
+   heavily depends on the programming language of the studied source code. Which
+   linters were used for the purposes of this thesis is discussed later in the
+   text.
+**** TODO cite: https://www.utcluj.ro/media/page_document/78/Foundations%20of%20software%20testing%20-%20ISTQB%20Certification.pdf
 ** TODO GitHub
    - GitHub issues and code quality
    - Ways to merge code
