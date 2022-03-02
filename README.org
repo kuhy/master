@@ -1,3 +1,4 @@
 - [[file:thesis.org][Thesis]]
 - [[file:style.sty][Style]]
 - [[file:bibliography.bib][Bibliography]]
+- [[file:project_list.org][List of analyzed projects]]
