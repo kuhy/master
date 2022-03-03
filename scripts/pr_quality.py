@@ -1,11 +1,14 @@
 #!/usr/bin/python
 import click
+import datetime
 import git
 import json
 import os
+import shutil
 import sys
 import subprocess
 import tempfile
+import time
 
 
 def obtain_project_data(user: str, repo: str, db_name: str, db_user: str,
@@ -41,6 +44,9 @@ def make_commit_accesible(repo, remote, commit_sha):
 
 
 def analyze_project(project_data, tmp_dir):
+    print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') +
+          " Starting analyzing project " + project_data["name"] + ".")
+    start_time = time.time()
     project_dir = tmp_dir + "/" + project_data["name"]
     repo = git.Repo.init(project_dir)
     repo.create_remote("origin", url="https://github.com/" +
@@ -62,14 +68,20 @@ def analyze_project(project_data, tmp_dir):
         pr_data.update(json.loads(output))
         pull_requests.append(pr_data)
     project_data["pull_requests"] = pull_requests
+    print("Removing project directory: " + project_dir)
+    shutil.rmtree(project_dir)
+    print("Time to analyze project " + project_data["name"] + ": " +
+          str(time.time() - start_time) + "\n")
 
 
 @click.option("--db-name", "-d", required=True)
 @click.option("--db-user", "-u", required=True)
 @click.option("--db-password", "-p", required=True, prompt="Database password")
+@click.option("--tmp-dir-path", "-t")
 @click.command()
-def cli(db_name: str, db_user: str, db_password: str):
-    tmp_dir = tempfile.mkdtemp()
+def cli(db_name: str, db_user: str, db_password: str,
+        tmp_dir_path: str = None):
+    tmp_dir = tempfile.mkdtemp(dir=tmp_dir_path)
     for line in sys.stdin.readlines():
         project_data = obtain_project_data(*line.rstrip().split("/"), db_name,
                                            db_user, db_password)

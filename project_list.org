@@ -6,16 +6,16 @@
   | https://github.com/donnemartin/system-design-primer           |              65095 | false    |
   | https://github.com/tensorflow/models                          |              55751 | true     |
   | https://github.com/rg3/youtube-dl                             |              50768 | true     |
-  | https://github.com/django/django                              |              47036 | true     |
+  | https://github.com/django/django                              |              47036 | false    |
   | https://github.com/nvbn/thefuck                               |              46148 | true     |
   | https://github.com/josephmisiti/awesome-machine-learning      |              41309 | false    |
-  | https://github.com/ansible/ansible                            |              39617 | true     |
-  | https://github.com/scikit-learn/scikit-learn                  |              37285 | true     |
+  | https://github.com/ansible/ansible                            |              39617 | false    |
+  | https://github.com/scikit-learn/scikit-learn                  |              37285 | false    |
   | https://github.com/jackfrued/Python-100-Days                  |              35040 | false    |
   | https://github.com/scrapy/scrapy                              |              33742 | true     |
   | https://github.com/minimaxir/big-list-of-naughty-strings      |              33201 | false    |
   | https://github.com/XX-net/XX-Net                              |              30225 | true     |
-  | https://github.com/pytorch/pytorch                            |              29534 | true     |
+  | https://github.com/pytorch/pytorch                            |              29534 | false    |
   | https://github.com/shadowsocks/shadowsocks                    |              28981 | false    |
   | https://github.com/jkbrzt/httpie                              |              28721 | true     |
   | https://github.com/yangshun/tech-interview-handbook           |              28711 | false    |
@@ -24,25 +24,25 @@
   | https://github.com/kennethreitz/requests                      |              27139 | false    |
   | https://github.com/soimort/you-get                            |              25437 | true     |
   | https://github.com/ageitgey/face_recognition                  |              24885 | false    |
-  | https://github.com/fchollet/keras                             |              23304 | true     |
+  | https://github.com/fchollet/keras                             |              23304 | false    |
   | https://github.com/imhuay/Algorithm_Interview_Notes-Chinese   |              21629 | false    |
-  | https://github.com/home-assistant/home-assistant              |              21468 | true     |
+  | https://github.com/home-assistant/home-assistant              |              21468 | false    |
   | https://github.com/getsentry/sentry                           |              21462 | false    |
   | https://github.com/facebookresearch/Detectron                 |              21162 | false    |
   | https://github.com/keras-team/keras                           |              20384 | true     |
   | https://github.com/tornadoweb/tornado                         |              19139 | true     |
-  | https://github.com/pallets/flask                              |              19040 | true     |
+  | https://github.com/pallets/flask                              |              19040 | false    |
   | https://github.com/deepfakes/faceswap                         |              19009 | true     |
   | https://github.com/faif/python-patterns                       |              18930 | true     |
   | https://github.com/fxsjy/jieba                                |              18116 | false    |
   | https://github.com/donnemartin/interactive-coding-challenges  |              17986 | false    |
   | https://github.com/openai/gym                                 |              17481 | true     |
   | https://github.com/littlecodersh/ItChat                       |              17020 | false    |
-  | https://github.com/Valloric/YouCompleteMe                     |              16282 | true     |
+  | https://github.com/Valloric/YouCompleteMe                     |              16282 | false    |
   | https://github.com/donnemartin/data-science-ipython-notebooks |              16248 | false    |
   | https://github.com/adobe-fonts/source-code-pro                |              15736 | false    |
   | https://github.com/keon/algorithms                            |              15703 | true     |
-  | https://github.com/ipython/ipython                            |              15325 | true     |
+  | https://github.com/ipython/ipython                            |              15325 | false    |
   | https://github.com/reddit/reddit                              |              15023 | false    |
   | https://github.com/ryanoasis/nerd-fonts                       |              14888 | false    |
   | https://github.com/HelloZeroNet/ZeroNet                       |              14882 | false    |
@@ -50,133 +50,333 @@
   | https://github.com/google/python-fire                         |              14623 | false    |
   | https://github.com/chinese-poetry/chinese-poetry              |              13980 | false    |
   | https://github.com/sqlmapproject/sqlmap                       |              13873 | true     |
-  | https://github.com/binux/pyspider                             |              13681 | true     |
-  | https://github.com/pandas-dev/pandas                          |              13473 | true     |
+  | https://github.com/binux/pyspider                             |              13681 | false    |
+  | https://github.com/pandas-dev/pandas                          |              13473 | false    |
+  | https://github.com/requests/requests                          |              13423 | true     |
+  | https://github.com/jkbrzt/httpie                              |              13247 | false    |
+  | https://github.com/StevenBlack/hosts                          |              13235 | false    |
+  | https://github.com/celery/celery                              |              12896 | true     |
+  | https://github.com/docker/compose                             |              12234 | false    |
+  | https://github.com/geekcomputers/Python                       |              12064 | false    |
+  | https://github.com/certbot/certbot                            |              12063 | true     |
+  | https://github.com/letsencrypt/letsencrypt                    |              11973 | false    |
+  | https://github.com/getredash/redash                           |              11952 | false    |
+  | https://github.com/eriklindernoren/ML-From-Scratch            |              11917 | false    |
+  | https://github.com/fabric/fabric                              |              11878 | true     |
+  | https://github.com/spotify/luigi                              |              11733 | true     |
+  | https://github.com/pypa/pipenv                                |              11670 |          |
+  | https://github.com/jlund/streisand                            |              11536 |          |
+  | https://github.com/explosion/spaCy                            |              11388 |          |
+  | https://github.com/powerline/powerline                        |              11266 |          |
+  | https://github.com/bitcoinbook/bitcoinbook                    |              11227 |          |
+  | https://github.com/cool-RR/PySnooper                          |              10944 |          |
+  | https://github.com/saltstack/salt                             |              10875 |          |
+  | https://github.com/tqdm/tqdm                                  |              10544 |          |
+  | https://github.com/channelcat/sanic                           |              10537 |          |
+  | https://github.com/zulip/zulip                                |              10486 |          |
+  | https://github.com/drduh/macOS-Security-and-Privacy-Guide     |              10474 |          |
+  | https://github.com/AHAAAAAAA/PokemonGo-Map                    |              10279 |          |
+  | https://github.com/3b1b/manim                                 |              10123 |          |
+  | https://github.com/matplotlib/matplotlib                      |               9927 |          |
+  | https://github.com/kivy/kivy                                  |               9891 |          |
+  | https://github.com/locustio/locust                            |               9849 |          |
+  | https://github.com/google/yapf                                |               9738 |          |
+  | https://github.com/Theano/Theano                              |               9637 |          |
+  | https://github.com/mnielsen/neural-networks-and-deep-learning |               9480 |          |
+  | https://github.com/Miserlou/Zappa                             |               9453 |          |
+  | https://github.com/localstack/localstack                      |               9368 |          |
+  | https://github.com/plotly/dash                                |               9315 |          |
+  | https://github.com/pytorch/examples                           |               9219 |          |
+  | https://github.com/audreyr/cookiecutter                       |               9104 |          |
+  | https://github.com/quantopian/zipline                         |               9021 |          |
+  | https://github.com/youfou/wxpy                                |               8824 |          |
+  | https://github.com/lra/mackup                                 |               8807 |          |
+  | https://github.com/gunthercox/ChatterBot                      |               8735 |          |
+  | https://github.com/warner/magic-wormhole                      |               8708 |          |
+  | https://github.com/apachecn/AiLearning                        |               8562 |          |
+  | https://github.com/mail-in-a-box/mailinabox                   |               8550 |          |
+  | https://github.com/apachecn/awesome-algorithm                 |               8493 |          |
+  | https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix       |               8354 |          |
+  | https://github.com/jupyter/jupyter                            |               8335 |          |
+  | https://github.com/darknessomi/musicbox                       |               8250 |          |
+  | https://github.com/aws/aws-cli                                |               8184 |          |
+  | https://github.com/lengstrom/fast-style-transfer              |               8184 |          |
+  | https://github.com/mahmoud/awesome-python-applications        |               8150 |          |
   |---------------------------------------------------------------+--------------------+----------|
 * Java
+  |----------------------------------------------------------------------+--------------------+----------|
+  | URL                                                                  | Number of watchers | Suitable |
+  |----------------------------------------------------------------------+--------------------+----------|
+  | https://github.com/facebook/react-native                             |              81817 | false    |
+  | https://github.com/iluwatar/java-design-patterns                     |              49353 | true     |
+  | https://github.com/ReactiveX/RxJava                                  |              40697 | true     |
+  | https://github.com/spring-projects/spring-boot                       |              39634 | false    |
+  | https://github.com/Snailclimb/JavaGuide                              |              36980 | false    |
+  | https://github.com/kdn251/Interviews                                 |              36099 | false    |
+  | https://github.com/elastic/elasticsearch                             |              33901 | false    |
+  | https://github.com/google/guava                                      |              33393 | true     |
+  | https://github.com/square/okhttp                                     |              33288 | false    |
+  | https://github.com/square/retrofit                                   |              32964 | true     |
+  | https://github.com/spring-projects/spring-framework                  |              31015 | true     |
+  | https://github.com/CyC2018/Interview-Notebook                        |              30956 | false    |
+  | https://github.com/JetBrains/kotlin                                  |              28952 | false    |
+  | https://github.com/PhilJay/MPAndroidChart                            |              28106 | true     |
+  | https://github.com/bumptech/glide                                    |              26675 | true     |
+  | https://github.com/airbnb/lottie-android                             |              25773 | false    |
+  | https://github.com/JakeWharton/butterknife                           |              23885 | true     |
+  | https://github.com/square/leakcanary                                 |              23292 | false    |
+  | https://github.com/zxing/zxing                                       |              22268 | true     |
+  | https://github.com/greenrobot/EventBus                               |              20617 | false    |
+  | https://github.com/alibaba/fastjson                                  |              20200 | true     |
+  | https://github.com/netty/netty                                       |              19873 | false    |
+  | https://github.com/google/iosched                                    |              19179 | false    |
+  | https://github.com/ReactiveX/RxAndroid                               |              18653 | true     |
+  | https://github.com/futurice/android-best-practices                   |              18579 | false    |
+  | https://github.com/nostra13/Android-Universal-Image-Loader           |              18153 | false    |
+  | https://github.com/alibaba/weex                                      |              17942 | false    |
+  | https://github.com/Netflix/Hystrix                                   |              17889 | true     |
+  | https://github.com/CymChad/BaseRecyclerViewAdapterHelper             |              17669 | false    |
+  | https://github.com/skylot/jadx                                       |              17652 | false    |
+  | https://github.com/alibaba/druid                                     |              17523 | true     |
+  | https://github.com/alibaba/dubbo                                     |              17357 | true     |
+  | https://github.com/square/picasso                                    |              16842 | false    |
+  | https://github.com/facebook/fresco                                   |              16361 | false    |
+  | https://github.com/afollestad/material-dialogs                       |              16279 | false    |
+  | https://github.com/proxyee-down-org/proxyee-down                     |              16163 | false    |
+  | https://github.com/ityouknow/spring-boot-examples                    |              15300 | false    |
+  | https://github.com/TheAlgorithms/Java                                |              14655 | true     |
+  | https://github.com/ctripcorp/apollo                                  |              14608 | false    |
+  | https://github.com/google/flexbox-layout                             |              14344 | false    |
+  | https://github.com/chrisbanes/PhotoView                              |              14289 | false    |
+  | https://github.com/Tencent/tinker                                    |              14202 | false    |
+  | https://github.com/shuzheng/zheng                                    |              14195 | false    |
+  | https://github.com/jenkinsci/jenkins                                 |              14075 | false    |
+  | https://github.com/google/dagger                                     |              13949 | false    |
+  | https://github.com/libgdx/libgdx                                     |              13929 | false    |
+  | https://github.com/android10/Android-CleanArchitecture               |              13905 | false    |
+  | https://github.com/google/ExoPlayer                                  |              13498 | true     |
+  | https://github.com/nickbutcher/plaid                                 |              13478 | false    |
+  | https://github.com/hankcs/HanLP                                      |              13281 | false    |
+  | https://github.com/googlesamples/android-architecture-components     |              13242 | false    |
+  | https://github.com/lgvalle/Material-Animations                       |              13209 | false    |
+  | https://github.com/deeplearning4j/deeplearning4j                     |              12499 | false    |
+  | https://github.com/b3log/symphony                                    |              12438 | false    |
+  | https://github.com/winterbe/java8-tutorial                           |              12300 | false    |
+  | https://github.com/apache/kafka                                      |              12300 | false    |
+  | https://github.com/wechat-group/weixin-java-tools                    |              12279 | false    |
+  | https://github.com/hdodenhof/CircleImageView                         |              12157 | false    |
+  | https://github.com/orhanobut/logger                                  |              11655 | false    |
+  | https://github.com/loopj/android-async-http                          |              11588 | true     |
+  | https://github.com/OpenGenus/cosmos                                  |              11475 | false    |
+  | https://github.com/facebook/stetho                                   |              11460 | true     |
+  | https://github.com/daimajia/AndroidSwipeLayout                       |              11454 | false    |
+  | https://github.com/crossoverJie/JCSprout                             |              11405 | false    |
+  | https://github.com/googlesamples/android-UniversalMusicPlayer        |              11383 | false    |
+  | https://github.com/mybatis/mybatis-3                                 |              11225 | true     |
+  | https://github.com/realm/realm-java                                  |              11095 | false    |
+  | https://github.com/greenrobot/greenDAO                               |              10991 | false    |
+  | https://github.com/mikepenz/MaterialDrawer                           |              10941 | false    |
+  | https://github.com/daimajia/AndroidViewAnimations                    |              10917 | false    |
+  | https://github.com/elastic/elasticsearch                             |              10737 | false    |
+  | https://github.com/apache/incubator-dubbo                            |              10350 | false    |
+  | https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh           |              10148 | false    |
+  | https://github.com/Tencent/VasSonic                                  |              10144 | false    |
+  | https://github.com/chrisbanes/Android-PullToRefresh                  |              10074 | false    |
+  | https://github.com/apache/hadoop                                     |              10015 | true     |
+  | https://github.com/nathanmarz/storm                                  |               9982 |          |
+  | https://github.com/brettwooldridge/HikariCP                          |               9973 |          |
+  | https://github.com/ksoichiro/Android-ObservableScrollView            |               9850 |          |
+  | https://github.com/JeffLi1993/springboot-learning-example            |               9844 |          |
+  | https://github.com/bazelbuild/bazel                                  |               9786 |          |
+  | https://github.com/navasmdc/MaterialDesignLibrary                    |               9781 |          |
+  | https://github.com/zhihu/Matisse                                     |               9743 |          |
+  | https://github.com/gradle/gradle                                     |               9720 |          |
+  | https://github.com/arduino/Arduino                                   |               9698 |          |
+  | https://github.com/wasabeef/recyclerview-animators                   |               9453 |          |
+  | https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition |               9425 |          |
+  | https://github.com/airbnb/lottie-react-native                        |               9414 |          |
+  | https://github.com/LMAX-Exchange/disruptor                           |               9055 |          |
+  | https://github.com/naver/pinpoint                                    |               9043 |          |
+  | https://github.com/Yalantis/uCrop                                    |               9015 |          |
+  | https://github.com/mockito/mockito                                   |               8964 |          |
+  | https://github.com/81813780/AVLoadingIndicatorView                   |               8955 |          |
+  | https://github.com/roughike/BottomBar                                |               8952 |          |
+  | https://github.com/apache/flink                                      |               8914 |          |
+  | https://github.com/Konloch/bytecode-viewer                           |               8847 |          |
+  | https://github.com/H07000223/FlycoTabLayout                          |               8794 |          |
+  | https://github.com/lingochamp/FileDownloader                         |               8753 |          |
+  | https://github.com/tbruyelle/RxPermissions                           |               8722 |          |
+  | https://github.com/dyc87112/SpringBoot-Learning                      |               8698 |          |
+  |----------------------------------------------------------------------+--------------------+----------|
+* Haskell
   |------------------------------------------------------------+--------------------+----------|
   | URL                                                        | Number of watchers | Suitable |
   |------------------------------------------------------------+--------------------+----------|
-  | https://github.com/facebook/react-native                   |              81817 | false    |
-  | https://github.com/iluwatar/java-design-patterns           |              49353 | true     |
-  | https://github.com/ReactiveX/RxJava                        |              40697 | true     |
-  | https://github.com/spring-projects/spring-boot             |              39634 | true     |
-  | https://github.com/Snailclimb/JavaGuide                    |              36980 | false    |
-  | https://github.com/kdn251/Interviews                       |              36099 | false    |
-  | https://github.com/elastic/elasticsearch                   |              33901 | true     |
-  | https://github.com/google/guava                            |              33393 | true     |
-  | https://github.com/square/okhttp                           |              33288 | false    |
-  | https://github.com/square/retrofit                         |              32964 | true     |
-  | https://github.com/spring-projects/spring-framework        |              31015 | true     |
-  | https://github.com/CyC2018/Interview-Notebook              |              30956 | false    |
-  | https://github.com/JetBrains/kotlin                        |              28952 | false    |
-  | https://github.com/PhilJay/MPAndroidChart                  |              28106 | true     |
-  | https://github.com/bumptech/glide                          |              26675 | true     |
-  | https://github.com/airbnb/lottie-android                   |              25773 | false    |
-  | https://github.com/JakeWharton/butterknife                 |              23885 | true     |
-  | https://github.com/square/leakcanary                       |              23292 | false    |
-  | https://github.com/zxing/zxing                             |              22268 | true     |
-  | https://github.com/greenrobot/EventBus                     |              20617 | false    |
-  | https://github.com/alibaba/fastjson                        |              20200 | true     |
-  | https://github.com/netty/netty                             |              19873 | true     |
-  | https://github.com/google/iosched                          |              19179 | false    |
-  | https://github.com/ReactiveX/RxAndroid                     |              18653 | true     |
-  | https://github.com/futurice/android-best-practices         |              18579 | false    |
-  | https://github.com/nostra13/Android-Universal-Image-Loader |              18153 | false    |
-  | https://github.com/alibaba/weex                            |              17942 | false    |
-  | https://github.com/Netflix/Hystrix                         |              17889 | true     |
-  | https://github.com/CymChad/BaseRecyclerViewAdapterHelper   |              17669 | false    |
-  | https://github.com/skylot/jadx                             |              17652 | true     |
-  | https://github.com/alibaba/druid                           |              17523 | true     |
-  | https://github.com/alibaba/dubbo                           |              17357 | true     |
-  | https://github.com/square/picasso                          |              16842 | false    |
-  | https://github.com/facebook/fresco                         |              16361 | true     |
-  | https://github.com/afollestad/material-dialogs             |              16279 | false    |
-  | https://github.com/proxyee-down-org/proxyee-down           |              16163 | false    |
-  | https://github.com/ityouknow/spring-boot-examples          |              15300 | false    |
-  | https://github.com/TheAlgorithms/Java                      |              14655 | true     |
-  | https://github.com/ctripcorp/apollo                        |              14608 | true     |
-  | https://github.com/google/flexbox-layout                   |              14344 | false    |
-  | https://github.com/chrisbanes/PhotoView                    |              14289 | false    |
-  | https://github.com/Tencent/tinker                          |              14202 | false    |
-  | https://github.com/shuzheng/zheng                          |              14195 | false    |
-  | https://github.com/jenkinsci/jenkins                       |              14075 | true     |
-  | https://github.com/google/dagger                           |              13949 | true     |
-  | https://github.com/libgdx/libgdx                           |              13929 | false    |
-  | https://github.com/android10/Android-CleanArchitecture     |              13905 | false    |
-  | https://github.com/google/ExoPlayer                        |              13498 | true     |
-  | https://github.com/nickbutcher/plaid                       |              13478 | false    |
-  | https://github.com/hankcs/HanLP                            |              13281 | false    |
+  | https://github.com/jgm/pandoc                              |              15134 | true     |
+  | https://github.com/koalaman/shellcheck                     |              14915 | false    |
+  | https://github.com/begriffs/postgrest                      |              11098 | false    |
+  | https://github.com/purescript/purescript                   |               5396 | false    |
+  | https://github.com/elm-lang/elm-compiler                   |               4860 | true     |
+  | https://github.com/facebook/Haxl                           |               3734 | false    |
+  | https://github.com/commercialhaskell/stack                 |               3244 | true     |
+  | https://github.com/data61/fp-course                        |               2961 | false    |
+  | https://github.com/idris-lang/Idris-dev                    |               2676 | false    |
+  | https://github.com/sdiehl/write-you-a-haskell              |               2669 | false    |
+  | https://github.com/caiorss/Functional-Programming          |               2641 | false    |
+  | https://github.com/yesodweb/yesod                          |               2410 | true     |
+  | https://github.com/ghc/ghc                                 |               2141 | false    |
+  | https://github.com/ghcjs/ghcjs                             |               2100 | false    |
+  | https://github.com/wireapp/wire-server                     |               2087 | false    |
+  | https://github.com/typelead/eta                            |               2043 | false    |
+  | https://github.com/amzeratul/halley                        |               2034 | false    |
+  | https://github.com/jameysharp/corrode                      |               1986 | false    |
+  | https://github.com/PostgREST/postgrest                     |               1896 | false    |
+  | https://github.com/jaspervdj/hakyll                        |               1792 | true     |
+  | https://github.com/gibiansky/IHaskell                      |               1715 | false    |
+  | https://github.com/haskell/haskell-ide-engine              |               1692 | true     |
+  | https://github.com/sdiehl/wiwinwlh                         |               1667 | false    |
+  | https://github.com/ekmett/lens                             |               1617 | true     |
+  | https://github.com/jgm/gitit                               |               1593 | false    |
+  | https://github.com/penrose/penrose                         |               1483 | false    |
+  | https://github.com/facebook/duckling                       |               1477 | false    |
+  | https://github.com/mikeizbicki/HLearn                      |               1428 | false    |
+  | https://github.com/xmonad/xmonad                           |               1350 | false    |
+  | https://github.com/hadolint/hadolint                       |               1297 | false    |
+  | https://github.com/NICTA/course                            |               1261 | false    |
+  | https://github.com/joeyh/github-backup                     |               1251 | false    |
+  | https://github.com/huangz1990/real-world-haskell-cn        |               1239 | false    |
+  | https://github.com/haskell-servant/servant                 |               1234 | true     |
+  | https://github.com/dmjio/miso                              |               1230 | false    |
+  | https://github.com/jaspervdj/patat                         |               1194 | false    |
+  | https://github.com/haskell/cabal                           |               1178 | true     |
+  | https://github.com/simonmichael/hledger                    |               1170 | false    |
+  | https://github.com/avh4/elm-format                         |               1163 | false    |
+  | https://github.com/lamdu/lamdu                             |               1063 | false    |
+  | https://github.com/valderman/haste-compiler                |               1036 | false    |
+  | https://github.com/yi-editor/yi                            |               1029 | true     |
+  | https://github.com/scotty-web/scotty                       |               1026 | false    |
+  | https://github.com/olivierverdier/zsh-git-prompt           |               1023 | false    |
+  | https://github.com/agda/agda                               |               1021 | false    |
+  | https://github.com/google/codeworld                        |               1004 | false    |
+  | https://github.com/ndmitchell/hlint                        |                976 | false    |
+  | https://github.com/BurntSushi/erd                          |                973 | false    |
+  | https://github.com/joeyh/git-annex                         |                944 | false    |
+  | https://github.com/facebookincubator/duckling              |                931 | false    |
+  | https://github.com/leksah/leksah                           |                887 | false    |
+  | https://github.com/aviaviavi/toodles                       |                882 | false    |
+  | https://github.com/tweag/asterius                          |                849 | false    |
+  | https://github.com/GaloisInc/HaLVM                         |                844 | false    |
+  | https://github.com/GaloisInc/cryptol                       |                835 | false    |
+  | https://github.com/commercialhaskell/intero                |                818 | false    |
+  | https://github.com/joshuaclayton/unused                    |                801 | false    |
+  | https://github.com/tdietert/nanocoin                       |                781 | false    |
+  | https://github.com/elm/compiler                            |                780 | false    |
+  | https://github.com/sdiehl/kaleidoscope                     |                759 | false    |
+  | https://github.com/lukasmartinelli/hadolint                |                747 | false    |
+  | https://github.com/jtdaugherty/brick                       |                745 | false    |
+  | https://github.com/Gabriel439/Haskell-Turtle-Library       |                734 | false    |
+  | https://github.com/tidalcycles/Tidal                       |                732 | true     |
+  | https://github.com/evincarofautumn/kitten                  |                716 | false    |
+  | https://github.com/awgn/cgrep                              |                713 | false    |
+  | https://github.com/colah/ImplicitCAD                       |                707 | false    |
+  | https://github.com/oden-lang/oden                          |                703 | false    |
+  | https://github.com/bos/aeson                               |                693 | true     |
+  | https://github.com/uber/queryparser                        |                692 | false    |
+  | https://github.com/ucsd-progsys/liquidhaskell              |                687 | true     |
+  | https://github.com/faylang/fay                             |                683 | false    |
+  | https://github.com/ndmitchell/ghcid                        |                667 | false    |
+  | https://github.com/clash-lang/clash-compiler               |                662 | true     |
+  | https://github.com/jaspervdj/stylish-haskell               |                637 | false    |
+  | https://github.com/BinRoot/Haskell-Data-Analysis-Cookbook  |                635 | false    |
+  | https://github.com/egison/egison                           |                632 | false    |
+  | https://github.com/ajtulloch/dnngraph                      |                625 | false    |
+  | https://github.com/agrafix/Spock                           |                607 | false    |
+  | https://github.com/pcapriotti/optparse-applicative         |                591 | false    |
+  | https://github.com/aurapm/aura                             |                590 | false    |
+  | https://github.com/github/semantic                         |                587 | false    |
+  | https://github.com/yesodweb/wai                            |                579 | true     |
+  | https://github.com/ndmitchell/shake                        |                574 | false    |
+  | https://github.com/agentm/project-m36                      |                563 | false    |
+  | https://github.com/reflex-frp/reflex                       |                562 | false    |
+  | https://github.com/thoughtbot/carnival                     |                555 | false    |
+  | https://github.com/snoyberg/conduit                        |                554 | true     |
+  | https://github.com/luna/luna-studio                        |                554 | false    |
+  | https://github.com/haskell-distributed/distributed-process |                550 | false    |
+  | https://github.com/diku-dk/futhark                         |                542 | false    |
+  | https://github.com/radicle-dev/radicle                     |                534 | true     |
+  | https://github.com/fptudelft/FP101x-Content-2015           |                518 | false    |
+  | https://github.com/mattgreen/hython                        |                509 | false    |
+  | https://github.com/rgleichman/glance                       |                508 | false    |
+  | https://github.com/kirel/detexify-hs-backend               |                505 | false    |
+  | https://github.com/nick8325/quickcheck                     |                502 | false    |
+  | https://github.com/mrkkrp/megaparsec                       |                502 | false    |
+  | https://github.com/AccelerateHS/accelerate                 |                502 | false    |
+  | https://github.com/matterhorn-chat/matterhorn              |                497 | false    |
+  | https://github.com/haskoin/haskoin                         |                491 | true     |
+  | https://github.com/olehkuchuk/haskell-must-watch           |                490 | false    |
+  | https://github.com/commercialhaskell/rio                   |                467 | false    |
+  | https://github.com/JakeWheat/intro_to_parsing              |                464 | false    |
+  | https://github.com/hspec/hspec                             |                462 | false    |
+  | https://github.com/snowleopard/alga                        |                460 | false    |
+  | https://github.com/tomjaguarpaw/haskell-opaleye            |                457 | false    |
+  | https://github.com/hzlmn/haskell-must-watch                |                450 | false    |
+  | https://github.com/jagajaga/FP-Course-ITMO                 |                443 | false    |
+  | https://github.com/blender/Rome                            |                441 | false    |
+  | https://github.com/tweag/HaskellR                          |                439 | false    |
+  | https://github.com/snapframework/snap                      |                427 | false    |
+  | https://github.com/tonymorris/course                       |                420 | false    |
+  | https://github.com/ndmitchell/hoogle                       |                419 | false    |
+  | https://github.com/lettier/gifcurry                        |                417 | false    |
+  | https://github.com/adjoint-io/bulletproofs                 |                414 | false    |
+  | https://github.com/jbarrow/LambdaNet                       |                408 | false    |
+  | https://github.com/HIPERFIT/futhark                        |                404 | false    |
+  | https://github.com/feuerbach/tasty                         |                404 | false    |
+  | https://github.com/HeinrichApfelmus/reactive-banana        |                400 | false    |
+  | https://github.com/mikeizbicki/subhask                     |                399 | false    |
+  | https://github.com/silkapp/rest                            |                398 | false    |
+  | https://github.com/brendanhay/amazonka                     |                398 | true     |
+  | https://github.com/kqr/gists                               |                397 | false    |
+  | https://github.com/haskell-foundation/foundation           |                395 | true     |
+  | https://github.com/haskell-wasm/wasm                       |                393 | false    |
+  | https://github.com/MaiaVictor/caramel                      |                391 | false    |
+  | https://github.com/gelisam/frp-zoo                         |                390 | false    |
+  | https://github.com/elm-lang/Elm                            |                387 | false    |
+  | https://github.com/mortberg/cubicaltt                      |                385 | false    |
+  | https://github.com/bos/attoparsec                          |                380 | false    |
+  | https://github.com/tweag/sparkle                           |                378 | false    |
+  | https://github.com/sol/hpack                               |                375 | false    |
+  | https://github.com/mbrubeck/compleat                       |                374 | false    |
+  | https://github.com/bos/stanford-cs240h                     |                369 | false    |
+  | https://github.com/haskell/haskell-platform                |                362 | false    |
+  | https://github.com/adjoint-io/raft                         |                361 | false    |
+  | https://github.com/knupfer/haskell-emacs                   |                357 | false    |
+  | https://github.com/bitemyapp/bloodhound                    |                357 | false    |
+  | https://github.com/jaor/xmobar                             |                353 | false    |
+  | https://github.com/tathougies/beam                         |                353 | false    |
+  | https://github.com/Gabriel439/Haskell-Pipes-Library        |                353 | false    |
+  | https://github.com/jpmorganchase/constellation             |                352 | false    |
+  | https://github.com/nh2/call-haskell-from-anything          |                352 | false    |
+  | https://github.com/joelburget/react-haskell                |                352 | false    |
+  | https://github.com/yesodweb/Shelly.hs                      |                349 | false    |
+  | https://github.com/bos/wreq                                |                348 | false    |
+  | https://github.com/Gabriel439/Haskell-Morte-Library        |                345 | false    |
+  | https://github.com/amacgregor/dot-files                    |                343 | false    |
+  | https://github.com/tkonolige/dbignore                      |                340 | false    |
   |------------------------------------------------------------+--------------------+----------|
-* Haskell
-  |-----------------------------------------------------+--------------------+----------|
-  | URL                                                 | Number of watchers | Suitable |
-  |-----------------------------------------------------+--------------------+----------|
-  | https://github.com/jgm/pandoc                       |              15134 | true     |
-  | https://github.com/koalaman/shellcheck              |              14915 | true     |
-  | https://github.com/begriffs/postgrest               |              11098 | true     |
-  | https://github.com/purescript/purescript            |               5396 | false    |
-  | https://github.com/elm-lang/elm-compiler            |               4860 | true     |
-  | https://github.com/facebook/Haxl                    |               3734 | false    |
-  | https://github.com/commercialhaskell/stack          |               3244 | true     |
-  | https://github.com/data61/fp-course                 |               2961 | false    |
-  | https://github.com/idris-lang/Idris-dev             |               2676 | false    |
-  | https://github.com/sdiehl/write-you-a-haskell       |               2669 | false    |
-  | https://github.com/caiorss/Functional-Programming   |               2641 | false    |
-  | https://github.com/yesodweb/yesod                   |               2410 | true     |
-  | https://github.com/ghc/ghc                          |               2141 | true     |
-  | https://github.com/ghcjs/ghcjs                      |               2100 | false    |
-  | https://github.com/wireapp/wire-server              |               2087 | false    |
-  | https://github.com/typelead/eta                     |               2043 | true     |
-  | https://github.com/amzeratul/halley                 |               2034 | false    |
-  | https://github.com/jameysharp/corrode               |               1986 | false    |
-  | https://github.com/PostgREST/postgrest              |               1896 | true     |
-  | https://github.com/jaspervdj/hakyll                 |               1792 | true     |
-  | https://github.com/gibiansky/IHaskell               |               1715 | false    |
-  | https://github.com/haskell/haskell-ide-engine       |               1692 | true     |
-  | https://github.com/sdiehl/wiwinwlh                  |               1667 | false    |
-  | https://github.com/ekmett/lens                      |               1617 | true     |
-  | https://github.com/jgm/gitit                        |               1593 | false    |
-  | https://github.com/penrose/penrose                  |               1483 | false    |
-  | https://github.com/facebook/duckling                |               1477 | true     |
-  | https://github.com/mikeizbicki/HLearn               |               1428 | false    |
-  | https://github.com/xmonad/xmonad                    |               1350 | false    |
-  | https://github.com/hadolint/hadolint                |               1297 | true     |
-  | https://github.com/NICTA/course                     |               1261 | false    |
-  | https://github.com/joeyh/github-backup              |               1251 | false    |
-  | https://github.com/huangz1990/real-world-haskell-cn |               1239 | false    |
-  | https://github.com/haskell-servant/servant          |               1234 | true     |
-  | https://github.com/dmjio/miso                       |               1230 | true     |
-  | https://github.com/jaspervdj/patat                  |               1194 | false    |
-  | https://github.com/haskell/cabal                    |               1178 | true     |
-  | https://github.com/simonmichael/hledger             |               1170 | true     |
-  | https://github.com/avh4/elm-format                  |               1163 | false    |
-  | https://github.com/lamdu/lamdu                      |               1063 | false    |
-  | https://github.com/valderman/haste-compiler         |               1036 | false    |
-  | https://github.com/yi-editor/yi                     |               1029 | true     |
-  | https://github.com/scotty-web/scotty                |               1026 | false    |
-  | https://github.com/olivierverdier/zsh-git-prompt    |               1023 | false    |
-  | https://github.com/agda/agda                        |               1021 | false    |
-  | https://github.com/google/codeworld                 |               1004 | true     |
-  | https://github.com/ndmitchell/hlint                 |                976 | true     |
-  | https://github.com/BurntSushi/erd                   |                973 | false    |
-  | https://github.com/joeyh/git-annex                  |                944 | false    |
-  | https://github.com/facebookincubator/duckling       |                931 | false    |
-  |-----------------------------------------------------+--------------------+----------|
 * C
   |----------------------------------------------------------------------+--------------------+----------|
   | URL                                                                  | Number of watchers | Suitable |
   |----------------------------------------------------------------------+--------------------+----------|
-  | https://github.com/torvalds/linux                                    |              76301 | true     |
-  | https://github.com/antirez/redis                                     |              39540 | true     |
-  | https://github.com/firehol/netdata                                   |              32669 | true     |
+  | https://github.com/torvalds/linux                                    |              76301 | false    |
+  | https://github.com/antirez/redis                                     |              39540 | false    |
+  | https://github.com/firehol/netdata                                   |              32669 | false    |
   | https://github.com/git/git                                           |              28751 | false    |
   | https://github.com/php/php-src                                       |              25064 | false    |
   | https://github.com/shadowsocks/shadowsocks-android                   |              24924 | false    |
   | https://github.com/Bilibili/ijkplayer                                |              23505 | false    |
   | https://github.com/grpc/grpc                                         |              21985 | false    |
   | https://github.com/vim/vim                                           |              20707 | false    |
-  | https://github.com/ggreer/the_silver_searcher                        |              18888 | true     |
+  | https://github.com/ggreer/the_silver_searcher                        |              18888 | false    |
   | https://github.com/godotengine/godot                                 |              18823 | false    |
   | https://github.com/wg/wrk                                            |              18046 | false    |
   | https://github.com/FFmpeg/FFmpeg                                     |              15299 | true     |
@@ -191,33 +391,288 @@
   | https://github.com/Genymobile/scrcpy                                 |              12943 | false    |
   | https://github.com/DrKLO/Telegram                                    |              12822 | false    |
   | https://github.com/stedolan/jq                                       |              12505 | true     |
-  | https://github.com/curl/curl                                         |              11610 | true     |
+  | https://github.com/curl/curl                                         |              11610 | false    |
   | https://github.com/nginx/nginx                                       |              11071 | false    |
   | https://github.com/numpy/numpy                                       |              10889 | false    |
-  | https://github.com/shadowsocks/shadowsocks-libev                     |              10888 | true     |
+  | https://github.com/shadowsocks/shadowsocks-libev                     |              10888 | false    |
   | https://github.com/commaai/openpilot                                 |              10860 | false    |
-  | https://github.com/openssl/openssl                                   |              10839 | true     |
+  | https://github.com/openssl/openssl                                   |              10839 | false    |
   | https://github.com/QSCTech/zju-icicles                               |              10584 | false    |
-  | https://github.com/radare/radare2                                    |              10581 | true     |
+  | https://github.com/radare/radare2                                    |              10581 | false    |
   | https://github.com/mpv-player/mpv                                    |              10419 | true     |
   | https://github.com/nothings/stb                                      |              10025 | true     |
   | https://github.com/esp8266/Arduino                                   |               9867 | false    |
   | https://github.com/irungentoo/toxcore                                |               9727 | true     |
-  | https://github.com/facebook/zstd                                     |               9092 | true     |
+  | https://github.com/facebook/zstd                                     |               9092 | false    |
   | https://github.com/andlabs/libui                                     |               9048 | false    |
   | https://github.com/torch/torch7                                      |               9019 | false    |
-  | https://github.com/memcached/memcached                               |               8977 | true     |
+  | https://github.com/memcached/memcached                               |               8977 | false    |
   | https://github.com/alibaba/tengine                                   |               8961 | false    |
   | https://github.com/jp9000/obs-studio                                 |               8942 | false    |
-  | https://github.com/h2o/h2o                                           |               8920 | true     |
-  | https://github.com/allinurl/goaccess                                 |               8814 | true     |
+  | https://github.com/h2o/h2o                                           |               8920 | false    |
+  | https://github.com/allinurl/goaccess                                 |               8814 | false    |
   | https://github.com/micropython/micropython                           |               8741 | true     |
   | https://github.com/robertdavidgraham/masscan                         |               8614 | false    |
   | https://github.com/pbatard/rufus                                     |               8014 | false    |
   | https://github.com/gentilkiwi/mimikatz                               |               7935 | false    |
   | https://github.com/octalmage/robotjs                                 |               7895 | false    |
-  | https://github.com/twitter/twemproxy                                 |               7714 | true     |
+  | https://github.com/twitter/twemproxy                                 |               7714 | false    |
+  | https://github.com/antirez/disque                                    |               7687 | false    |
+  | https://github.com/MicrosoftArchive/redis                            |               7617 | false    |
+  | https://github.com/Tencent/wcdb                                      |               7592 | false    |
+  | https://github.com/squeaky-pl/japronto                               |               7572 | false    |
+  | https://github.com/apple/darwin-xnu                                  |               7554 | false    |
+  | https://github.com/cloudwu/skynet                                    |               7491 | false    |
+  | https://github.com/arut/nginx-rtmp-module                            |               7463 | false    |
+  | https://github.com/aseprite/aseprite                                 |               7040 | false    |
+  | https://github.com/netdata/netdata                                   |               6908 | false    |
+  | https://github.com/reactos/reactos                                   |               6883 | true     |
+  | https://github.com/jonas/tig                                         |               6837 | false    |
+  | https://github.com/hashcat/hashcat                                   |               6805 | true     |
+  | https://github.com/facebook/watchman                                 |               6658 | false    |
+  | https://github.com/googlecreativelab/anypixel                        |               6599 | false    |
+  | https://github.com/s-matyukevich/raspberry-pi-os                     |               6587 | false    |
+  | https://github.com/openresty/lua-nginx-module                        |               6579 | true     |
+  | https://github.com/skywind3000/kcp                                   |               6571 | false    |
+  | https://github.com/mozilla/firefox-ios                               |               6489 | false    |
+  | https://github.com/OpenRCT2/OpenRCT2                                 |               6443 | false    |
+  | https://github.com/topjohnwu/Magisk                                  |               6339 | false    |
+  | https://github.com/jedisct1/libsodium                                |               6308 | true     |
+  | https://github.com/raspberrypi/linux                                 |               6213 | true     |
+  | https://github.com/MSOpenTech/redis                                  |               6165 | false    |
+  | https://github.com/Microsoft/react-native-code-push                  |               6014 | false    |
+  | https://github.com/RMerl/asuswrt-merlin                              |               5810 | true     |
+  | https://github.com/linuxkit/linuxkit                                 |               5732 | false    |
+  | https://github.com/xoreaxeaxeax/movfuscator                          |               5701 | false    |
+  | https://github.com/openresty/openresty                               |               5700 | false    |
+  | https://github.com/haiwen/seafile                                    |               5691 | false    |
+  | https://github.com/phpredis/phpredis                                 |               5661 | false    |
+  | https://github.com/jarun/nnn                                         |               5647 | false    |
+  | https://github.com/Microsoft/winfile                                 |               5618 | false    |
+  | https://github.com/nodemcu/nodemcu-firmware                          |               5590 | true     |
+  | https://github.com/liuliu/ccv                                        |               5588 | false    |
+  | https://github.com/fogleman/Craft                                    |               5585 | false    |
+  | https://github.com/deepmind/lab                                      |               5543 | false    |
+  | https://github.com/macvim-dev/macvim                                 |               5534 | false    |
+  | https://github.com/jedisct1/dnscrypt-proxy                           |               5534 | false    |
+  | https://github.com/HandBrake/HandBrake                               |               5456 | false    |
+  | https://github.com/systemd/systemd                                   |               5433 | false    |
+  | https://github.com/SoftEtherVPN/SoftEtherVPN                         |               5424 | false    |
+  | https://github.com/postgres/postgres                                 |               5416 | false    |
+  | https://github.com/citra-emu/citra                                   |               5351 | false    |
+  | https://github.com/mist64/xhyve                                      |               5285 | false    |
+  | https://github.com/fulldecent/system-bus-radio                       |               5159 | false    |
+  | https://github.com/videolan/vlc                                      |               5143 | false    |
+  | https://github.com/rswier/c4                                         |               5110 | false    |
+  | https://github.com/huangz1990/redis-3.0-annotated                    |               5089 | false    |
+  | https://github.com/b4winckler/macvim                                 |               5084 | false    |
+  | https://github.com/rofl0r/proxychains-ng                             |               5059 | false    |
+  | https://github.com/obsproject/obs-studio                             |               5010 | false    |
+  | https://github.com/libgit2/libgit2                                   |               4986 | true     |
+  | https://github.com/mruby/mruby                                       |               4958 | false    |
+  | https://github.com/spacehuhn/esp8266_deauther                        |               4942 | false    |
+  | https://github.com/git-for-windows/git                               |               4889 | false    |
+  | https://github.com/lpereira/lwan                                     |               4888 | false    |
+  | https://github.com/glfw/glfw                                         |               4800 | true     |
+  | https://github.com/happyfish100/fastdfs                              |               4779 | false    |
+  | https://github.com/i3/i3                                             |               4756 | false    |
+  | https://github.com/PowerShell/Win32-OpenSSH                          |               4736 | false    |
+  | https://github.com/MarlinFirmware/Marlin                             |               4720 | false    |
+  | https://github.com/zfsonlinux/zfs                                    |               4683 | false    |
+  | https://github.com/matz/streem                                       |               4650 | false    |
+  | https://github.com/libevent/libevent                                 |               4646 | true     |
+  | https://github.com/cesanta/mongoose                                  |               4630 | false    |
+  | https://github.com/Tencent/xLua                                      |               4622 | false    |
+  | https://github.com/WhisperSystems/Signal-Android                     |               4605 | false    |
+  | https://github.com/facebook/css-layout                               |               4516 | false    |
+  | https://github.com/freebsd/freebsd                                   |               4478 | false    |
+  | https://github.com/MiCode/Xiaomi_Kernel_OpenSource                   |               4439 | false    |
+  | https://github.com/antirez/kilo                                      |               4429 | false    |
+  | https://github.com/vysheng/tg                                        |               4326 | false    |
+  | https://github.com/catboost/catboost                                 |               4323 | false    |
+  | https://github.com/rui314/8cc                                        |               4299 | false    |
+  | https://github.com/hishamhm/htop                                     |               4293 | true     |
+  | https://github.com/jonls/redshift                                    |               4233 | false    |
+  | https://github.com/openwrt/openwrt                                   |               4232 | false    |
+  | https://github.com/DaveDavenport/rofi                                |               4232 | false    |
+  | https://github.com/mjolnir-io/mjolnir                                |               4218 | false    |
+  | https://github.com/sdegutis/mjolnir                                  |               4189 | false    |
+  | https://github.com/Qihoo360/Atlas                                    |               4178 | false    |
+  | https://github.com/cinder/Cinder                                     |               4177 | false    |
+  | https://github.com/AlexeyAB/darknet                                  |               4166 | false    |
+  | https://github.com/rhysd/vim.wasm                                    |               4148 | false    |
+  | https://github.com/id-Software/DOOM                                  |               4080 | false    |
+  | https://github.com/id-Software/Quake-III-Arena                       |               4053 | false    |
+  | https://github.com/chrismaltby/gb-studio                             |               4039 | false    |
+  | https://github.com/jemalloc/jemalloc                                 |               4009 | false    |
+  | https://github.com/sumatrapdfreader/sumatrapdf                       |               3971 | false    |
+  | https://github.com/OpenVPN/openvpn                                   |               3933 | false    |
+  | https://github.com/vk-com/kphp-kdb                                   |               3894 | false    |
+  | https://github.com/fastos/fastsocket                                 |               3877 | false    |
+  | https://github.com/IAIK/meltdown                                     |               3871 | false    |
+  | https://github.com/google/ios-webkit-debug-proxy                     |               3865 | false    |
+  | https://github.com/vmg/redcarpet                                     |               3846 | false    |
+  | https://github.com/nonstriater/Learn-Algorithms                      |               3845 | false    |
+  | https://github.com/stanfordnlp/GloVe                                 |               3833 | false    |
+  | https://github.com/nanomsg/nanomsg                                   |               3822 | true     |
+  | https://github.com/Airblader/i3                                      |               3768 | false    |
+  | https://github.com/hioa-cs/IncludeOS                                 |               3699 | false    |
   |----------------------------------------------------------------------+--------------------+----------|
+* C++
+  |----------------------------------------------------------+--------------------+----------|
+  | URL                                                      | Number of watchers | Suitable |
+  |----------------------------------------------------------+--------------------+----------|
+  | https://github.com/tensorflow/tensorflow                 |             135685 | false    |
+  | https://github.com/electron/electron                     |              52010 | false    |
+  | https://github.com/apple/swift                           |              51911 | false    |
+  | https://github.com/bitcoin/bitcoin                       |              42193 | false    |
+  | https://github.com/Microsoft/Terminal                    |              37759 | true     |
+  | https://github.com/x64dbg/x64dbg                         |              31664 | false    |
+  | https://github.com/BVLC/caffe                            |              29967 | false    |
+  | https://github.com/google/protobuf                       |              29394 | false    |
+  | https://github.com/tesseract-ocr/tesseract               |              28013 | true     |
+  | https://github.com/opencv/opencv                         |              26832 | false    |
+  | https://github.com/racaljk/hosts                         |              20339 | false    |
+  | https://github.com/nwjs/nw.js                            |              20297 | false    |
+  | https://github.com/atom/electron                         |              20115 | false    |
+  | https://github.com/facebookresearch/fastText             |              19009 | false    |
+  | https://github.com/rethinkdb/rethinkdb                   |              18433 | false    |
+  | https://github.com/google/leveldb                        |              18244 | false    |
+  | https://github.com/facebook/hhvm                         |              17852 | false    |
+  | https://github.com/Microsoft/CNTK                        |              17334 | false    |
+  | https://github.com/mongodb/mongo                         |              16885 | false    |
+  | https://github.com/dmlc/xgboost                          |              16211 | false    |
+  | https://github.com/ocornut/imgui                         |              15895 | true     |
+  | https://github.com/Microsoft/calculator                  |              15845 | false    |
+  | https://github.com/rogerwang/node-webkit                 |              15480 | false    |
+  | https://github.com/cocos2d/cocos2d-x                     |              14902 | false    |
+  | https://github.com/facebook/osquery                      |              14728 | false    |
+  | https://github.com/nlohmann/json                         |              14616 | true     |
+  | https://github.com/v8/v8                                 |              14447 | false    |
+  | https://github.com/ApolloAuto/apollo                     |              14393 | false    |
+  | https://github.com/aria2/aria2                           |              13386 | false    |
+  | https://github.com/Tencent/mars                          |              13144 | false    |
+  | https://github.com/CMU-Perceptual-Computing-Lab/openpose |              13022 | false    |
+  | https://github.com/facebook/folly                        |              12977 | true     |
+  | https://github.com/uglide/RedisDesktopManager            |              12793 | false    |
+  | https://github.com/vurtun/nuklear                        |              12632 | false    |
+  | https://github.com/google/flatbuffers                    |              12516 | false    |
+  | https://github.com/facebook/rocksdb                      |              12465 | false    |
+  | https://github.com/google/googletest                     |              12089 | true     |
+  | https://github.com/sqlitebrowser/sqlitebrowser           |              11815 | true     |
+  | https://github.com/haoel/leetcode                        |              11220 | false    |
+  | https://github.com/EOSIO/eos                             |              11214 | false    |
+  | https://github.com/dmlc/mxnet                            |              10753 | false    |
+  | https://github.com/yangyangwithgnu/hardseed              |               9777 | false    |
+  | https://github.com/apple/foundationdb                    |               9583 | false    |
+  | https://github.com/SFTtech/openage                       |               9351 | false    |
+  | https://github.com/googlei18n/libphonenumber             |               9300 | false    |
+  | https://github.com/xbmc/xbmc                             |               9295 | false    |
+  | https://github.com/Microsoft/LightGBM                    |               9057 | false    |
+  | https://github.com/Microsoft/napajs                      |               8995 | false    |
+  | https://github.com/ValveSoftware/Proton                  |               8907 | false    |
+  | https://github.com/vnpy/vnpy                             |               8818 | false    |
+  | https://github.com/apple/turicreate                      |               8786 | false    |
+  | https://github.com/tekezo/Karabiner-Elements             |               8772 | false    |
+  | https://github.com/caffe2/caffe2                         |               8539 | false    |
+  | https://github.com/openalpr/openalpr                     |               8528 | false    |
+  | https://github.com/opencv/opencv                         |               7970 | false    |
+  | https://github.com/Microsoft/AirSim                      |               7933 | false    |
+  | https://github.com/facebook/yoga                         |               7681 | false    |
+  | https://github.com/envoyproxy/envoy                      |               7673 | true     |
+  | https://github.com/notepad-plus-plus/notepad-plus-plus   |               7661 | false    |
+  | https://github.com/openframeworks/openFrameworks         |               7611 | false    |
+  | https://github.com/google/brotli                         |               7581 | false    |
+  | https://github.com/davisking/dlib                        |               7534 | true     |
+  | https://github.com/apache/incubator-mxnet                |               7500 | false    |
+  | https://github.com/telegramdesktop/tdesktop              |               7485 | true     |
+  | https://github.com/Tencent/MMKV                          |               7449 | false    |
+  | https://github.com/arangodb/arangodb                     |               7428 | false    |
+  | https://github.com/ethereum/solidity                     |               7394 | false    |
+  | https://github.com/yandex/ClickHouse                     |               7148 | false    |
+  | https://github.com/ssloy/tinyrenderer                    |               7101 | false    |
+  | https://github.com/CRYTEK-CRYENGINE/CRYENGINE            |               6934 | false    |
+  | https://github.com/iovisor/bcc                           |               6898 | false    |
+  | https://github.com/wkhtmltopdf/wkhtmltopdf               |               6833 | false    |
+  | https://github.com/alibaba/AndFix                        |               6828 | false    |
+  | https://github.com/qbittorrent/qBittorrent               |               6788 | false    |
+  | https://github.com/facebookresearch/faiss                |               6715 | false    |
+  | https://github.com/lemire/simdjson                       |               6701 | true     |
+  | https://github.com/bjorn/tiled                           |               6671 | false    |
+  | https://github.com/shadowsocks/shadowsocks-qt5           |               6633 | false    |
+  | https://github.com/Tencent/ncnn                          |               6600 | false    |
+  | https://github.com/ceph/ceph                             |               6534 | false    |
+  | https://github.com/protocolbuffers/protobuf              |               6504 | false    |
+  | https://github.com/energicryptocurrency/energi           |               6493 | false    |
+  | https://github.com/bkaradzic/bgfx                        |               6370 | false    |
+  | https://github.com/Maximus5/ConEmu                       |               6307 | false    |
+  | https://github.com/kaldi-asr/kaldi                       |               6234 | false    |
+  | https://github.com/googlesamples/android-ndk             |               6227 | false    |
+  | https://github.com/Automattic/node-canvas                |               6156 | false    |
+  | https://github.com/facebook/proxygen                     |               6109 | false    |
+  | https://github.com/gabime/spdlog                         |               6029 | true     |
+  | https://github.com/acaudwell/Gource                      |               6020 | false    |
+  | https://github.com/Microsoft/vcpkg                       |               5957 | false    |
+  | https://github.com/coolwanglu/pdf2htmlEX                 |               5952 | false    |
+  | https://github.com/keepassxreboot/keepassxc              |               5868 | true     |
+  | https://github.com/apache/thrift                         |               5864 | false    |
+  | https://github.com/gzc/CLRS                              |               5859 | false    |
+  | https://github.com/ideawu/ssdb                           |               5781 | false    |
+  | https://github.com/atom/electron                         |               5684 | false    |
+  | https://github.com/RPCS3/rpcs3                           |               5624 | true     |
+  | https://github.com/chenshuo/muduo                        |               5623 | false    |
+  | https://github.com/dolphin-emu/dolphin                   |               5619 | false    |
+  | https://github.com/chromium/chromium                     |               5576 | false    |
+  | https://github.com/PaddlePaddle/Paddle                   |               5532 | false    |
+  | https://github.com/Tencent/Tars                          |               5509 | false    |
+  | https://github.com/spotify/annoy                         |               5453 | false    |
+  | https://github.com/zealdocs/zeal                         |               5427 | false    |
+  | https://github.com/TrinityCore/TrinityCore               |               5422 | true     |
+  | https://github.com/ipkn/crow                             |               5410 | false    |
+  | https://github.com/philsquared/Catch                     |               5391 | true     |
+  | https://github.com/visualfc/liteide                      |               5385 | false    |
+  | https://github.com/huihut/interview                      |               5350 | false    |
+  | https://github.com/uber/horovod                          |               5337 | false    |
+  | https://github.com/uWebSockets/uWebSockets               |               5324 | false    |
+  | https://github.com/scylladb/scylla                       |               5280 | false    |
+  | https://github.com/rovo89/Xposed                         |               5169 | false    |
+  | https://github.com/liuruoze/EasyPR                       |               5145 | false    |
+  | https://github.com/radareorg/cutter                      |               5052 | true     |
+  | https://github.com/JohnLangford/vowpal_wabbit            |               4997 | false    |
+  | https://github.com/bulletphysics/bullet3                 |               4924 | false    |
+  | https://github.com/miloyip/rapidjson                     |               4906 | true     |
+  | https://github.com/tamlok/vnote                          |               4877 | false    |
+  | https://github.com/jaagr/polybar                         |               4816 | true     |
+  | https://github.com/hrydgard/ppsspp                       |               4806 | false    |
+  | https://github.com/butor/blackbird                       |               4787 | false    |
+  | https://github.com/facebook/hiphop-php                   |               4735 | false    |
+  | https://github.com/Squirrel/Squirrel.Windows             |               4683 | false    |
+  | https://github.com/facebook/redex                        |               4627 | false    |
+  | https://github.com/ShiqiYu/libfacedetection              |               4544 | false    |
+  | https://github.com/fmtlib/fmt                            |               4540 | true     |
+  | https://github.com/sass/libsass                          |               4528 |          |
+  | https://github.com/Mooophy/Cpp-Primer                    |               4487 |          |
+  | https://github.com/minetest/minetest                     |               4446 |          |
+  | https://github.com/mawww/kakoune                         |               4417 |          |
+  | https://github.com/draios/sysdig                         |               4401 |          |
+  | https://github.com/pybind/pybind11                       |               4381 |          |
+  | https://github.com/Z3Prover/z3                           |               4367 |          |
+  | https://github.com/mobile-shell/mosh                     |               4337 |          |
+  | https://github.com/zeromq/libzmq                         |               4333 |          |
+  | https://github.com/TranslucentTB/TranslucentTB           |               4333 |          |
+  | https://github.com/scylladb/seastar                      |               4322 |          |
+  | https://github.com/Tencent/libco                         |               4303 |          |
+  | https://github.com/zhongyang219/TrafficMonitor           |               4302 |          |
+  | https://github.com/Microsoft/cpprestsdk                  |               4201 |          |
+  | https://github.com/SaschaWillems/Vulkan                  |               4181 |          |
+  | https://github.com/google/or-tools                       |               4174 |          |
+  | https://github.com/electronicarts/EASTL                  |               4172 |          |
+  | https://github.com/paralect/robomongo                    |               4127 |          |
+  | https://github.com/mysql/mysql-server                    |               4127 |          |
+  | https://github.com/assimp/assimp                         |               4119 |          |
+  | https://github.com/facebookarchive/scribe                |               4060 |          |
+  | https://github.com/paulasmuth/fnordmetric                |               4057 |          |
+  |----------------------------------------------------------+--------------------+----------|
 * Kotlin
   |---------------------------------------------------------------------------+--------------------+----------|
   | URL                                                                       | Number of watchers | Suitable |
@@ -227,10 +682,10 @@
   | https://github.com/JetBrains/kotlin-native                                |               6101 | false    |
   | https://github.com/ReactiveX/RxKotlin                                     |               5748 | false    |
   | https://github.com/ktorio/ktor                                            |               3790 | true     |
-  | https://github.com/airbnb/MvRx                                            |               2972 | true     |
+  | https://github.com/airbnb/MvRx                                            |               2972 | false    |
   | https://github.com/kittinunf/Fuel                                         |               2910 | true     |
   | https://github.com/bufferapp/android-clean-architecture-boilerplate       |               2866 | false    |
-  | https://github.com/JetBrains/Exposed                                      |               2731 | true     |
+  | https://github.com/JetBrains/Exposed                                      |               2731 | false    |
   | https://github.com/square/sqldelight                                      |               2505 | true     |
   | https://github.com/JetBrains/kotlin-examples                              |               2482 | false    |
   | https://github.com/edvin/tornadofx                                        |               2457 | true     |
@@ -250,7 +705,7 @@
   | https://github.com/Kotlin/anko                                            |               1653 | false    |
   | https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter        |               1605 | false    |
   | https://github.com/kotlintest/kotlintest                                  |               1597 | true     |
-  | https://github.com/Kotlin/ktor                                            |               1581 | false    |
+  | https://github.com/ktorio/ktor                                            |               1581 | true     |
   | https://github.com/Tinder/Scarlet                                         |               1499 | false    |
   | https://github.com/aritraroy/Flashbar                                     |               1499 | false    |
   | https://github.com/DanielMartinus/Konfetti                                |               1474 | false    |
@@ -272,4 +727,104 @@
   | https://github.com/SalomonBrys/Kodein                                     |               1030 | false    |
   | https://github.com/bufferapp/clean-architecture-components-boilerplate    |               1015 | false    |
   | https://github.com/guolindev/coolweatherjetpack                           |               1003 | false    |
+  | https://github.com/kiruto/debug-bottle                                    |                982 | false    |
+  | https://github.com/Vektah/CodeGlance                                      |                979 | false    |
+  | https://github.com/spring-projects/spring-fu                              |                954 | false    |
+  | https://github.com/http4k/http4k                                          |                936 | false    |
+  | https://github.com/blackbbc/Tucao                                         |                932 | false    |
+  | https://github.com/ingokegel/jclasslib                                    |                928 | false    |
+  | https://github.com/spekframework/spek                                     |                916 | true     |
+  | https://github.com/perwendel/spark-kotlin                                 |                899 | false    |
+  | https://github.com/pawegio/KAndroid                                       |                877 | false    |
+  | https://github.com/JetBrains/spek                                         |                864 | false    |
+  | https://github.com/duanhong169/DrawableToolbox                            |                863 | false    |
+  | https://github.com/linsir6/AndroidNote                                    |                851 | false    |
+  | https://github.com/MarioAriasC/funKTionale                                |                846 | false    |
+  | https://github.com/jabbink/PokemonGoBot                                   |                808 | true     |
+  | https://github.com/mozilla-mobile/android-components                      |                803 | true     |
+  | https://github.com/MicroUtils/kotlin-logging                              |                782 | false    |
+  | https://github.com/jaredrummler/Cyanea                                    |                776 | false    |
+  | https://github.com/iceCola7/WanAndroid                                    |                772 | false    |
+  | https://github.com/gradle/gradle-script-kotlin                            |                765 | true     |
+  | https://github.com/RedApparat/Fotoapparat                                 |                761 | false    |
+  | https://github.com/juanchosaravia/KedditBySteps                           |                747 | false    |
+  | https://github.com/bufferapp/android-clean-architecture-mvi-boilerplate   |                729 | false    |
+  | https://github.com/yjfnypeu/EasyAndroid                                   |                729 | false    |
+  | https://github.com/agoda-com/Kakao                                        |                725 | false    |
+  | https://github.com/DroidKaigi/conference-app-2019                         |                719 | ?        |
+  | https://github.com/gildor/kotlin-coroutines-retrofit                      |                705 | false    |
+  | https://github.com/burhanrashid52/YoutubeUX                               |                691 | false    |
+  | https://github.com/Kotlin/kotlinx.html                                    |                674 | false    |
+  | https://github.com/mplatvoet/kovenant                                     |                669 | false    |
+  | https://github.com/SalomonBrys/Kotson                                     |                666 | false    |
+  | https://github.com/JetBrains/swot                                         |                643 | false    |
+  | https://github.com/PaulWoitaschek/MaterialAudiobookPlayer                 |                633 | false    |
+  | https://github.com/ingbyr/VDM                                             |                633 | false    |
+  | https://github.com/ansman/kotshi                                          |                632 | false    |
+  | https://github.com/nekocode/kotgo                                         |                625 | false    |
+  | https://github.com/TonnyL/Spark                                           |                619 | false    |
+  | https://github.com/FasterXML/jackson-module-kotlin                        |                604 | false    |
+  | https://github.com/sanogueralorenzo/Android-Kotlin-Clean-Architecture     |                598 | false    |
+  | https://github.com/naman14/TimberX                                        |                576 | false    |
+  | https://github.com/devzwy/open_nsfw_android                               |                573 | false    |
+  | https://github.com/MoyuruAizawa/TimetableLayout                           |                563 | false    |
+  | https://github.com/Kotlin/kotlin-frontend-plugin                          |                561 | false    |
+  | https://github.com/TinyMission/kara                                       |                553 | false    |
+  | https://github.com/Tinder/StateMachine                                    |                536 | false    |
+  | https://github.com/Jire/Charlatano                                        |                531 | false    |
+  | https://github.com/amanjeetsingh150/kotlin-android-examples               |                531 | false    |
+  | https://github.com/CarGuo/GSYGithubAppKotlin                              |                530 | false    |
+  | https://github.com/JetBrains/kotlinconf-spinner                           |                526 | false    |
+  | https://github.com/iammert/ReadableBottomBar                              |                525 | false    |
+  | https://github.com/cortinico/slidetoact                                   |                520 | false    |
+  | https://github.com/JetBrains/kotlin-workshop                              |                519 | false    |
+  | https://github.com/qingmei2/MVVM-Rhine                                    |                518 | false    |
+  | https://github.com/johnlindquist/AceJump                                  |                516 | false    |
+  | https://github.com/ravidsrk/kotlinextensions.com                          |                506 | false    |
+  | https://github.com/mcxiaoke/kotlin-koi                                    |                499 | false    |
+  | https://github.com/sdeleuze/spring-boot-kotlin-demo                       |                495 | false    |
+  | https://github.com/skedgo/DateTimeRangePicker                             |                493 | false    |
+  | https://github.com/kategory/kategory                                      |                490 | false    |
+  | https://github.com/armcha/ElasticView                                     |                482 | false    |
+  | https://github.com/mrshawnho/ideaagent                                    |                480 | false    |
+  | https://github.com/libktx/ktx                                             |                475 | false    |
+  | https://github.com/saket/FluidKeyboardResize                              |                471 | false    |
+  | https://github.com/recruit-mp/LightCalendarView                           |                468 | false    |
+  | https://github.com/bgard6977/depends                                      |                456 | false    |
+  | https://github.com/florent37/KotlinPleaseAnimate                          |                454 | false    |
+  | https://github.com/brianegan/bansa                                        |                441 | false    |
+  | https://github.com/zsmb13/MaterialDrawerKt                                |                441 | false    |
+  | https://github.com/kittinunf/Result                                       |                438 | false    |
+  | https://github.com/TonnyL/Charles                                         |                437 | false    |
+  | https://github.com/arunkumar9t2/transition-x                              |                434 | false    |
+  | https://github.com/BennyWang/KBinding                                     |                434 | false    |
+  | https://github.com/moove-it/fakeit                                        |                433 | false    |
+  | https://github.com/lyft/domic                                             |                432 | false    |
+  | https://github.com/mistamek/Android-drawable-preview-plugin               |                427 | false    |
+  | https://github.com/JetBrains/kotlin-wrappers                              |                422 | true     |
+  | https://github.com/cbeust/kobalt                                          |                419 | false    |
+  | https://github.com/Yalantis/OfficialFoldingTabBar.Android                 |                417 | false    |
+  | https://github.com/metalabdesign/AsyncAwait                               |                417 | false    |
+  | https://github.com/chibatching/Kotpref                                    |                416 | false    |
+  | https://github.com/develar/settings-repository                            |                411 | false    |
+  | https://github.com/skydoves/AndroidVeil                                   |                410 | false    |
+  | https://github.com/francoiscampbell/CircleLayout                          |                403 | false    |
+  | https://github.com/saulmm/From-design-to-Android-part2                    |                395 | false    |
+  | https://github.com/CleverPumpkin/CrunchyCalendar                          |                394 | false    |
+  | https://github.com/the-super-toys/glimpse-android                         |                392 | false    |
+  | https://github.com/PaulWoitaschek/Voice                                   |                392 | false    |
+  | https://github.com/sangcomz/StickyTimeLine                                |                383 | false    |
+  | https://github.com/mpcjanssen/simpletask-android                          |                381 | false    |
+  | https://github.com/cjiahuan/TrimmerVideoView                              |                381 | false    |
+  | https://github.com/square/workflow                                        |                379 | false    |
+  | https://github.com/stfalcon-studio/MultiImageView                         |                376 | false    |
+  | https://github.com/android/android-studio-poet                            |                371 | false    |
+  | https://github.com/reddit/IndicatorFastScroll                             |                369 | false    |
+  | https://github.com/michaelxs/Android-CommonShapeButton                    |                367 | false    |
+  | https://github.com/nirukk52/SnapTabLayout                                 |                365 | false    |
+  | https://github.com/square/AssistedInject                                  |                359 | false    |
+  | https://github.com/wordpress-mobile/AztecEditor-Android                   |                356 | true     |
+  | https://github.com/mixitconf/mixit                                        |                353 | false    |
+  | https://github.com/walleth/walleth                                        |                353 | false    |
+  | https://github.com/saket/Flick                                            |                350 | false    |
   |---------------------------------------------------------------------------+--------------------+----------|

@@ -335,6 +335,12 @@
    | *Pylint*   | Python                | =.py=                 |
    |------------+-----------------------+-----------------------|
 ** TODO Projects selection
+   Criteria (data from 2019-06-01):
+   - is in the top 150 most favorite projects written in the given language
+   - 200+ pull requests and less then 5000
+   - at least 85 % of files are source files written in the given language
+   - project is a program or program collection (not a book with the script etc.)
+
    - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
    - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
    - https://zenodo.org/record/3858046
