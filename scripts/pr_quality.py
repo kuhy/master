@@ -33,13 +33,12 @@ def make_commit_accesible(repo, remote, commit_sha):
                 print("Remote " + remote + " was successfully added.")
                 return make_commit_accesible(repo, remote, commit_sha)
             except git.exc.GitError:
-                print("Repository " + remote + " is not accessible.",
-                      file=sys.stderr)
+                print("Repository " + remote + " is not accessible.")
                 repo.delete_remote(remote)
                 return False
         else:
             print("Commit {} is not present in the {} repository."
-                  .format(commit_sha, remote), file=sys.stderr)
+                  .format(commit_sha, remote))
             return False
 
 
@@ -56,6 +55,12 @@ def analyze_project(project_data, tmp_dir):
           project_dir + " directory.")
     pull_requests = []
     for pr_data in project_data["pull_requests"]:
+        try:
+            repo.commit(pr_data["base_commit"])
+        except ValueError:
+            print("Base commit {} is not present in the repository."
+                  .format(pr_data["base_commit"]))
+            continue
         if not make_commit_accesible(repo, pr_data["head_repo"],
                                      pr_data["head_commit"]):
             print("Skipping pull request no. " + str(pr_data["id"]) + ".")
