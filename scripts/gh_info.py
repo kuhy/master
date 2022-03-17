@@ -10,7 +10,7 @@ def obtain_project_data(project_name: str, db):
     project_data["name"] = project_name
 
     cur = db.cursor()
-    cur.execute("SELECT id, language, created_at FROM projects WHERE url = %s",
+    cur.execute("SELECT id, language, created_at FROM projects WHERE url = %s LIMIT 1",
                 ("https://api.github.com/repos/" + project_name,))
     (project_id, language, created_at) = cur.fetchone()
     project_data["language"] = language
@@ -59,6 +59,7 @@ def obtain_pr_data(pr_id: int, head_repo_id: int, head_commit_id: int,
     if not head_repo_id:
         return  # head repository was deleted
 
+    opened_at = None
     is_merged = False
     is_closed = False
     cur = db.cursor()
@@ -84,6 +85,9 @@ def obtain_pr_data(pr_id: int, head_repo_id: int, head_commit_id: int,
     pr_data["id"] = github_pr_id
 
     pr_data["accepted"] = is_merged
+
+    if not opened_at:
+        return  # incomplete data in the DB
 
     pr_data["time_opened"] = closed_at - opened_at
 
@@ -114,6 +118,9 @@ def obtain_pr_data(pr_id: int, head_repo_id: int, head_commit_id: int,
     cur.execute("SELECT COUNT(*) FROM pull_request_comments WHERE "
                 "pull_request_id = %s", (pr_id,))
     pr_data["number_of_comments"] = cur.fetchone()[0]
+
+    if not submitter_id:
+        return  # submitter account was deleted
 
     pr_data["submitter"] = obtain_submitter_data(submitter_id, base_repo_id,
                                                  db)
@@ -148,10 +155,11 @@ def obtain_submitter_data(submitter_id: int, project_id: int, db):
 @click.option("--db-user", "-u", required=True)
 @click.option("--db-password", "-p", required=True, prompt="Database password")
 def cli(user: str, repo: str, db_name: str, db_user: str, db_password: str):
-    with mysql.connector.connect(user=db_user, password=db_password,
-                                 database=db_name) as db:
-        project_data = obtain_project_data(user + '/' + repo, db)
-        print(json.dumps(project_data))
+    db = mysql.connector.connect(user=db_user, password=db_password,
+                                 database=db_name)
+    project_data = obtain_project_data(user + '/' + repo, db)
+    print(json.dumps(project_data))
+    db.close()
 
 
 if __name__ == "__main__":
