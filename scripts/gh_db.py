@@ -163,4 +163,4 @@ def cli(user: str, repo: str, db_name: str, db_user: str, db_password: str):
 
 
 if __name__ == "__main__":
-    cli(auto_envvar_prefix="GH_INFO")
+    cli(auto_envvar_prefix="GH_DB")
