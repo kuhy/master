@@ -1,0 +1,240 @@
+#+TITLE: Pull request analysis
+#+AUTHOR: Ondřej Kuhejda
+#+PROPERTY: header-args+ :comments both
+#+PROPERTY: header-args+ :tangle "analysis.R"
+* Packages
+  Following package is needed for ``filtering'' operations:
+  #+BEGIN_SRC R
+    # install.packages("dplyr")
+    library("dplyr")
+  #+END_SRC
+
+  This package is needed for PCA plotting:
+  #+BEGIN_SRC R
+    # install.packages("ggfortify")
+    library("ggfortify")
+  #+END_SRC
+
+  Following package is used for printing tables into the PDF file:
+  #+BEGIN_SRC R
+    # install.packages("gridExtra")
+    library("gridExtra")
+  #+END_SRC
+
+  This library is used to format percentages:
+  #+BEGIN_SRC R
+    # install.packages("scales")
+    library("scales")
+  #+END_SRC
+
+  This package can be used to export tables into the LaTeX:
+  #+BEGIN_SRC R
+    # install.packages("xtable")
+    library("xtable")
+  #+END_SRC
+
+  Following package is able to export plots into the LaTeX (TikZ):
+  #+BEGIN_SRC R
+    # install.packages("tikzDevice")
+    library("tikzDevice")
+  #+END_SRC
+* Data preprocessing
+** Dataset loading
+   #+BEGIN_SRC R
+     prs <- read.csv("data.csv", header=TRUE, sep = ",", check.names=FALSE)
+
+     dim(prs)
+
+     str(prs)
+
+     summary(prs)
+   #+END_SRC
+** Convert strings to booleans
+   #+BEGIN_SRC R
+     prs$accepted <- prs$accepted == "True"
+     prs$submitter_is_project_member <- prs$submitter_is_project_member == "True"
+   #+END_SRC
+** Filter linter results
+   #+BEGIN_SRC R
+     prsQuality <- prs %>% select("accepted" | starts_with('results_'))
+
+     summary(prsQuality)
+   #+END_SRC
+* Projects summary
+  Print the table with a summary of all projects:
+  #+BEGIN_SRC R
+    projects_summary <- (prs %>%
+                         mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x < 0, 0L, .x))),
+                                fixed=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x > 0, 0L, -.x))),
+                                rejected=!accepted) %>% group_by(project_name) %>% rename(Project=project_name) %>%
+                         summarise(Stars=first(project_number_of_watchers), "Analyzed PRs"=n(),
+                                   Accepted=percent(sum(accepted)/n()), Rejected=percent(sum(rejected)/n()),
+                                   "Introduced issues"=mean(introduced, trim=0.05),
+                                   "Fixed issues"=mean(fixed, trim=0.05)) %>% arrange(desc(Stars))
+                         )
+
+    print(xtable(projects_summary, type="latex", align=c("l", "|p{3.5cm}", "p{1.5cm}", "p{1.5cm}", "p{1.5cm}",
+                                                        "p{1.5cm}", "p{1.5cm}", "p{1cm}|")),
+          file="projects_summary.tex", include.rownames=FALSE,
+          add.to.row=list(pos=list(0), command=c("\\hline")), floating=FALSE)
+  #+END_SRC
+
+  Print the summary about all pull request of the given language:
+  #+BEGIN_SRC R
+    prs %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x < 0, 0L, .x))),
+                   fixed=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x > 0, 0L, -.x))),
+                   rejected=!accepted) %>%
+        summarise(Stars=mean(project_number_of_watchers), "Analyzed PRs"=n(),
+                  Accepted=percent(sum(accepted)/n()), Rejected=percent(sum(rejected)/n()),
+                  "Introduced issues"=mean(introduced, trim=0.05), "Fixed issues"=mean(fixed, trim=0.05))
+  #+END_SRC
+
+  Do the same but group by acceptance:
+  #+BEGIN_SRC R
+    prs %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x < 0, 0L, .x))),
+                   fixed=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x > 0, 0L, -.x))),
+                   rejected=!accepted) %>% group_by(accepted) %>%
+        summarise(Stars=mean(project_number_of_watchers), "Analyzed PRs"=n(),
+                  Accepted=percent(sum(accepted)/n()), Rejected=percent(sum(rejected)/n()),
+                  "Introduced issues"=mean(introduced, trim=0.05), "Fixed issues"=mean(fixed, trim=0.05)) %>%
+        print(width = Inf)
+  #+END_SRC
+* Importance of individual quality issues
+  *TODO*: add information about number of projects in which issue occurred
+  Summarize information about individual issues (compute maximum, minimum etc.):
+  #+BEGIN_SRC R
+    (issues <- prsQuality %>% group_by(accepted) %>% summarise(across(everything(),
+                                                                      tibble::lst(max, min, mean, introduced_by=~sum(. > 0),
+                                                                                  fixed_by=~sum(. < 0), appeared_in=~sum(. != 0)),
+                                                                     .names="{.col}***{.fn}")) %>%
+            tidyr::pivot_longer(cols=starts_with("results_"), names_to=c("issue", ".value"), names_sep="\\*\\*\\*") %>%
+            group_by(accepted) %>% group_split() %>% bind_cols() %>% select(2:8, 11:16) %>%
+            rename_with(.cols=2:7, .fn=function(x) sub("^", "rejected.", sub("\\..*", "", x))) %>%
+            rename_with(.cols=8:13, .fn=function(x) sub("^", "accepted.", sub("\\..*", "", x))) %>%
+            rename(issue = issue...2) %>% mutate_at("issue", function(x) sub("results_([^_]+)_", "", x)) %>%
+            tidyr::extract(issue, into=c("type", "issue"), "^([^_]+)_(.*)"))
+  #+END_SRC
+
+  Print the table with summary into the PDF file:
+  #+BEGIN_SRC R
+    pdf("issues.pdf", height=75, width=25)
+    grid.table(issues)
+    dev.off()
+  #+END_SRC
+
+  Summarize the issue categories:
+  #+BEGIN_SRC R
+    issueTypesSummary <- tibble(
+      type = character(),
+      introduced_total = integer(),
+      introduced_by = integer(),
+      fixed_total = integer(),
+      fixed_by = integer()
+    )
+    for (type in unique(issues$type)) {
+        issueTypesSummary <- issueTypesSummary %>%
+            bind_rows(prs %>% select(starts_with("results_") & contains(type)) %>%
+                      mutate(introduced=rowSums(mutate_all(., ~if_else(.x < 0, 0L, .x))),
+                             fixed=rowSums(mutate_all(., ~if_else(.x > 0, 0L, -.x)))) %>%
+                      summarize(type=type, introduced_total=sum(introduced), introduced_by=sum(introduced > 0),
+                                fixed_total=sum(fixed), fixed_by=sum(fixed > 0)))
+    }
+
+    print(xtable((issueTypesSummary %>% rename(Category=type, "Introduced in total"=introduced_total,
+                                               "#PRs which introduced"=introduced_by, "Fixed in total"=fixed_total,
+                                               "#PRs which fixed"=fixed_by)),
+                 type="latex", align=c("l", "|p{2cm}", "p{2cm}", "p{2cm}", "p{2cm}", "p{2cm}|"), digits=c(0,0,0,0,0,0)),
+          file="issue_types_summary.tex", include.rownames=FALSE,
+          add.to.row=list(pos=list(0), command=c("\\hline")), floating=FALSE)
+  #+END_SRC
+
+  Create a barplot with issues and their average counts in accepted/rejected pull requests:
+  #+BEGIN_SRC R
+    barplot(t(as.matrix(issues %>% select(accepted.mean, rejected.mean))), beside=TRUE, legend.text=TRUE,
+            xlab="issue", ylab="on average in one PR")
+  #+END_SRC
+
+  List the issues sorted by the number of accepted pull request which introduced them:
+  #+BEGIN_SRC R
+    issues %>% arrange(desc(accepted.introduced_by)) %>% select(type, issue, accepted.introduced_by)
+  #+END_SRC
+
+  List the issues sorted by the number of rejected pull request which introduced them:
+  #+BEGIN_SRC R
+    issues %>% arrange(desc(rejected.introduced_by)) %>% select(type, issue, rejected.introduced_by)
+  #+END_SRC
+
+  List the issues sorted by the number of accepted pull request which fixed them:
+  #+BEGIN_SRC R
+    issues %>% arrange(desc(accepted.fixed_by)) %>% select(type, issue, accepted.fixed_by)
+  #+END_SRC
+
+  List the issues sorted by the number of rejected pull request which fixed them:
+  #+BEGIN_SRC R
+    issues %>% arrange(desc(rejected.fixed_by)) %>% select(type, issue, rejected.fixed_by)
+  #+END_SRC
+
+  List the issues and the percentage in how many pull requests they change the quality:
+  #+BEGIN_SRC R
+    issues %>% transmute(type, issue, appeared_in=(rejected.appeared_in + accepted.appeared_in)) %>%
+        arrange(desc(appeared_in)) %>% mutate(percent_of_prs=percent(appeared_in/nrow(prs))) %>%
+        print(n=Inf)
+  #+END_SRC
+
+  Print the issues that were fixed in the larger number of PRs then introduced.
+  #+BEGIN_SRC R
+    issues %>% transmute(type, issue, fixed_more_times=(accepted.fixed_by + rejected.fixed_by -
+                                                        accepted.introduced_by - rejected.introduced_by)) %>%
+        arrange(desc(fixed_more_times)) %>% print(n=Inf)
+  #+END_SRC
+
+  Create a barplot with issues on the x-axis and number of pull request in which the issues were fixed/introduced on the y-axis:
+  #+BEGIN_SRC R
+    tikz(filename="issues_appeared_in.tex", width=7, height=3)
+    issues %>% transmute(type, appeared_in=100*(rejected.appeared_in + accepted.appeared_in)/nrow(prs)) %>%
+        arrange(desc(appeared_in)) %>% mutate(pos=1:n()) %>%
+        ggplot(aes(x=pos, y=appeared_in, fill=type)) + geom_col() + labs(x="Issues", y="Pull Requests (\\%)", fill="Types") +
+        theme(axis.ticks.x=element_blank(), axis.text.x=element_blank())
+    dev.off()
+  #+END_SRC
+* Does code quality affects the pull request acceptance?
+** PCA scatterplot
+   *TODO*: remove outliers
+   #+BEGIN_SRC R
+     prsQualityPCA <- prcomp(prsQuality %>% select(-accepted))
+
+     pallete = c("blue", "red")
+     (autoplot(prsQualityPCA, data=prsQuality, colour="accepted") +
+      scale_colour_manual(values=pallete))
+   #+END_SRC
+** Contingency matrices
+   Does an introduction of some code quality issue in the PR affects its acceptance?
+   #+BEGIN_SRC R
+     introCont <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
+                    summarize(across(everything(), tibble::lst(introduced=~sum(.>0), didNotIntroduced=~sum(.==0)))))[,-1])
+     rownames(introCont) <- c("rejected", "accepted")
+
+     introContChisq <- chisq.test(introCont)
+
+     introContChisq
+     introContChisq$observed
+     round(introContChisq$expected, 2)
+   #+END_SRC
+
+   Does a fixing of some code quality issue in the PR affects its acceptance?
+   #+BEGIN_SRC R
+     fixedCont <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]<0)) %>% group_by(accepted) %>%
+                    summarize(across(everything(), tibble::lst(fixed=~sum(.>0), didNotFixed=~sum(.==0)))))[,-1])
+     rownames(fixedCont) <- c("rejected", "accepted")
+
+     fixedContChisq <- chisq.test(fixedCont)
+
+     fixedContChisq
+     fixedContChisq$observed
+     round(fixedContChisq$expected, 2)
+   #+END_SRC
+** ROC curves and AUCs
+   /Analyzed using the Python script./
+* Code quality and time to close a pull request
+** ROC curves and AUCs
+   /Analyzed using the Python script./
