@@ -2,12 +2,11 @@
 #+AUTHOR: Ondřej Kuhejda
 * Introduction
 ** Problem statement
-   - Is there some correlation between the source code quality and the pull request acceptance?
-   - Which issues/code smells affect the PR acceptance most?
-   - Is code quality impact higher in projects that are using some particular programming language?
-   - Is there a better code quality in projects which are using linters as part of their CI?
-   - Is there a better code quality in projects which are using linters as part of their build process?
-   - Does code smells lead to a longer discussion about PR?
+   - RQ_1 :: Which code issues are typically introduced by the pull requests?
+   - RQ_2 :: Are there some particular issues/code smells that affect the pull request acceptance?
+   - RQ_3 :: Is there a relationship between the source code quality and the pull request acceptance?
+   - RQ_4 :: Does code quality influence the time it takes to close a pull request?
+   - RQ_5 :: Is code quality impact higher in projects that are using some particular programming language?
 * Code quality in pull-based development
   The pull-based development model created novel ways how can developers
   interact between each other. Instead of pushing code changes (patches) into
@@ -302,9 +301,9 @@
    |                    | Number of comments        | \ding{51} |
    |--------------------+---------------------------+-----------|
 
-   Variables marked with ticks (\ding{51}) are later used as an statistical data
-   for analysis of pull request acceptance or as factors that can influence code
-   quality. Other variables (\ding{55}) are not meant to be used as an part of
+   Variables marked with ticks (\ding{51}) are factors that can possibly
+   influence code quality and they can be used for pull request acceptance
+   analysis. Other variables (\ding{55}) are not meant to be used as an part of
    an data analysis itself, but are kept here for better orientation; and some
    of them are later used by the =git-contrast= tool (in order to pull the
    commits which will be subsequently analyzed by linters).
@@ -328,12 +327,20 @@
    | Linter     | Programming languages | File extensions       |
    |------------+-----------------------+-----------------------|
    |------------+-----------------------+-----------------------|
-   | *Cppcheck* | C/C++                 | =.c=, =.cpp= and =.h= |
+   | *OCLint*   | C/C++                 | =.c=, =.cpp= and =.h= |
    | *HLint*    | Haskell               | =.hs=                 |
    | *ktlint*   | Kotlin                | =.kt= and =.kts=      |
    | *PMD*      | Java                  | =.java=               |
    | *Pylint*   | Python                | =.py=                 |
    |------------+-----------------------+-----------------------|
+
+   The most problematic was to statically analyze the C/C++ source files because
+   some linters also need the information how the source code should be
+   compiled. Luckily, this information can be usually automatically obtained
+   from the makefiles. Another problem is the speed. At first, I was using the
+   Cppcheck linter for the static analysis of C/C++ but I was forced to switch
+   to the OCLint in order to shrink the total execution time of the static
+   analysis.
 ** TODO Projects selection
    Criteria (data from 2019-06-01):
    - is in the top 150 most favorite projects written in the given language
@@ -352,9 +359,130 @@
      because PR can be also merged using several different approaches.
      - https://dl.acm.org/doi/10.1145/2597073.2597074
      - [[cite:explaratory]]
+** TODO Computational resources
 * Data analysis
+  In order to simplify analysis of retrieved data, I created the script that
+  takes multiple JSON files with the data about each individual project and
+  converts them into the CSV files. Each row in the CSV file represents some
+  pull request. This script also filters the pull requests which are not
+  suitable for the analysis --- PRs that do not contains any source code written
+  in the primary language or PRs that contained corrupted files (the linter was
+  unable to analyze those files).
+
+  The retrieved data about the pull request were subsequently analyzed in order
+  to answer my research questions.  For this analysis was used the Python
+  script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] provided by Lenurdazzi
+  et al. (this script was used for machine learning classification methods) and
+  also my script written in R. The statistical methods that were used are
+  discussed in the following paragraphs:
+
+  Research questions 1 to 4 were analyzed separately for each programming language.
+
+  *TODO:* At first, for *RQ_1*, I summarized the retrieved data for each project
+  --- I counted how many suitable pull requests were analyzed and
+  how many of them are accepted/rejected. Then for each issue individually I
+  computed how many accepted/rejected pull request introduced/fixed this issue,
+  how many times this issue occurred in some pull request etc.
+
+  - https://www.scribbr.com/statistics/statistical-tests/
+
+  *RQ_2*:
+  - classification (machine learning)
+  - machine learning while taking into account only introduced issues vs quality change
+  - correlation matrix
+
+  *RQ_3*:
+  - PCA scatterplot
+  - contingency matrices
+  - contingency matrices for PR's that contain only modified source code files vs for all of them
+  - contingency matrices separately for each project
+  - ROC curves and AUCs
+
+  *RQ_4*:
+  - regression (machine learning)
+  - correlation matrix
+
+  *RQ_5*:
+  - Compare results from previous steps.
+    - Statistically compare the parameters obtained for each programming language.
+     (check if the pull requests from different languages and retrieved parameters
+     follow the same distributions)
+  - What is the effect of the programming language on the acceptance and
+    time it takes to close a pull request?
+    - ANOVA
+    - classification (machine learning)
 * Evaluation
+  *TODO*
+** Python
+   In order to analyze the influence of code quality on the pull request
+   acceptance, the following projects from the Python ecosystem were selected:
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Python projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/python/projects_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+
+   In total, 9452 pull requests were analyzed and 73 % of these PRs was accepted.
+   Pull request were more accepted in less popular projects.
+
+   At average, one pull request introduced 5.36 issues and fixed 2.44 issues;
+   accepted pull request introduced 4.62 and fixed 1.99 issues, and rejected
+   pull request introduced 7.86 issues and fixed 4.43 on average.
+   5 % trimmed mean was used to compute these values.
+
+   The Pylint, which was used to lint those projects, classifies issues into the
+   following categories:
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Pylint issue categories}
+   \centering
+   \begingroup\footnotesize
+   \input{data/python/issue_types_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+
+   The list of issues that was fixed/introduced in the largest number of pull
+   request was dominated by the conventions.  The convention that was
+   fixed/introduced in the largest number of pull requests is
+   =missing-function-docstring= (in 37 % of PRs); also conventions
+   =invalid-name=, =line-too-long= and =consider-using-f-string= were
+   fixed/introduced in over then 20 % of pull requests. There were 15 issues
+   that were fixed/introduced in more then 10 % of PRs and 72 issues were in
+   over 1 % of PRs (out of the 222 issues which were found in the pull
+   requests).  There were 9 issues which was present in the analyzed pull
+   requests but did not influence their quality (number of these issues was not
+   changed by any pull request). 13 issues were introduced/fixed in only one
+   pull request and 10 of them are issues classified as errors. The most common
+   error is =import-error= (24 % of PRs); however, I suspect that there will be
+   a lot of false positives which aroused due to linting in the isolated
+   environment. 60 issues were fixed in more PR's then they were introduced.
+   They are 24 more PRs that fixed the warning =super-init-not-called= than the
+   PR's that introduced it.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/python/issues_appeared_in}
+   }
+   \caption{Pylint issues and \% of PRs which fixed/introduced them}
+   \end{figure}
+   #+END_EXPORT
+
+   *RQ_2:* TODO
 ** Threads to validity
+   - PR recognition (rejected PRs can be merged using another way)
+   - modified files in the PR's that are not written in the primary programming language can influence acceptance
+   - chosen projects
+   - PR's filtering
+     - linter errors
+     - limit of 500 PRs
+     - limited execution time for =git-contrast=
+     - not available PR's/repositories
+   - false positives from Linters (=import-error=, =relative-beyond-top-level=)
 * Conclusion
 ** Future work
 * Appendix
