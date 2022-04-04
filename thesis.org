@@ -225,6 +225,7 @@
    - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
 ** TODO Create table that compares already performed studies with my thesis
 * Data mining
+  *TODO*: update graph
   #+BEGIN_EXPORT latex
   \begin{figure}[htb]\centering
   \begin{tikzpicture}
@@ -267,6 +268,8 @@
   =git-contrast= is the command-line application which analyzes the code quality
   of the given pull request using the external linters. This application is
   further discussed in the following sections.
+
+  *TODO*: mention that data from REST API are not complete (GH API limit)
 ** GHTorrent database
    As stated before, the script called =gh_info.py= uses the GHTorrent database
    in order to retrieve GitHub data. GitHub REST API can be leveraged to obtain
@@ -345,6 +348,7 @@
    Criteria (data from 2019-06-01):
    - is in the top 150 most favorite projects written in the given language
    - 200+ pull requests and less then 5000
+   - https://github.com/EvanLi/Github-Ranking
    - at least 85 % of files are source files written in the given language
    - project is a program or program collection (not a book with the script etc.)
 
@@ -446,6 +450,8 @@
    \end{table}
    #+END_EXPORT
 
+   In the analyzed pull requests, Pylint detected 222 different issues.
+
    The list of issues that was fixed/introduced in the largest number of pull
    request was dominated by the conventions.  The convention that was
    fixed/introduced in the largest number of pull requests is
@@ -472,7 +478,17 @@
    \end{figure}
    #+END_EXPORT
 
-   *RQ_2:* TODO
+   The most important Pylint issue in regards of the PR acceptance is the
+   =syntax-error=.  XGBoost classifier gives this error the 1 %
+   importance. However, other classifiers consider this error less important.
+   The average importance of the =syntax-error= is only 0.4 %.
+   *TODO*: investigate the =syntax-error= in more detail
+      #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/python/issue_importance}
+   \caption{Ten most important Pylint issues}
+   \end{figure}
+   #+END_EXPORT
 ** Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
    - modified files in the PR's that are not written in the primary programming language can influence acceptance

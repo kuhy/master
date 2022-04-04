@@ -3,10 +3,11 @@
 #+PROPERTY: header-args+ :comments both
 #+PROPERTY: header-args+ :tangle "analysis.R"
 * Packages
-  Following package is needed for ``filtering'' operations:
+  Following packages are needed for data manipulation:
   #+BEGIN_SRC R
-    # install.packages("dplyr")
+    # install.packages("tidyverse")
     library("dplyr")
+    library("purrr")
   #+END_SRC
 
   This package is needed for PCA plotting:
@@ -60,7 +61,7 @@
 
      summary(prsQuality)
    #+END_SRC
-* Projects summary
+* Research Question 1
   Print the table with a summary of all projects:
   #+BEGIN_SRC R
     projects_summary <- (prs %>%
@@ -99,7 +100,7 @@
                   "Introduced issues"=mean(introduced, trim=0.05), "Fixed issues"=mean(fixed, trim=0.05)) %>%
         print(width = Inf)
   #+END_SRC
-* Importance of individual quality issues
+
   *TODO*: add information about number of projects in which issue occurred
   Summarize information about individual issues (compute maximum, minimum etc.):
   #+BEGIN_SRC R
@@ -120,6 +121,11 @@
     pdf("issues.pdf", height=75, width=25)
     grid.table(issues)
     dev.off()
+  #+END_SRC
+
+  Print the number of different issue that was detected in the PRs:
+  #+BEGIN_SRC R
+    nrow(issues)
   #+END_SRC
 
   Summarize the issue categories:
@@ -197,7 +203,34 @@
         theme(axis.ticks.x=element_blank(), axis.text.x=element_blank())
     dev.off()
   #+END_SRC
-* Does code quality affects the pull request acceptance?
+* Research Question 2
+  Import the issue importance from CSV files:
+  #+BEGIN_SRC R
+    path <- "acceptance/Importances_drop/values/"
+    issueImportance <- (lapply(list.files(path=path, pattern="*.csv"),
+                               (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
+                                                         check.names=FALSE) %>% rename_with(~sub("_ruleid.csv", "", file),
+                                                                                            Importance)))
+                       ) %>% reduce(full_join, by="Variables") %>%
+                             mutate_at("Variables", function(x) sub("results_([^_]+)_", "", x)) %>%
+                             tidyr::extract(Variables, into=c("type", "issue"), "^([^_]+)_(.*)")
+  #+END_SRC
+
+  Sort issues by their average importance and print them:
+  #+BEGIN_SRC R
+    issueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
+  #+END_SRC
+
+  Sort issues by their average importance and plot them in the barplot:
+  #+BEGIN_SRC R
+    tikz(filename="issue_importance.tex", width=4.5, height=3)
+    issueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>%
+        tidyr::gather(classifier, importance, -c(type, issue, mean)) %>% ggplot() +
+            geom_bar(aes(x=reorder(issue, mean), y=(100 * importance), fill=classifier), stat='identity') + coord_flip() +
+            labs(x="Issues", y="Importance (\\%)", fill="Classifier") + geom_hline(yintercept=0)
+    dev.off()
+  #+END_SRC
+* Research Question 3
 ** PCA scatterplot
    *TODO*: remove outliers
    #+BEGIN_SRC R
@@ -235,6 +268,8 @@
    #+END_SRC
 ** ROC curves and AUCs
    /Analyzed using the Python script./
+* Research Question 4
 * Code quality and time to close a pull request
 ** ROC curves and AUCs
    /Analyzed using the Python script./
+* Research Question 5
