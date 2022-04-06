@@ -232,29 +232,84 @@
   #+END_SRC
 * Research Question 3
 ** PCA scatterplot
-   *TODO*: remove outliers
    #+BEGIN_SRC R
-     prsQualityPCA <- prcomp(prsQuality %>% select(-accepted))
+     set.seed(135089)
+     prsSample <- prsQuality %>% sample_n(2000, replace=FALSE)
 
-     pallete = c("blue", "red")
-     (autoplot(prsQualityPCA, data=prsQuality, colour="accepted") +
-      scale_colour_manual(values=pallete))
+     acceptancePCA <- prcomp(prsSample %>% select(-accepted))
+
+     tikz(filename="acceptance_pca.tex", width=6, height=4)
+     pallete = c("red", "green")
+     (autoplot(acceptancePCA, data=prsSample, colour="accepted") + scale_colour_manual(values=pallete) +
+                                             xlim(-0.0025, 0.0025) + ylim(-0.01, 0.01) +
+      labs(colour="Accepted",
+                                                       x=paste("PC1 (", summary(acceptancePCA)$importance[2,1] * 100, "\\%)", sep=""),
+                                                       y=paste("PC2 (", summary(acceptancePCA)$importance[2,2] * 100, "\\%)", sep="")
+                                                       )
+     )
+     dev.off()
    #+END_SRC
 ** Contingency matrices
-   Does an introduction of some code quality issue in the PR affects its acceptance?
+   Define function that will be used to plot results of chi-square test of independence:
    #+BEGIN_SRC R
-     introCont <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
-                    summarize(across(everything(), tibble::lst(introduced=~sum(.>0), didNotIntroduced=~sum(.==0)))))[,-1])
-     rownames(introCont) <- c("rejected", "accepted")
-
-     introContChisq <- chisq.test(introCont)
-
-     introContChisq
-     introContChisq$observed
-     round(introContChisq$expected, 2)
+     chsqt_plot <- function(chsqt) {
+         ggplot(data=data.frame(Frequency=c(chsqt$observed[1,1], chsqt$observed[1,2], chsqt$observed[2,1], chsqt$observed[2,2],
+                                            chsqt$expected[1,1], chsqt$expected[1,2], chsqt$expected[2,1], chsqt$expected[2,2]),
+                                Value=rep(c("Observed", "Expected"), each=4),
+                                Quality=rep(c("Issue detected", "Without an issue"), times=4),
+                                Acceptance=rep(rep(c("Rejected pull requests", "Accepted pull requests"), each=2), times=2)
+                                ), aes(x=Quality, y=Frequency, fill=Value)) + geom_bar(stat="identity", position="dodge") +
+             facet_grid(~ Acceptance) + labs(x="Presence of some quality issue", y="Pull request frequency")
+     }
    #+END_SRC
 
-   Does a fixing of some code quality issue in the PR affects its acceptance?
+   Does an introduction of some code quality issue in the PR affects its acceptance?
+   #+BEGIN_SRC R
+     qualityCT <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
+                              summarize(across(everything(), tibble::lst(introduced=~sum(.>0), didNotIntroduced=~sum(.==0)))))[,-1])
+     colnames(qualityCT) <- c("Issue introduced", "Issue not introduced")
+     rownames(qualityCT) <- c("Rejected", "Accepted")
+
+     chsqt <- chisq.test(qualityCT)
+
+     chsqt
+
+     chsqt$observed
+
+     round(chsqt$expected, 2)
+
+     tikz(filename="acceptance_ct.tex", width=10, height=6)
+     chsqt_plot(chsqt)
+     dev.off()
+   #+END_SRC
+
+   Filter PRs that only modified some source code files and test them:
+   #+BEGIN_SRC R
+     qualityModCT <- data.frame((prs %>% filter(modified == prs[grepl("^modified_", names(prs))], added == 0, deleted == 0) %>%
+                                 select("accepted" | starts_with("results_")) %>%
+                                 transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
+                                 summarize(across(everything(), tibble::lst(introduced=~sum(.>0),
+                                                                            didNotIntroduced=~sum(.==0)))))[,-1]
+                                )
+     colnames(qualityModCT) <- c("Issue introduced", "Issue not introduced")
+     rownames(qualityModCT) <- c("Rejected", "Accepted")
+
+     chsqtMod <- chisq.test(qualityModCT)
+
+     chsqtMod
+
+     chsqtMod$observed
+
+     round(chsqtMod$expected, 2)
+
+     tikz(filename="acceptance_mod_ct.tex", width=10, height=6)
+     chsqt_plot(chsqtMod)
+     dev.off()
+   #+END_SRC
+
+   *TODO*: Test each project independently.
+
+   *TODO* Does a fixing of some code quality issue in the PR affects its acceptance?
    #+BEGIN_SRC R
      fixedCont <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]<0)) %>% group_by(accepted) %>%
                     summarize(across(everything(), tibble::lst(fixed=~sum(.>0), didNotFixed=~sum(.==0)))))[,-1])

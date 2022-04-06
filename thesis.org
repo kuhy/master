@@ -483,12 +483,46 @@
    importance. However, other classifiers consider this error less important.
    The average importance of the =syntax-error= is only 0.4 %.
    *TODO*: investigate the =syntax-error= in more detail
-      #+BEGIN_EXPORT latex
+   #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \input{data/python/issue_importance}
    \caption{Ten most important Pylint issues}
    \end{figure}
    #+END_EXPORT
+
+   In order to visualize the difference in quality between accepted and rejected PRs, I created PCA scatter plot:
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/python/acceptance_pca}
+   \caption{PCA scatter plot}
+   \end{figure}
+   #+END_EXPORT
+   In the PCA scatter plot, there is no visible difference between rejected and accepted pull requests.
+
+   To understand if the presence of some issue in the PR influences its acceptance, I created contingency matrices
+   and performed chi-square test of independence:
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{data/python/acceptance_ct}
+   }
+   \caption{Relation between presence of issue and PR acceptance}\label{Python_CT}
+   \end{figure}
+   #+END_EXPORT
+
+   As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of rejected pull requests which contained some defected is
+   higher then expected. The p-value of chi-square test is less then \num{2.2e-16} and therefore, the hypothesis that presence of
+   some issue and PR acceptance are independent is rejected on significance level $\alpha = 0.05$.
+
+   Pull request that are adding or removing some files has large influence on
+   code quality. If the number of removed/added files has large impact on PR
+   acceptance, then it can be a large thread to validity of the independence
+   test.  The pull request acceptance can be also influenced by quality of files
+   which were not linted (was written in non-primary language).  To eliminate
+   the risk that the test was influenced, same test was performed on pull
+   requests that only modified some source files and these files were written in the
+   primary language. The resulting p-value was \num{5.548e-10} and therefore the
+   fact that PRs introduced some code quality issues influences their acceptance.
 ** Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
    - modified files in the PR's that are not written in the primary programming language can influence acceptance
