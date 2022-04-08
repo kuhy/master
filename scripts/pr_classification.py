@@ -3,8 +3,8 @@
 # !!! DISCLAIMER !!!
 #
 # I (Ondřej Kuhejda) did not create this script.
-# This scripts was created by Lenarduzzi et al.,
-# and is distributed with CC BY 4.0 license.
+# This script was created by Lenarduzzi et al.
+# and is distributed with the CC BY 4.0 license.
 #
 # https://creativecommons.org/licenses/by/4.0/
 #
