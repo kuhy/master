@@ -206,7 +206,7 @@
 * Research Question 2
   Import the issue importance from CSV files:
   #+BEGIN_SRC R
-    path <- "acceptance/Importances_drop/values/"
+    path <- "classification/Importances_drop/values/"
     issueImportance <- (lapply(list.files(path=path, pattern="*.csv"),
                                (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
                                                          check.names=FALSE) %>% rename_with(~sub("_ruleid.csv", "", file),
