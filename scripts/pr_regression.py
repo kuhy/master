@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 
 import click
+import datetime
 import numpy as np
 import os
 import pandas
 import pickle
 
+from sklearn.ensemble import (AdaBoostRegressor,
+                              BaggingRegressor,
+                              GradientBoostingRegressor,
+                              RandomForestRegressor)
 from sklearn.inspection import permutation_importance
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import (ElasticNet, LinearRegression)
 from sklearn.metrics import (explained_variance_score,
                              mean_absolute_error,
                              mean_squared_error,
                              r2_score)
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
 
 
 def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
@@ -84,7 +90,16 @@ def cli(csv_file_path: str, output_folder_path: str):
                                                         random_state=0)
     # Define the regressors that will be used.
     regressors = [
-        (LinearRegression(n_jobs=-1), "LinearRegression")
+        (LinearRegression(n_jobs=-1), "LinearRegression"),
+        (ElasticNet(random_state=0), "ElasticNet"),
+        (DecisionTreeRegressor(random_state=0), "DecisionTree"),
+        (RandomForestRegressor(random_state=0, n_estimators=100, n_jobs=-1),
+         "RandomForest"),
+        (AdaBoostRegressor(random_state=0, n_estimators=100), "AdaBoost"),
+        (BaggingRegressor(random_state=0, n_estimators=100, n_jobs=-1),
+         "Bagging"),
+        (GradientBoostingRegressor(random_state=0, n_estimators=100),
+         "GradientBoost")
     ]
 
     # Set the output directory as working directory.
@@ -92,6 +107,8 @@ def cli(csv_file_path: str, output_folder_path: str):
 
     # Train and evaluate defined regression models.
     for (model, model_name) in regressors:
+        print(str(datetime.datetime.now()) +
+              f": Starting to train {model_name} regressor.")
         train_and_evaluate_model(X_train, X_test, y_train, y_test, cols,
                                  model, model_name)
 
