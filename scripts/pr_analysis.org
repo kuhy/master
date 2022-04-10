@@ -239,6 +239,7 @@
     dev.off()
   #+END_SRC
 * Research Question 2
+  *TODO:* extract this into the function and do it for =classification= and =classification_introduced=
   Import the issue importance from CSV files:
   #+BEGIN_SRC R
     path <- "classification/Importances_drop/values/"
@@ -322,7 +323,7 @@
 
    Filter PRs that only modified some source code files and test them:
    #+BEGIN_SRC R
-     qualityModCT <- data.frame((prs %>% filter(modified == prs[grepl("^modified_", names(prs))], added == 0, deleted == 0) %>%
+     qualityModCT <- data.frame((prs %>% filter(modified == linted_and_modified, added == 0, deleted == 0) %>%
                                  select("accepted" | starts_with("results_")) %>%
                                  transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
                                  summarize(across(everything(), tibble::lst(introduced=~sum(.>0),
@@ -361,7 +362,32 @@
      round(fixedContChisq$expected, 2)
    #+END_SRC
 ** ROC curves and AUCs
-   /Analyzed using the Python script./
+   *TODO:* extract this into the function and do it for =classification= and =classification_introduced=
+   Retrieve classifiers metrics:
+   #+BEGIN_SRC R
+     path <- "classification_introduced/Metrics/"
+     files <- list.files(path=path, pattern="*.csv")
+     classificationMetrics <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
+                                                                      check.names=FALSE)))
+     names(classificationMetrics) = lapply(files, function (file) sub("_ruleid.csv", "", file))
+     classificationMetrics <- bind_rows(classificationMetrics, .id="Classifier")
+
+     classificationMetrics
+   #+END_SRC
+
+   Plot ROC curves:
+   #+BEGIN_SRC R
+     path <- "classification_introduced/AUCs/values/"
+     files <- list.files(path=path, pattern="*.csv")
+     classificationROCs <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",", check.names=FALSE)))
+     names(classificationROCs) = (classificationMetrics %>% transmute(names=stringr::str_c(Classifier, " (AUC=",
+                                                                                           percent(AUC_mean/100), ")"))
+                                 )$names
+
+     ggplot(bind_rows(classificationROCs, .id="Classifier"), aes(x=mean_fpr, y=mean_tpr, colour=Classifier)) + geom_line() +
+         geom_abline(intercept=0, slope=1, linetype="dashed") + xlab("False Positive Rate (1 - specificity)") +
+         ylab("True Positive Rate (sensitivity)")
+   #+END_SRC
 * Research Question 4
 * Code quality and time to close a pull request
 ** ROC curves and AUCs

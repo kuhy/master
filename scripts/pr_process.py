@@ -30,6 +30,14 @@ def filter_pull_requests(project):
     for pr in project["pull_requests"]:
         pr["results"] = {linter: linter_results for (linter, linter_results)
                          in pr["results"].items() if linter == main_linter}
+        for category in ["modified", "added", "deleted"]:
+            if f"{category}_{main_linter}" in pr.keys():
+                pr[f"linted_and_{category}"] = pr[f"{category}_{main_linter}"]
+            else:
+                pr[f"linted_and_{category}"] = 0
+        for key, value in list(pr.items()):
+            if key.startswith(("modified_", "added_", "deleted_")):
+                del pr[key]
 
     # remove pull requests where parsing error occurred
     if project["language"] == "Haskell":
