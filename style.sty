@@ -26,6 +26,7 @@
 
 \usepackage{makeidx}
 \makeindex
+\usepackage{import}
 \usepackage{paralist}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -79,3 +80,9 @@
 \setminted{breaklines, fontsize=\footnotesize, numbersep=8mm}
 \BeforeBeginEnvironment{minted}{\begin{tcolorbox}}
 \AfterEndEnvironment{minted}{\end{tcolorbox}}
+\newcommand\inputTikz[2]{
+    \let\pgfimageOld\pgfimage%
+    \renewcommand{\pgfimage}[2][]{\pgfimageOld[##1]{#1/##2}}%
+    \input{#1/#2}%
+    \let\pgfimage\pgfimageOld%
+}

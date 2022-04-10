@@ -344,6 +344,8 @@
    Cppcheck linter for the static analysis of C/C++ but I was forced to switch
    to the OCLint in order to shrink the total execution time of the static
    analysis.
+
+   *TODO:* add information about versions of linters, issue categories etc.
 ** TODO Projects selection
    Criteria (data from 2019-06-01):
    - is in the top 150 most favorite projects written in the given language
@@ -382,6 +384,8 @@
 
   Research questions 1 to 4 were analyzed separately for each programming language.
 
+  *TODO:* For each test, state the rationale behind the test and assumptions about data.
+
   *TODO:* At first, for *RQ_1*, I summarized the retrieved data for each project
   --- I counted how many suitable pull requests were analyzed and
   how many of them are accepted/rejected. Then for each issue individually I
@@ -419,35 +423,30 @@
   *TODO*
 ** Python
    In order to analyze the influence of code quality on the pull request
-   acceptance, the following projects from the Python ecosystem were selected:
-   #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Python projects}
-   \centering
-   \begingroup\footnotesize
-   \input{data/python/projects_summary}
-   \endgroup
-   \end{table}
-   #+END_EXPORT
-
+   acceptance, the 20 projects from the Python ecosystem were selected.
    In total, 9452 pull requests were analyzed and 73 % of these PRs was accepted.
-   Pull request were more accepted in less popular projects.
+   Pull request were more accepted in less popular projects, as can be seen in
+   the following scatterplot:
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/python/stars_and_acceptance}
+   }
+   \caption{Stars and pull request acceptance}
+   \end{figure}
+   #+END_EXPORT
 
    At average, one pull request introduced 5.36 issues and fixed 2.44 issues;
    accepted pull request introduced 4.62 and fixed 1.99 issues, and rejected
    pull request introduced 7.86 issues and fixed 4.43 on average.
    5 % trimmed mean was used to compute these values.
-
-   The Pylint, which was used to lint those projects, classifies issues into the
-   following categories:
    #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Pylint issue categories}
-   \centering
-   \begingroup\footnotesize
-   \input{data/python/issue_types_summary}
-   \endgroup
-   \end{table}
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \inputTikz{data/python/}{pr_quality_heat_map}
+   }
+   \caption{Pull requests and quality}
+   \end{figure}
    #+END_EXPORT
 
    In the analyzed pull requests, Pylint detected 222 different issues.
@@ -472,7 +471,7 @@
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
-     \input{data/python/issues_appeared_in}
+     \input{data/python/issues_types_and_prs}
    }
    \caption{Pylint issues and \% of PRs which fixed/introduced them}
    \end{figure}
@@ -511,8 +510,9 @@
    #+END_EXPORT
 
    As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of rejected pull requests which contained some defected is
-   higher then expected. The p-value of chi-square test is less then \num{2.2e-16} and therefore, the hypothesis that presence of
-   some issue and PR acceptance are independent is rejected on significance level $\alpha = 0.05$.
+   higher then expected. For chi-square test, $p < \num{2.2e-16}$ and therefore, the hypothesis that presence of
+   some issue and PR acceptance are independent is rejected on significance level $\alpha = 0.05$. However,
+   the Cramer's $\phi_c \approx 0.092$ therefore the association is weak.
 
    Pull request that are adding or removing some files has large influence on
    code quality. If the number of removed/added files has large impact on PR
@@ -521,8 +521,12 @@
    which were not linted (was written in non-primary language).  To eliminate
    the risk that the test was influenced, same test was performed on pull
    requests that only modified some source files and these files were written in the
-   primary language. The resulting p-value was \num{5.548e-10} and therefore the
+   primary language. For this test, $p < \num{5.548e-10}$ and therefore the
    fact that PRs introduced some code quality issues influences their acceptance.
+   Similarly to the previous test, the $\phi_c \approx 0.087$, therefore the
+   relation between presence of same issue and PR acceptance is small.
+
+   *TODO:* Adjust p-value when doing multiple tests.
 ** Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
    - modified files in the PR's that are not written in the primary programming language can influence acceptance
@@ -536,6 +540,26 @@
 * Conclusion
 ** Future work
 * Appendix
+** Projects
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Python projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/python/projects_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+** Issue categories
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Pylint issue categories}
+   \centering
+   \begingroup\footnotesize
+   \input{data/python/issue_types_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
 * Setup :noexport:
 #+LATEX_CLASS: fithesis4
 #+LATEX_CLASS_OPTIONS: [digital,oneside,oldtable,nolof,nolot,nocover]

@@ -39,6 +39,12 @@
     # install.packages("tikzDevice")
     library("tikzDevice")
   #+END_SRC
+
+  This library is used to calculate effect size (Cramer's V):
+  #+BEGIN_SRC R
+    install.packages("lsr")
+    library("lsr")
+  #+END_SRC
 * Data preprocessing
 ** Dataset loading
    #+BEGIN_SRC R
@@ -78,6 +84,25 @@
                                                         "p{1.5cm}", "p{1.5cm}", "p{1cm}|")),
           file="projects_summary.tex", include.rownames=FALSE,
           add.to.row=list(pos=list(0), command=c("\\hline")), floating=FALSE)
+  #+END_SRC
+
+  Print the scatter plot between number of stars and percentage of accepted PRs:
+  #+BEGIN_SRC R
+    tikz(filename="stars_and_acceptance.tex", width=10, height=6)
+    ggplot(projects_summary %>% mutate_at("Accepted", function(x) readr::parse_number(x)), aes(x=Stars, y=Accepted)) + geom_() +
+        geom_smooth(method='lm') + labs(y="Accepted pull requests (\\%)")
+    dev.off()
+  #+END_SRC
+
+  Print the heat map of fixed and introduced issues (PR quality overview):
+  #+BEGIN_SRC R
+    tikz(filename="pr_quality_heat_map.tex", width=10, height=10)
+    ggplot(prs %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x < 0, 0L, .x))),
+                          fixed=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x > 0, 0L, -.x)))),
+           aes(x=introduced, y=fixed)) + xlim(-11,210) + ylim(-11,210) + geom_bin2d(binwidth=10) +
+        scale_fill_gradient(trans="log10") + labs(x="Introduced issues", y="Fixed issues",
+                                                  fill="Number of\npull requests")
+    dev.off()
   #+END_SRC
 
   Print the summary about all pull request of the given language:
@@ -203,6 +228,16 @@
         theme(axis.ticks.x=element_blank(), axis.text.x=element_blank())
     dev.off()
   #+END_SRC
+
+  Create a scatter plot with issue types on the x-axis and number of pull request in which the issues were
+  fixed/introduced on the y-axis:
+  #+BEGIN_SRC R
+    tikz(filename="issues_types_and_prs.tex", width=7, height=5)
+    issues %>% transmute(type, appeared_in=100*(rejected.appeared_in + accepted.appeared_in)/nrow(prs)) %>%
+        ggplot(aes(x=reorder(type, desc(appeared_in), mean), y=appeared_in)) + labs(x="Issue types (sorted by y-axis mean)",
+                                                                                    y="Pull Requests (\\%)") + geom_point()
+    dev.off()
+  #+END_SRC
 * Research Question 2
   Import the issue importance from CSV files:
   #+BEGIN_SRC R
@@ -278,6 +313,8 @@
 
      round(chsqt$expected, 2)
 
+     cramersV(qualityCT)
+
      tikz(filename="acceptance_ct.tex", width=10, height=6)
      chsqt_plot(chsqt)
      dev.off()
@@ -301,6 +338,8 @@
      chsqtMod$observed
 
      round(chsqtMod$expected, 2)
+
+     cramersV(qualityModCT)
 
      tikz(filename="acceptance_mod_ct.tex", width=10, height=6)
      chsqt_plot(chsqtMod)
