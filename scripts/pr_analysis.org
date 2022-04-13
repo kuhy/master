@@ -1,7 +1,7 @@
 #+TITLE: Pull request analysis
 #+AUTHOR: Ondřej Kuhejda
 #+PROPERTY: header-args+ :comments both
-#+PROPERTY: header-args+ :tangle "analysis.R"
+#+PROPERTY: header-args+ :tangle "pr_analysis.R"
 * Packages
   Following packages are needed for data manipulation:
   #+BEGIN_SRC R
@@ -42,8 +42,14 @@
 
   This library is used to calculate effect size (Cramer's V):
   #+BEGIN_SRC R
-    install.packages("lsr")
+    # install.packages("lsr")
     library("lsr")
+  #+END_SRC
+
+  This is needed to be able to use variables instead of column names when using =dplyr=:
+  #+BEGIN_SRC R
+    # install.packages("lazyeval")
+    library("lazyeval")
   #+END_SRC
 * Data preprocessing
 ** Dataset loading
@@ -126,7 +132,6 @@
         print(width = Inf)
   #+END_SRC
 
-  *TODO*: add information about number of projects in which issue occurred
   Summarize information about individual issues (compute maximum, minimum etc.):
   #+BEGIN_SRC R
     (issues <- prsQuality %>% group_by(accepted) %>% summarise(across(everything(),
@@ -151,6 +156,15 @@
   Print the number of different issue that was detected in the PRs:
   #+BEGIN_SRC R
     nrow(issues)
+  #+END_SRC
+
+  Print the projects that introduced the issue:
+  #+BEGIN_SRC R
+    for (issue in issues$issue) {
+        print(issue)
+        column_name <- names(prs)[grep(paste("_", issue, sep=""), names(prs))]
+        prs %>% filter_(interp(~v > 0, v=as.name(column_name))) %>% distinct(project_name) %>% print
+    }
   #+END_SRC
 
   Summarize the issue categories:
@@ -239,33 +253,49 @@
     dev.off()
   #+END_SRC
 * Research Question 2
-  *TODO:* extract this into the function and do it for =classification= and =classification_introduced=
   Import the issue importance from CSV files:
   #+BEGIN_SRC R
-    path <- "classification/Importances_drop/values/"
-    issueImportance <- (lapply(list.files(path=path, pattern="*.csv"),
-                               (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
-                                                         check.names=FALSE) %>% rename_with(~sub("_ruleid.csv", "", file),
-                                                                                            Importance)))
-                       ) %>% reduce(full_join, by="Variables") %>%
-                             mutate_at("Variables", function(x) sub("results_([^_]+)_", "", x)) %>%
-                             tidyr::extract(Variables, into=c("type", "issue"), "^([^_]+)_(.*)")
+    import_issue_importance <- function(path) {
+        (lapply(list.files(path=path, pattern="*.csv"),
+               (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
+                                         check.names=FALSE) %>% rename_with(~sub("_ruleid.csv", "", file),
+                                                                            Importance)))
+        ) %>% reduce(full_join, by="Variables") %>%
+              mutate_at("Variables", function(x) sub("results_([^_]+)_", "", x)) %>%
+              tidyr::extract(Variables, into=c("type", "issue"), "^([^_]+)_(.*)")
+    }
+
+    issueImportance <- import_issue_importance("classification/Importances_drop/values/")
+
+    introducedIssueImportance <- import_issue_importance("classification_introduced/Importances_drop/values/")
   #+END_SRC
 
   Sort issues by their average importance and print them:
   #+BEGIN_SRC R
     issueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
+
+    introducedIssueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
   #+END_SRC
 
   Sort issues by their average importance and plot them in the barplot:
   #+BEGIN_SRC R
+    plot_issue_importance <- function(issue_importance) {
+        issue_importance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>%
+            tidyr::gather(classifier, importance, -c(type, issue, mean)) %>% ggplot() +
+                geom_bar(aes(x=reorder(issue, mean), y=(100 * importance), fill=classifier), stat='identity') + coord_flip() +
+                labs(x="Issues", y="Importance (\\%)", fill="Classifier") + geom_hline(yintercept=0)
+    }
+
     tikz(filename="issue_importance.tex", width=4.5, height=3)
-    issueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>%
-        tidyr::gather(classifier, importance, -c(type, issue, mean)) %>% ggplot() +
-            geom_bar(aes(x=reorder(issue, mean), y=(100 * importance), fill=classifier), stat='identity') + coord_flip() +
-            labs(x="Issues", y="Importance (\\%)", fill="Classifier") + geom_hline(yintercept=0)
+    plot_issue_importance(issueImportance)
     dev.off()
+
+    plot_issue_importance(issueImportance)
+
+    plot_issue_importance(introducedIssueImportance)
   #+END_SRC
+
+  *TODO:* compare importance of issues (introduced vs fixed/introduced) using some statistical methods
 * Research Question 3
 ** PCA scatterplot
    #+BEGIN_SRC R
@@ -286,6 +316,18 @@
      dev.off()
    #+END_SRC
 ** Contingency matrices
+   Define function for transforming the data into the contingency matrix:
+   #+BEGIN_SRC R
+     to_contingency_table <- function(prs_data) {
+         ct <- data.frame((prs_data %>% select("accepted" | starts_with("results_")) %>%
+                           transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
+                           summarize(across(everything(), tibble::lst(introduced=~sum(.>0), didNotIntroduced=~sum(.==0)))))[,-1])
+         colnames(ct) <- c("Issue introduced", "Issue not introduced")
+         rownames(ct) <- c("Rejected", "Accepted")
+         ct
+     }
+   #+END_SRC
+
    Define function that will be used to plot results of chi-square test of independence:
    #+BEGIN_SRC R
      chsqt_plot <- function(chsqt) {
@@ -299,55 +341,58 @@
      }
    #+END_SRC
 
+   Define function for printing chi-square test:
+   #+BEGIN_SRC R
+     chsqt_print <- function(ct_name, ct) {
+         print(ct_name)
+         chsqtType <- chisq.test(ct)
+         print(chsqtType)
+         print("Observed:")
+         print(chsqtType$observed)
+         print("Expected:")
+         print(chsqtType$expected)
+         print(cramersV(ct))
+         print(paste(rep("-", times=80), collapse=""))
+     }
+   #+END_SRC
+
    Does an introduction of some code quality issue in the PR affects its acceptance?
    #+BEGIN_SRC R
-     qualityCT <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
-                              summarize(across(everything(), tibble::lst(introduced=~sum(.>0), didNotIntroduced=~sum(.==0)))))[,-1])
-     colnames(qualityCT) <- c("Issue introduced", "Issue not introduced")
-     rownames(qualityCT) <- c("Rejected", "Accepted")
+     qualityCT <- to_contingency_table(prs)
 
-     chsqt <- chisq.test(qualityCT)
-
-     chsqt
-
-     chsqt$observed
-
-     round(chsqt$expected, 2)
-
-     cramersV(qualityCT)
+     chsqt_print("All PRs", qualityCT)
 
      tikz(filename="acceptance_ct.tex", width=10, height=6)
-     chsqt_plot(chsqt)
+     chsqt_plot(chisq.test(qualityCT))
      dev.off()
    #+END_SRC
 
    Filter PRs that only modified some source code files and test them:
    #+BEGIN_SRC R
-     qualityModCT <- data.frame((prs %>% filter(modified == linted_and_modified, added == 0, deleted == 0) %>%
-                                 select("accepted" | starts_with("results_")) %>%
-                                 transmute(accepted, issueTypes=rowSums(.[-1]>0)) %>% group_by(accepted) %>%
-                                 summarize(across(everything(), tibble::lst(introduced=~sum(.>0),
-                                                                            didNotIntroduced=~sum(.==0)))))[,-1]
-                                )
-     colnames(qualityModCT) <- c("Issue introduced", "Issue not introduced")
-     rownames(qualityModCT) <- c("Rejected", "Accepted")
+     qualityModCT <- to_contingency_table(prs %>% filter(modified == linted_and_modified, added == 0, deleted == 0))
 
-     chsqtMod <- chisq.test(qualityModCT)
-
-     chsqtMod
-
-     chsqtMod$observed
-
-     round(chsqtMod$expected, 2)
-
-     cramersV(qualityModCT)
+     chsqt_print("PR's that only modified some source code files", qualityModCT)
 
      tikz(filename="acceptance_mod_ct.tex", width=10, height=6)
-     chsqt_plot(chsqtMod)
+     chsqt_plot(chisq.test(qualityModCT))
      dev.off()
    #+END_SRC
 
-   *TODO*: Test each project independently.
+   Test each issue category independently:
+   #+BEGIN_SRC R
+     for (type in unique(issues$type)) {
+         chsqt_print(type, to_contingency_table(prs %>% select(accepted, contains(paste("_", type, "_", sep="")))))
+     }
+   #+END_SRC
+
+   Test each project independently:
+   #+BEGIN_SRC R
+     for (project in unique(prs$project_name)) {
+         chsqt_print(project, to_contingency_table(prs %>% filter(project_name == project)))
+     }
+   #+END_SRC
+
+   *TODO*: Do all tests for filtered/unfiltered PR's.
 
    *TODO* Does a fixing of some code quality issue in the PR affects its acceptance?
    #+BEGIN_SRC R
@@ -362,34 +407,53 @@
      round(fixedContChisq$expected, 2)
    #+END_SRC
 ** ROC curves and AUCs
-   *TODO:* extract this into the function and do it for =classification= and =classification_introduced=
    Retrieve classifiers metrics:
    #+BEGIN_SRC R
-     path <- "classification_introduced/Metrics/"
-     files <- list.files(path=path, pattern="*.csv")
-     classificationMetrics <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",",
-                                                                      check.names=FALSE)))
-     names(classificationMetrics) = lapply(files, function (file) sub("_ruleid.csv", "", file))
-     classificationMetrics <- bind_rows(classificationMetrics, .id="Classifier")
+     import_classification_metrics <- function(path) {
+         files <- list.files(path=path, pattern="*.csv")
+         metrics <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",", check.names=FALSE)))
+         names(metrics) = lapply(files, function (file) sub("_ruleid.csv", "", file))
+         bind_rows(metrics, .id="Classifier")
+     }
+
+     classificationMetrics <- import_classification_metrics("classification/Metrics/")
 
      classificationMetrics
+
+     classificationMetricsIntroduced <- import_classification_metrics("classification_introduced/Metrics/")
+
+     classificationMetricsIntroduced
+   #+END_SRC
+
+   Import ROC curves:
+   #+BEGIN_SRC R
+     import_roc_curves <- function(path, metrics) {
+         files <- list.files(path=path, pattern="*.csv")
+         rocs <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",", check.names=FALSE)))
+         names(rocs) = (metrics %>% transmute(names=stringr::str_c(Classifier, " (AUC=", percent(AUC_mean/100), ")")))$names
+         rocs
+     }
+
+     classificationROCs <- import_roc_curves("classification/AUCs/values/", classificationMetrics)
+
+     classificationIntroducedROCs <- import_roc_curves("classification_introduced/AUCs/values/", classificationMetricsIntroduced)
    #+END_SRC
 
    Plot ROC curves:
    #+BEGIN_SRC R
-     path <- "classification_introduced/AUCs/values/"
-     files <- list.files(path=path, pattern="*.csv")
-     classificationROCs <- lapply(files, (function (file) read.csv(paste(path, file, sep=""), header=TRUE, sep = ",", check.names=FALSE)))
-     names(classificationROCs) = (classificationMetrics %>% transmute(names=stringr::str_c(Classifier, " (AUC=",
-                                                                                           percent(AUC_mean/100), ")"))
-                                 )$names
+     plot_roc_curves <- function(rocs) {
+         ggplot(bind_rows(rocs, .id="Classifier"), aes(x=mean_fpr, y=mean_tpr, colour=Classifier)) + geom_line() +
+             geom_abline(intercept=0, slope=1, linetype="dashed") + xlab("False Positive Rate (1 - specificity)") +
+             ylab("True Positive Rate (sensitivity)")
+     }
 
-     ggplot(bind_rows(classificationROCs, .id="Classifier"), aes(x=mean_fpr, y=mean_tpr, colour=Classifier)) + geom_line() +
-         geom_abline(intercept=0, slope=1, linetype="dashed") + xlab("False Positive Rate (1 - specificity)") +
-         ylab("True Positive Rate (sensitivity)")
+     plot_roc_curves(classificationROCs)
+
+     plot_roc_curves(classificationIntroducedROCs)
    #+END_SRC
+
+  *TODO:* compare ROCs (introduced vs fixed/introduced) using some statistical methods
 * Research Question 4
-* Code quality and time to close a pull request
-** ROC curves and AUCs
-   /Analyzed using the Python script./
+  *TODO:* import results
+  *TODO:* compare regression results (introduced vs fixed/introduced) using some statistical methods
 * Research Question 5

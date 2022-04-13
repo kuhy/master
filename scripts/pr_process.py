@@ -15,7 +15,7 @@ import pathlib
 
 def filter_pull_requests(project):
     """Remove pull request that do not change any source code files."""
-    main_linter = {"C": "OCLint", "C++": "OCLint", "Haskell": "HLint",
+    main_linter = {"C": "flawfinder", "C++": "flawfinder", "Haskell": "HLint",
                    "Java": "PMD", "Kotlin": "ktlint", "Python": "Pylint"
                    }[project["language"]]
 
@@ -46,6 +46,10 @@ def filter_pull_requests(project):
                                     not any(issue.startswith("Parse-error")
                                             for issue
                                             in pr["results"]["HLint"].keys())]
+
+    # merge C and C++ projects into one category
+    if project["language"] == "C" or project["language"] == "C++":
+        project["language"] = "C/C++"
 
 
 def project_to_pull_requests(project):
@@ -107,10 +111,11 @@ def cli(path: str):
             language_prs[project["language"]] = []
         language_prs[project["language"]].extend(prs)
         save_dol_as_csv(lod_to_dol(prs), "csv/{}/{}.csv".format(
-            project["language"], project["name"].split("/")[1]))
+            project["language"].replace('/', '_'),
+            project["name"].split('/')[1]))
     for language in language_prs.keys():
         save_dol_as_csv(lod_to_dol(language_prs[language]),
-                        f"csv/{language}.csv")
+                        "csv/" + language.replace('/', '_') + ".csv")
 
 
 if __name__ == "__main__":

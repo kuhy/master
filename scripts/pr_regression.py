@@ -68,10 +68,12 @@ def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
 
 
 @click.command()
+@click.option('--ignore-fixed-issues', is_flag=True)
 @click.argument("csv_file_path", type=click.Path(exists=True, dir_okay=False))
 @click.argument("output_folder_path", type=click.Path(exists=True,
                                                       file_okay=False))
-def cli(csv_file_path: str, output_folder_path: str):
+def cli(csv_file_path: str, output_folder_path: str,
+        ignore_fixed_issues: bool):
     # Import the dataset.
     df = pandas.read_csv(csv_file_path)
     df = df.drop(columns=[column for column in list(df) if not
@@ -79,8 +81,13 @@ def cli(csv_file_path: str, output_folder_path: str):
                            column.startswith("results_"))])
 
     cols = [c for c in df.columns if "results_" in c]
+
     X = df[cols]
     X = np.array(X)
+
+    if ignore_fixed_issues:
+        # Use only data about introduced issues
+        X = X.clip(min=0)
 
     y = df["time_opened"]
     y = np.array(y)

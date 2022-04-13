@@ -480,14 +480,22 @@
    The most important Pylint issue in regards of the PR acceptance is the
    =syntax-error=.  XGBoost classifier gives this error the 1 %
    importance. However, other classifiers consider this error less important.
-   The average importance of the =syntax-error= is only 0.4 %.
-   *TODO*: investigate the =syntax-error= in more detail
+   The average importance of the =syntax-error= is only 0.4 %.  The syntax error
+   was introduced in 17 projects. At average, rejected pull request introduced
+   =0.027= syntax errors, and average accepted pull request even fixed =0.001=
+   syntax errors.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \input{data/python/issue_importance}
    \caption{Ten most important Pylint issues}
    \end{figure}
    #+END_EXPORT
+
+   When the fixed issues were not considered (only introduced issues), the list
+   of the most important issues looked differently. On the other hand, there
+   are some issues that appeared in top 10 in both lists: =syntax-error=,
+   =protected-access= and =unused-import=. The =syntax-error= is considered
+   as the most important issue by both methods.
 
    In order to visualize the difference in quality between accepted and rejected PRs, I created PCA scatter plot:
    #+BEGIN_EXPORT latex
@@ -527,8 +535,19 @@
    relation between presence of same issue and PR acceptance is small.
 
    *TODO:* Adjust p-value when doing multiple tests.
+
+   *TODO:* evaluate all chi-square tests (projects, issue types)
+
+   The quality of the code does not seem to have an effect on the time it takes to close a pull request.
+   All of the trained regression models have negative $R^2$ score (when evaluated on the test set).
+   This means that trained models are worse at predicting the time than a constant (mean value).
+** Java
+** Kotlin
+** Haskell
+** C/C++
 ** Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
+     - manually inspect some randomly selected PRs
    - modified files in the PR's that are not written in the primary programming language can influence acceptance
    - chosen projects
    - PR's filtering
@@ -550,6 +569,33 @@
    \endgroup
    \end{table}
    #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Java projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/java/projects_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Kotlin projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/kotlin/projects_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{Haskell projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/haskell/projects_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
 ** Issue categories
    #+BEGIN_EXPORT latex
    \begin{table}[htbp]
@@ -557,6 +603,15 @@
    \centering
    \begingroup\footnotesize
    \input{data/python/issue_types_summary}
+   \endgroup
+   \end{table}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{table}[htbp]
+   \caption{PMD issue categories}
+   \centering
+   \begingroup\footnotesize
+   \input{data/java/issue_types_summary}
    \endgroup
    \end{table}
    #+END_EXPORT
