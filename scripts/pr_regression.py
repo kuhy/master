@@ -68,12 +68,19 @@ def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
 
 
 @click.command()
+@click.option('--only-introduced-issues', "-i", is_flag=True)
+@click.option('--only-fixed-issues', "-f", is_flag=True)
 @click.option('--number-of-cores', "-c", type=int, default=3)
 @click.argument("csv_file_path", type=click.Path(exists=True, dir_okay=False))
 @click.argument("output_folder_path", type=click.Path(exists=True,
                                                       file_okay=False))
 def cli(csv_file_path: str, output_folder_path: str,
-        ignore_fixed_issues: bool, number_of_cores: int):
+        only_introduced_issues: bool, only_fixed_issues: bool,
+        number_of_cores: int):
+    if only_introduced_issues and only_fixed_issues:
+        raise click.UsageError("Flags '--only_introduced_issues' and "
+                               "'--only_fixed_issues' are mutually exclusive.")
+
     # Import the dataset.
     df = pandas.read_csv(csv_file_path)
     df = df.drop(columns=[column for column in list(df) if not
@@ -85,9 +92,10 @@ def cli(csv_file_path: str, output_folder_path: str,
     X = df[cols]
     X = np.array(X)
 
-    if ignore_fixed_issues:
-        # Use only data about introduced issues
+    if only_introduced_issues:
         X = X.clip(min=0)
+    if only_fixed_issues:
+        X = X.clip(max=0)
 
     y = df["time_opened"]
     y = np.array(y)
