@@ -47,10 +47,7 @@ import matplotlib
 matplotlib.use("PDF")
 
 
-num_cores = multiprocessing.cpu_count()
-
-
-def cross_validate_and_plot(clf, X, y, column_names, name):
+def cross_validate_and_plot(clf, X, y, column_names, name, number_of_cores):
     num_folds = 5
 
     cv = StratifiedKFold(n_splits=num_folds)
@@ -183,7 +180,7 @@ def cross_validate_and_plot(clf, X, y, column_names, name):
             n.append(m)
 
         # run drop-column function in parallel
-        Parallel(n_jobs=num_cores, verbose=10)(
+        Parallel(n_jobs=number_of_cores, verbose=10)(
             delayed(drop_column)(col) for col in range(P))
 
         # Importance is incremented by the drop in accuracy:
@@ -390,11 +387,12 @@ def make_sure_folder_exists(path):
 
 @click.command()
 @click.option('--ignore-fixed-issues', is_flag=True)
+@click.option('--number-of-cores', "-c", type=int, default=3)
 @click.argument("csv_file_path", type=click.Path(exists=True, dir_okay=False))
 @click.argument("output_folder_path", type=click.Path(exists=True,
                                                       file_okay=False))
 def cli(csv_file_path: str, output_folder_path: str,
-        ignore_fixed_issues: bool):
+        ignore_fixed_issues: bool, number_of_cores: int):
     start_time = time.time()
 
     # Read in data
@@ -432,18 +430,20 @@ def cli(csv_file_path: str, output_folder_path: str,
 
     # Define classifiers to try: (clf, name) pairs
     classifiers = [
-        (LogisticRegression(C=1, penalty="l1", solver="liblinear"), "LogisticRegression"),
-        (RandomForestClassifier(n_estimators=100,
-                                n_jobs=-1, random_state=0), "RandomForest"),
-        (GradientBoostingClassifier(
-            n_estimators=100, random_state=0), "GradientBoost"),
+        (LogisticRegression(C=1, penalty="l1", solver="liblinear"),
+         "LogisticRegression"),
+        (RandomForestClassifier(n_estimators=100, n_jobs=number_of_cores,
+                                random_state=0), "RandomForest"),
+        (GradientBoostingClassifier(n_estimators=number_of_cores,
+                                    random_state=0), "GradientBoost"),
         (ExtraTreesClassifier(n_estimators=100,
                               random_state=0), "ExtraTrees"),
         (DecisionTreeClassifier(random_state=0), "DecisionTrees"),
-        (BaggingClassifier(n_estimators=100,
-                           n_jobs=-1, random_state=0), "Bagging"),
+        (BaggingClassifier(n_estimators=100, n_jobs=number_of_cores,
+                           random_state=0), "Bagging"),
         (AdaBoostClassifier(n_estimators=100, random_state=0), "AdaBoost"),
-        (XGBClassifier(n_estimators=100, n_jobs=-1, randomstate=0), "XGBoost")
+        (XGBClassifier(n_estimators=100, n_jobs=number_of_cores,
+                       randomstate=0), "XGBoost")
     ]
 
     # Loop over each and crossvalidate
@@ -453,8 +453,8 @@ def cli(csv_file_path: str, output_folder_path: str,
 
     for clf, name in classifiers:
         print("Evaluating %s classifier (ruleid)" % name)
-        fpr, tpr = cross_validate_and_plot(
-            clf, X, y, cols, name + "_ruleid")
+        fpr, tpr = cross_validate_and_plot(clf, X, y, cols, name + "_ruleid",
+                                           number_of_cores)
 
     end_time = time.time()
     execution_time = end_time - start_time

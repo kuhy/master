@@ -68,12 +68,12 @@ def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
 
 
 @click.command()
-@click.option('--ignore-fixed-issues', is_flag=True)
+@click.option('--number-of-cores', "-c", type=int, default=3)
 @click.argument("csv_file_path", type=click.Path(exists=True, dir_okay=False))
 @click.argument("output_folder_path", type=click.Path(exists=True,
                                                       file_okay=False))
 def cli(csv_file_path: str, output_folder_path: str,
-        ignore_fixed_issues: bool):
+        ignore_fixed_issues: bool, number_of_cores: int):
     # Import the dataset.
     df = pandas.read_csv(csv_file_path)
     df = df.drop(columns=[column for column in list(df) if not
@@ -97,14 +97,14 @@ def cli(csv_file_path: str, output_folder_path: str,
                                                         random_state=0)
     # Define the regressors that will be used.
     regressors = [
-        (LinearRegression(n_jobs=-1), "LinearRegression"),
+        (LinearRegression(n_jobs=number_of_cores), "LinearRegression"),
         (ElasticNet(random_state=0), "ElasticNet"),
         (DecisionTreeRegressor(random_state=0), "DecisionTree"),
-        (RandomForestRegressor(random_state=0, n_estimators=100, n_jobs=-1),
-         "RandomForest"),
+        (RandomForestRegressor(random_state=0, n_estimators=100,
+                               n_jobs=number_of_cores), "RandomForest"),
         (AdaBoostRegressor(random_state=0, n_estimators=100), "AdaBoost"),
-        (BaggingRegressor(random_state=0, n_estimators=100, n_jobs=-1),
-         "Bagging"),
+        (BaggingRegressor(random_state=0, n_estimators=100,
+                          n_jobs=number_of_cores), "Bagging"),
         (GradientBoostingRegressor(random_state=0, n_estimators=100),
          "GradientBoost")
     ]
