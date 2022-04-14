@@ -570,13 +570,13 @@
    \end{table}
    #+END_EXPORT
    #+BEGIN_EXPORT latex
-   % \begin{table}[htbp]
-   % \caption{Java projects}
-   % \centering
-   % \begingroup\footnotesize
-   % \input{data/java/projects_summary}
-   % \endgroup
-   % \end{table}
+   \begin{table}[htbp]
+   \caption{Java projects}
+   \centering
+   \begingroup\footnotesize
+   \input{data/java/projects_summary}
+   \endgroup
+   \end{table}
    #+END_EXPORT
    #+BEGIN_EXPORT latex
    \begin{table}[htbp]
@@ -616,13 +616,13 @@
    \end{table}
    #+END_EXPORT
    #+BEGIN_EXPORT latex
-   % \begin{table}[htbp]
-   % \caption{PMD issue categories}
-   % \centering
-   % \begingroup\footnotesize
-   % \input{data/java/issue_types_summary}
-   % \endgroup
-   % \end{table}
+   \begin{table}[htbp]
+   \caption{PMD issue categories}
+   \centering
+   \begingroup\footnotesize
+   \input{data/java/issue_types_summary}
+   \endgroup
+   \end{table}
    #+END_EXPORT
 * Setup :noexport:
 #+LATEX_CLASS: fithesis4
