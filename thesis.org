@@ -542,9 +542,97 @@
    All of the trained regression models have negative $R^2$ score (when evaluated on the test set).
    This means that trained models are worse at predicting the time than a constant (mean value).
 ** Java
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/java/stars_and_acceptance}
+   }
+   \caption{Stars and pull request acceptance}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \inputTikz{data/java/}{pr_quality_heat_map}
+   }
+   \caption{Pull requests and quality}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/java/issues_types_and_prs}
+   }
+   \caption{PMD issues and \% of PRs which fixed/introduced them}
+   \end{figure}
+   #+END_EXPORT
 ** Kotlin
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/kotlin/stars_and_acceptance}
+   }
+   \caption{Stars and pull request acceptance}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \inputTikz{data/kotlin/}{pr_quality_heat_map}
+   }
+   \caption{Pull requests and quality}
+   \end{figure}
+   #+END_EXPORT
 ** Haskell
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/haskell/stars_and_acceptance}
+   }
+   \caption{Stars and pull request acceptance}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \inputTikz{data/haskell/}{pr_quality_heat_map}
+   }
+   \caption{Pull requests and quality}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/haskell/issues_types_and_prs}
+   }
+   \caption{HLint issues and \% of PRs which fixed/introduced them}
+   \end{figure}
+   #+END_EXPORT
 ** C/C++
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/c_cpp/stars_and_acceptance}
+   }
+   \caption{Stars and pull request acceptance}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \inputTikz{data/c_cpp/}{pr_quality_heat_map}
+   }
+   \caption{Pull requests and quality}
+   \end{figure}
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth + 2cm}{!}{%
+     \input{data/c_cpp/issues_types_and_prs}
+   }
+   \caption{flawfinder issues and \% of PRs which fixed/introduced them}
+   \end{figure}
+   #+END_EXPORT
 ** Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
      - manually inspect some randomly selected PRs

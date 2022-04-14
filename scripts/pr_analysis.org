@@ -95,7 +95,7 @@
   Print the scatter plot between number of stars and percentage of accepted PRs:
   #+BEGIN_SRC R
     tikz(filename="stars_and_acceptance.tex", width=10, height=6)
-    ggplot(projects_summary %>% mutate_at("Accepted", function(x) readr::parse_number(x)), aes(x=Stars, y=Accepted)) + geom_() +
+    ggplot(projects_summary %>% mutate_at("Accepted", function(x) readr::parse_number(x)), aes(x=Stars, y=Accepted)) + geom_point() +
         geom_smooth(method='lm') + labs(y="Accepted pull requests (\\%)")
     dev.off()
   #+END_SRC
