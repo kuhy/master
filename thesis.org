@@ -542,6 +542,13 @@
    All of the trained regression models have negative $R^2$ score (when evaluated on the test set).
    This means that trained models are worse at predicting the time than a constant (mean value).
 ** Java
+   The next programming language that was analyzed is Java. In total, the 8887
+   pull requests were linted and the 73 % of these pull request were accepted.
+   At average, the one pull request introduced 20 new PMD issues, but
+   at the same time, also fixed 18 other issues.
+
+   Similarly to the Python projects, the pull request from the less popular project
+   were more likely to be accepted than pull request from more popular projects.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -550,6 +557,12 @@
    \caption{Stars and pull request acceptance}
    \end{figure}
    #+END_EXPORT
+
+   Only 1366 pull requests (from the total of 8887 pull requests) did not change
+   the quality of the source code (did not fixed nor introduced some PMD issue).
+   The PMD linter was able to detect 253 different issues in the given pull requests.
+   Most of the introduced issues were issues related to the code style. In total,
+   all of the pull requests introduced over the million of code style issues.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -558,15 +571,35 @@
    \caption{Pull requests and quality}
    \end{figure}
    #+END_EXPORT
+
+   The issue that was introduced in the largest number of pull requests is
+   =CommentRequired= (documentation issue).  Another frequent issues are
+   =LocalVariableCouldBeFinal=, =MethodArgumentCouldBeFinal= (code style issues)
+   and =LawOfDemeter= (issue in code design). These issues are the only issues
+   that was introduced in more than 3000 pull requests. Similarly, the list of issues
+   that was fixed in the largest number of pull request is dominated by the
+   very same issues.
+
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
      \input{data/java/issues_types_and_prs}
    }
-   \caption{PMD issues and \% of PRs which fixed/introduced them}
+   \caption{PMD issues and \% of PRs which fixed/introduced them}\label{PMD_issues_prs}
    \end{figure}
    #+END_EXPORT
+   As can be seen in Figure\nbsp{}\ref{PMD_issues_prs}, the documentation issues
+   tend to appear in large number of pull requests (24 % at average). Moreover,
+   the typical code style issue appeared in 11 % of pull requests. On the other
+   hand, average issue that indicate error prone construct is present in only two
+   percent of pull requests.
 ** Kotlin
+   The 20 projects were selected also from the Kotlin ecosystem.
+   Average analyzed pull request was from project that has ten thousand
+   stars and introduced nine issues and fixed only four. The 7514 pull requests
+   were analyzed (using the /ktlint/ linter) and 80 % of them were accepted.
+   The trend that maintainers of popular projects reject more pull requests can
+   be observed also in the Kotlin community.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -575,6 +608,21 @@
    \caption{Stars and pull request acceptance}
    \end{figure}
    #+END_EXPORT
+
+   The only 20 different issues were detected by the /ktlint/ in the analyzed projects;
+   however, this is expected, since the /ktlint/ is focused only on small set of quality issues.
+
+   The =indent= issue was introduced in the largest number of pull requests (2598). It is the
+   only issue that was introduced in more than thousand pull requests. It is also the issue
+   that was fixed in largest number of pull requests. The official Kotlin convention is
+   to use the four spaces for indentation[fn::https://kotlinlang.org/docs/coding-conventions.html]
+   and the =indent= issue signifies that this convention was violated. This issue influenced
+   the code quality of more than half of the pull requests. However, this can be caused by projects
+   whose standards does not follow the official recommendations.
+
+   Other often violated /ktlint/ rules are =no-wildcard-imports=, =final-newline= and =import-ordering=.
+   On the other end of the spectrum, the rule =no-line-break-after-else= was violated only once.
+
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -584,6 +632,16 @@
    \end{figure}
    #+END_EXPORT
 ** Haskell
+   Haskell is the only purely functional programming language that I analyzed.
+   The 18 out of 20 selected Haskell projects has under the 5000 stars. There
+   are only two exceptions: PureScript with 7632 stars and Pandoc that has over
+   15000 stars. The Pandoc has the also smallest percentage of accepted pull
+   requests.  However, excluding the Pandoc, there is no visible connection
+   between number of stars and acceptance in the selected projects. When the
+   outliers are filtered, the trend tends to be opposite of previous languages:
+   more accepted are pull requests of projects with more stars.  However, only
+   20 projects are not sufficient to make such conclusions about whole
+   population of Haskell projects.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -592,6 +650,15 @@
    \caption{Stars and pull request acceptance}
    \end{figure}
    #+END_EXPORT
+
+   The 6949 pull request were analyzed. Interesting is that in the over than 60
+   % of pull requests, no change in the code quality was detected. Moreover, the
+   /hlint/ is able to recognize large number of different issues (321 issue
+   types were detected in selected pull requests). On the other hand, some issues
+   were counted twice because they appeared as suggestion but also as a warning
+   (in the different contexts).
+   These facts can indicate that large
+   number of submitted pull requests follows the high quality standards.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -600,6 +667,16 @@
    \caption{Pull requests and quality}
    \end{figure}
    #+END_EXPORT
+
+   The 78 percent of pull requests was accepted and the average pull request introduced
+   only 0.6 issues and fixed 0.3 issues. The most common types of issues were suggestions
+   and warnings. The error that was introduced in the largest number of pull requests is
+   =Use-newTVarIO= and this error was introduced only in 8 pull requests. The most common
+   suggestions were =Redundant-bracket= (introduced in 499 PRs) and =Redundant-$= (444 PRs).
+   The warning =Unused-LANGUAGE-pragma= was introduced in 323 pull requests and =Eta-reduce=
+   warning in 214 of them. There were only ten issues that were introduced in 100 and more
+   pull requests. 105 issue types were detected in the analyzed code but no PR introduce
+   any of those issues.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -609,6 +686,14 @@
    \end{figure}
    #+END_EXPORT
 ** C/C++
+   The C and C++ programming languages are analyzed together because they share
+   lot of similarities.  This usually enables to use the same linter for both
+   languages. Moreover, it is not uncommon that projects that are written in C++
+   contains also some C code and vice versa.  The 9 selected projects has more
+   code written in C, while the rest of the 11 projects is more C++-oriented.
+
+   In analyzed projects, there is no visible connection between the acceptance
+   and the number of stars.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -617,6 +702,12 @@
    \caption{Stars and pull request acceptance}
    \end{figure}
    #+END_EXPORT
+
+   I analyzed 8774 C/C++ pull requests. The 77 % of them are accepted pull requests.
+   The typical pull request introduces 0.25 issues and fixes 0.12 issues, the typical
+   rejected PR introduces 0.79 issues and typical accepted PR only 0.15 issues.
+   The 79 % of pull request did not change the quality of the source code
+   (in terms of the /flawfinder/ quality rules).
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -625,6 +716,17 @@
    \caption{Pull requests and quality}
    \end{figure}
    #+END_EXPORT
+
+   The most common type of issue is note. Least common are errors. The
+   /flawfinder/ was able to identify 137 different issues in the studied
+   PRs. All of the top ten issues (in terms of umber of PRs which introduced
+   them) are notes. The most common note is =buffer-char= (``Statically-sized
+   arrays can be improperly restricted leading to potential overflows or other
+   issues\dots{}''). The most common error is =buffer-strcat= (``Does not check
+   for buffer overflows when concatenating to destination\dots'') and it is the
+   11 most introduced issue (introduced in 69 pull requests). There are 36 issues
+   that were present in the analyzed code but they were not introduced in any
+   pull request; 21 of them are errors.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%

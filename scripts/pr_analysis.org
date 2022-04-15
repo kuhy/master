@@ -132,6 +132,13 @@
         print(width = Inf)
   #+END_SRC
 
+  Print the number of pull requests that did not changed the quality:
+  #+BEGIN_SRC R
+    prs %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x < 0, 0L, .x))),
+                   fixed=rowSums(mutate_all(select(., starts_with("results_")), ~if_else(.x > 0, 0L, -.x)))) %>%
+        filter(introduced == 0, fixed == 0) %>% nrow
+  #+END_SRC
+
   Summarize information about individual issues (compute maximum, minimum etc.):
   #+BEGIN_SRC R
     (issues <- prsQuality %>% group_by(accepted) %>% summarise(across(everything(),
@@ -199,6 +206,18 @@
             xlab="issue", ylab="on average in one PR")
   #+END_SRC
 
+  List the issues sorted by the number of pull request which introduced them:
+  #+BEGIN_SRC R
+    issues %>% mutate(introduced_by=accepted.introduced_by + rejected.introduced_by) %>%
+        arrange(desc(introduced_by)) %>% select(type, issue, introduced_by)
+  #+END_SRC
+
+  List the issues sorted by the number of pull request which fixed them:
+  #+BEGIN_SRC R
+    issues %>% mutate(fixed_by=accepted.fixed_by + rejected.fixed_by) %>%
+        arrange(desc(fixed_by)) %>% select(type, issue, fixed_by)
+  #+END_SRC
+
   List the issues sorted by the number of accepted pull request which introduced them:
   #+BEGIN_SRC R
     issues %>% arrange(desc(accepted.introduced_by)) %>% select(type, issue, accepted.introduced_by)
@@ -251,6 +270,12 @@
         ggplot(aes(x=reorder(type, desc(appeared_in), mean), y=appeared_in)) + labs(x="Issue types (sorted by y-axis mean)",
                                                                                     y="Pull Requests (\\%)") + geom_point()
     dev.off()
+  #+END_SRC
+
+  Print the issue types and percentage of PRs that contained the average issue from the given category.
+  #+BEGIN_SRC R
+    issues %>% transmute(type, appeared_in=100*(rejected.appeared_in + accepted.appeared_in)/nrow(prs)) %>%
+        group_by(type) %>% summarize(mean(appeared_in))
   #+END_SRC
 * Research Question 2
   Import the issue importance from CSV files:
