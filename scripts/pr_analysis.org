@@ -293,6 +293,8 @@
     issueImportance <- import_issue_importance("classification/Importances_drop/values/")
 
     introducedIssueImportance <- import_issue_importance("classification_introduced/Importances_drop/values/")
+
+    fixedIssueImportance <- import_issue_importance("classification_fixed/Importances_drop/values/")
   #+END_SRC
 
   Sort issues by their average importance and print them:
@@ -300,6 +302,8 @@
     issueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
 
     introducedIssueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
+
+    fixedIssueImportance %>% mutate(mean=rowMeans(.[,-1:-2])) %>% arrange(desc(mean)) %>% head(10) %>% print
   #+END_SRC
 
   Sort issues by their average importance and plot them in the barplot:
@@ -318,6 +322,8 @@
     plot_issue_importance(issueImportance)
 
     plot_issue_importance(introducedIssueImportance)
+
+    plot_issue_importance(fixedIssueImportance)
   #+END_SRC
 
   *TODO:* compare importance of issues (introduced vs fixed/introduced) using some statistical methods
@@ -448,6 +454,10 @@
      classificationMetricsIntroduced <- import_classification_metrics("classification_introduced/Metrics/")
 
      classificationMetricsIntroduced
+
+     classificationMetricsFixed <- import_classification_metrics("classification_fixed/Metrics/")
+
+     classificationMetricsFixed
    #+END_SRC
 
    Import ROC curves:
@@ -462,6 +472,8 @@
      classificationROCs <- import_roc_curves("classification/AUCs/values/", classificationMetrics)
 
      classificationIntroducedROCs <- import_roc_curves("classification_introduced/AUCs/values/", classificationMetricsIntroduced)
+
+     classificationFixedROCs <- import_roc_curves("classification_fixed/AUCs/values/", classificationMetricsFixed)
    #+END_SRC
 
    Plot ROC curves:
@@ -475,8 +487,9 @@
      plot_roc_curves(classificationROCs)
 
      plot_roc_curves(classificationIntroducedROCs)
-   #+END_SRC
 
+     plot_roc_curves(classificationFixedROCs)
+   #+END_SRC
   *TODO:* compare ROCs (introduced vs fixed/introduced) using some statistical methods
 * Research Question 4
   *TODO:* import results

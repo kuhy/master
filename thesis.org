@@ -398,6 +398,7 @@
   - classification (machine learning)
   - machine learning while taking into account only introduced issues vs quality change
   - correlation matrix
+  - reference the model reliability (from the appendix)
 
   *RQ_3*:
   - PCA scatterplot
@@ -478,9 +479,9 @@
    #+END_EXPORT
 
    The most important Pylint issue in regards of the PR acceptance is the
-   =syntax-error=.  XGBoost classifier gives this error the 1 %
+   =syntax-error=.  XGBoost classifier gives this error the 1.2 %
    importance. However, other classifiers consider this error less important.
-   The average importance of the =syntax-error= is only 0.4 %.  The syntax error
+   The average importance of the =syntax-error= is only 0.3 %.  The syntax error
    was introduced in 17 projects. At average, rejected pull request introduced
    =0.027= syntax errors, and average accepted pull request even fixed =0.001=
    syntax errors.
@@ -491,11 +492,15 @@
    \end{figure}
    #+END_EXPORT
 
-   When the fixed issues were not considered (only introduced issues), the list
+   When only introduced issues were considered, the list
    of the most important issues looked differently. On the other hand, there
    are some issues that appeared in top 10 in both lists: =syntax-error=,
-   =protected-access= and =unused-import=. The =syntax-error= is considered
+   =unused-variable= and =unused-import=. The =syntax-error= is considered
    as the most important issue by both methods.
+
+   Using only the information about fixed issues, the most important issue
+   is =f-string-without-interpolation= (in terms of acceptance). However no classifier
+   gives this issue importance over one percent.
 
    In order to visualize the difference in quality between accepted and rejected PRs, I created PCA scatter plot:
    #+BEGIN_EXPORT latex
@@ -593,6 +598,23 @@
    the typical code style issue appeared in 11 % of pull requests. On the other
    hand, average issue that indicate error prone construct is present in only two
    percent of pull requests.
+
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/java/issue_importance}
+   \caption{Ten most important PMD issues}
+   \end{figure}
+   #+END_EXPORT
+   The most important PMD issue is =JUnitAssertionsShouldIncludeMessage=. The
+   average importance of this issue is only 0.6 %. However, the AdaBoost
+   classifier gives this issue 3.7 % importance.  The 0.89 issues of this type
+   are introduced in average accepted pull request. I suspect that the pull
+   requests that are adding larger number of tests to the codebase have higher
+   probability to be accepted. This pull requests have also higher probability
+   to introduce the =JUnitAssertionsShouldIncludeMessage=. This can be the
+   reason why this issue has the largest importance.  However,
+   performed study indicates that presence of test code does not influence PR
+   acceptance[[cite:explaratory]].
 ** Kotlin
    The 20 projects were selected also from the Kotlin ecosystem.
    Average analyzed pull request was from project that has ten thousand
@@ -631,6 +653,31 @@
    \caption{Pull requests and quality}
    \end{figure}
    #+END_EXPORT
+
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/kotlin/issue_importance}
+   \caption{Ten most important ktlint issues}
+   \end{figure}
+   #+END_EXPORT
+   The issue with the highest importance average is =dot-spacing=.
+   The Bagging classifier gives 1.7 % importance to this issue. The importance from other
+   classifiers is smaller --- average importance is 0.8 %.
+   However, this issue was introduced only in 18 PRs (13 times in the rejected pull request).
+   Furthermore, 7 accepted and 7 rejected pull requests fixed this issue.
+
+   It is worth mentioning that issue on the fourth place does not have a name
+   (given by /ktlint/).  This issue usually indicates invalid Kotlin file.  This
+   issue has high importance (relative to the other issues) also when the only
+   fixed and also when only introduced issues were taken into account during the
+   classification. This issue was introduced by 90 rejected PRs and by 51
+   accepted PRs.
+
+   When using only introduced issues, the most important issue is =indent=.
+   This issue is also most important when only the fixed issues are considered.
+   As being said before, in projects that are using non-standard indentation,
+   this issue is false positive.
+   *TODO: investigate this*
 ** Haskell
    Haskell is the only purely functional programming language that I analyzed.
    The 18 out of 20 selected Haskell projects has under the 5000 stars. There
@@ -685,6 +732,21 @@
    \caption{HLint issues and \% of PRs which fixed/introduced them}
    \end{figure}
    #+END_EXPORT
+
+   The most important Haskell issue is suggestion =Use-if=. However, no classifier gives this
+   issue importance over one percent. Therefore the actual impact of this issue is disputable.
+   This issue was introduced in 18 rejected PRs and fixed in 11. There are 19 accepted PRs that
+   introduced =Use-if= and 27 accepted PRs that fixed it.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/haskell/issue_importance}
+   \caption{Ten most important HLint issues}
+   \end{figure}
+   #+END_EXPORT
+   When only introduced issues were taken into account, the most important issues is =Move-brackets-to-avoid-$= (suggestion).
+   The AdaBoost classifier gives this issue 1 % importance, although the average importance is only 0.4 %.
+
+   In context of fixed issues, the most important is warning =Use-fewer-imports= with average importance again only about 0.4 %.
 ** C/C++
    The C and C++ programming languages are analyzed together because they share
    lot of similarities.  This usually enables to use the same linter for both
@@ -735,7 +797,30 @@
    \caption{flawfinder issues and \% of PRs which fixed/introduced them}
    \end{figure}
    #+END_EXPORT
-** Threads to validity
+
+   Classification algorithms ranks as the most important issue the
+   =format-printf= (``If format strings can be influenced by an attacker, they
+   can be exploited\dots''). However, this issue is only a /note/.  Therefore it
+   does not have to indicate a defect (there will probably be large number of
+   false positives). AdaBoost and XGBoost algorithms gives this issue importance
+   of 1 %. The average importance is 0.7%.  This issue is also most important
+   when only introduced issues are considered.  Second most important issue has
+   average importance only 0.26 %.
+
+   The most important error is =buffer-StrCpyNA= (``Does not check for buffer
+   overflows when copying to destination\dots'') with average importance only
+   0.9 %. This error is sixth most important issue.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/c_cpp/issue_importance}
+   \caption{Ten most important flawfinder issues}
+   \end{figure}
+   #+END_EXPORT
+   When considering only fixed issues, the =buffer-read= is the most important issue (note);
+   however, the average importance is only 0.28 %.
+** TODO Programming languages and code quality impact
+   - RQ5
+** TODO Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
      - manually inspect some randomly selected PRs
    - modified files in the PR's that are not written in the primary programming language can influence acceptance
@@ -746,8 +831,9 @@
      - limited execution time for =git-contrast=
      - not available PR's/repositories
    - false positives from Linters (=import-error=, =relative-beyond-top-level=)
-* Conclusion
-** Future work
+* TODO Conclusion
+** TODO Comparison with the previous results
+** TODO Future work
 * Appendix
 ** Projects
    #+BEGIN_EXPORT latex
@@ -814,6 +900,11 @@
    \endgroup
    \end{table}
    #+END_EXPORT
+** Model reliability
+   - for regression and classification
+   - check the Lenarduzzi paper
+   - table with recall, precision etc.
+** ROC curves
 * Setup :noexport:
 #+LATEX_CLASS: fithesis4
 #+LATEX_CLASS_OPTIONS: [digital,oneside,oldtable,nolof,nolot,nocover]
