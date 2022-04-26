@@ -1,5 +1,6 @@
 #+TITLE: Source Code Quality impact @@latex:\\@@ on Pull Requests acceptance
 #+AUTHOR: Ondřej Kuhejda
+#+OPTIONS: num:2
 * Introduction
 ** Problem statement
    - RQ_1 :: Which code issues are typically introduced by the pull requests?
@@ -367,59 +368,117 @@
      - [[cite:explaratory]]
 ** TODO Computational resources
 * Data analysis
-  In order to simplify analysis of retrieved data, I created the script that
-  takes multiple JSON files with the data about each individual project and
-  converts them into the CSV files. Each row in the CSV file represents some
-  pull request. This script also filters the pull requests which are not
-  suitable for the analysis --- PRs that do not contains any source code written
-  in the primary language or PRs that contained corrupted files (the linter was
-  unable to analyze those files).
+** TODO Scripts
+   - Put this into appendix?
+*** Data preprocessing
+    In order to simplify analysis of retrieved data, I created the script that
+    takes multiple JSON files with the data about each individual project and
+    converts them into the CSV files. Each row in the CSV file represents some
+    pull request. This script also filters the pull requests which are not
+    suitable for the analysis --- PRs that do not contains any source code written
+    in the primary language or PRs that contained corrupted files (the linter was
+    unable to analyze those files).
+*** Pull request classification
+    The retrieved data about the pull request were subsequently analyzed in order
+    to answer my research questions.  For this analysis was used the Python
+    script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] provided by Lenurdazzi
+    et al. (this script was used for machine learning classification methods)
+*** Pull request regression
+*** Main script
+    - rest of the analysis
+    - divided by research questions
+    - aggregation of results from the classification and regression
+    - export to LaTeX and PDF
+** Statistical methods
+   Research questions 1 to 4 were analyzed separately for each programming language.
 
-  The retrieved data about the pull request were subsequently analyzed in order
-  to answer my research questions.  For this analysis was used the Python
-  script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] provided by Lenurdazzi
-  et al. (this script was used for machine learning classification methods) and
-  also my script written in R. The statistical methods that were used are
-  discussed in the following paragraphs:
+   *TODO:* For each test, state the rationale behind the test and assumptions about data.
 
-  Research questions 1 to 4 were analyzed separately for each programming language.
+   - https://www.scribbr.com/statistics/statistical-tests/
+*** Which code issues are typically introduced by the pull requests?
+    At first, in order to answer the *RQ_1*, I summarized the retrieved data for each project
+    --- I counted how many suitable pull requests were analyzed and
+    how many of them are accepted/rejected. Then I created a scatter plot between number of
+    stars and percentage of accepted PRs.
 
-  *TODO:* For each test, state the rationale behind the test and assumptions about data.
+    I also summarized all pull requests regardless of their project. I computed average number
+    of introduced issues, fixed issues etc. Then I created heat map that shows how many PRs
+    introduced/fixed some specific number of issues.
 
-  *TODO:* At first, for *RQ_1*, I summarized the retrieved data for each project
-  --- I counted how many suitable pull requests were analyzed and
-  how many of them are accepted/rejected. Then for each issue individually I
-  computed how many accepted/rejected pull request introduced/fixed this issue,
-  how many times this issue occurred in some pull request etc.
+    Then for each issue individually I computed how many accepted/rejected pull
+    request introduced/fixed this issue, how many times this issue occurred in
+    some pull request etc. I created multiple lists of issues sorted by some parameter.
+    I sorted issues by the number of rejected/accepted PRs that fixed/introduced them.
+    I also listed issues and percentage of PRs that changed their quality. I examined the
+    issues that were fixed in larger number of PRs then introduced. Then I created a scatter plot
+    that shows which issue category contains the most common issues.
 
-  - https://www.scribbr.com/statistics/statistical-tests/
+    These steps were applied individually for each programming language to determine
+    how does the average PR look line in terms of code quality.
+*** Are there some particular issues/code smells that affect the pull request acceptance?
+    In order to discover issues that affects the acceptance of pull requests most, the classification models were created.
+    The aim of these models is to classify pull request into two groups (accepted PRs and rejected PRs) by using the information
+    about quality change in the given pull request. Multiple classification algorithms were used:
+    - LogisticRegression :: TODO
+    - RandomForest :: TODO
+    - GradientBoost :: TODO
+    - ExtraTrees :: TODO
+    - DecisionTrees :: TODO
+    - Bagging :: TODO
+    - AdaBoost :: TODO
+    - XGBoost :: TODO
+    Each of those algorithms was run on three different datasets --- dataset
+    with quality change, dataset containing only introduced issues and dataset
+    with only fixed issues. In the first dataset, the quality change for some issue was
+    represented by the integer and this integer was negative if the issue was fixed in the PR
+    and positive if the issues was introduced. The other datasets were created by filtering
+    positive/negative values from the first dataset.
 
-  *RQ_2*:
-  - classification (machine learning)
-  - machine learning while taking into account only introduced issues vs quality change
-  - correlation matrix
-  - reference the model reliability (from the appendix)
-
-  *RQ_3*:
-  - PCA scatterplot
-  - contingency matrices
-  - contingency matrices for PR's that contain only modified source code files vs for all of them
-  - contingency matrices separately for each project
-  - ROC curves and AUCs
-
-  *RQ_4*:
-  - regression (machine learning)
-  - correlation matrix
-
-  *RQ_5*:
-  - Compare results from previous steps.
-    - Statistically compare the parameters obtained for each programming language.
-     (check if the pull requests from different languages and retrieved parameters
-     follow the same distributions)
-  - What is the effect of the programming language on the acceptance and
-    time it takes to close a pull request?
-    - ANOVA
-    - classification (machine learning)
+    In order to recognize issues that have some effect on the PR acceptance,
+    the /drop-column importance/ mechanism[fn::https://explained.ai/rf-importance/] was used.
+    - *TODO:* reference the paper
+    - *TODO:* correlation matrix
+    - *TODO:* reference/explain the model reliability (from the appendix)
+*** Is there a relationship between the source code quality and the pull request acceptance?
+    *RQ_3*:
+    - classification
+    - PCA scatterplot
+    - contingency matrices
+    - contingency matrices for PR's that contain only modified source code files vs for all of them
+    - contingency matrices separately for each project
+      - According to Cochran (1952, 1954), all expected counts should be 10 or greater.
+        If < 10, but >=5, Yates’ Correction for continuity should be applied.
+    - ROC curves and AUCs
+    - mention that p-values were not adjusted
+    Pull request that are adding or removing some files has large influence on
+    code quality. If the number of removed/added files has large impact on PR
+    acceptance, then it can be a large thread to validity of the independence
+    test.  The pull request acceptance can be also influenced by quality of files
+    which were not linted (was written in non-primary language).  To eliminate
+    the risk that the test was influenced, same test was performed on pull
+    requests that only modified some source files and these files were written in the
+    primary language.
+*** Does code quality influence the time it takes to close a pull request?
+    In order to find the possible link between the code quality and time it
+    takes to close a PR, the regression algorithms were used. At first, the
+    dataset was split into two parts --- training and test set.  After that, the
+    regression model was trained on the training set. Then, the importance of
+    individual quality issues was determined using the /permutation importance/
+    mechanism. To evaluate the model itself, the model was used to predict the
+    time based on the data from test set. Metrics such as /mean absolute error/
+    (MAE), /mean squared error/ (MSE) and /coefficient of determination/ ($R^2$)
+    were computed using the predicted and expected values.
+    - *TODO:* correlation matrix
+*** Is code quality impact higher in projects that are using some particular programming language?
+    *RQ_5*:
+    - Compare results from previous steps.
+      - Statistically compare the parameters obtained for each programming language.
+       (check if the pull requests from different languages and retrieved parameters
+       follow the same distributions)
+    - What is the effect of the programming language on the acceptance and
+      time it takes to close a pull request?
+      - ANOVA
+      - classification (machine learning)
 * Evaluation
   *TODO*
 ** Python
@@ -522,26 +581,27 @@
    \end{figure}
    #+END_EXPORT
 
-   As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of rejected pull requests which contained some defected is
-   higher then expected. For chi-square test, $p < \num{2.2e-16}$ and therefore, the hypothesis that presence of
-   some issue and PR acceptance are independent is rejected on significance level $\alpha = 0.05$. However,
-   the Cramer's $\phi_c \approx 0.092$ therefore the association is weak.
+   As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of
+   rejected pull requests which contained some defected is higher then
+   expected. For chi-square test, $p < \num{2.2e-16}$ and therefore, the
+   hypothesis that presence of some issue and PR acceptance are independent is
+   rejected on significance level $\alpha = 0.05$. However, the Cramer's $\phi_c
+   \approx 0.092$ therefore the association is weak.  This conclusion supports
+   also the fact that AUC for trained classification models is slightly over 50
+   percent.  The average AUC for all models is $53.4$.
 
-   Pull request that are adding or removing some files has large influence on
-   code quality. If the number of removed/added files has large impact on PR
-   acceptance, then it can be a large thread to validity of the independence
-   test.  The pull request acceptance can be also influenced by quality of files
-   which were not linted (was written in non-primary language).  To eliminate
-   the risk that the test was influenced, same test was performed on pull
-   requests that only modified some source files and these files were written in the
-   primary language. For this test, $p < \num{5.548e-10}$ and therefore the
-   fact that PRs introduced some code quality issues influences their acceptance.
+   When considering only PRs that solely modified some source files, $p < \num{5.548e-10}$
+   and therefore also there the presence of some code quality issue in the PR
+   influences the PR acceptance.
    Similarly to the previous test, the $\phi_c \approx 0.087$, therefore the
-   relation between presence of same issue and PR acceptance is small.
+   association between presence of same issue and PR acceptance is weak.
 
-   *TODO:* Adjust p-value when doing multiple tests.
+   Similar results were obtained when the chi-square test was performed separately for each issue category.
 
-   *TODO:* evaluate all chi-square tests (projects, issue types)
+   When the projects were considered individually, only for nine of them the $p < \alpha$. In these projects,
+   the poor code quality had a negative impact on PR acceptance.
+   In the rest of the projects, presence of some code quality issue does not seems to have an effect on
+   the PR acceptance.
 
    The quality of the code does not seem to have an effect on the time it takes to close a pull request.
    All of the trained regression models have negative $R^2$ score (when evaluated on the test set).
@@ -617,6 +677,35 @@
    reason why this issue has the largest importance.  However,
    performed study indicates that presence of test code does not influence PR
    acceptance[[cite:explaratory]].
+
+   The PCA scatter plot for Java pull requests looks as follows:
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/java/acceptance_pca}
+   \caption{PCA scatter plot}
+   \end{figure}
+   #+END_EXPORT
+   In the PCA scatter plot, there is no visible difference between rejected/accepted pull requests.
+
+   In order to understand the relation between acceptance and the introduction of some quality issue,
+   the chi-square test was performed.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{data/java/acceptance_ct}
+   }
+   \caption{Relation between presence of issue and PR acceptance}
+   \end{figure}
+   #+END_EXPORT
+   The $p = \num{9.132e-14} < \alpha$ and $\phi_c = 0.079$; therefore, there is
+   a weak relation between acceptance and issue presence. Similar results were
+   obtained when only PRs that solely modified source code of the main language were
+   considered and also when test was performed individually for each issue category.
+
+   17 out of the 20 Java projects contained sufficient number of pull requests to
+   perform the chi-square tests. In nine of them, the code quality and acceptance are
+   not independent. Unexpectedly, in one of the projects (=alibaba/fastjson=) the
+   presence of some issue has small positive effect on the acceptance.
 
    The PMD issues seems to have some effect on the time it takes to close a pull
    requests when considering only $R^2$ computed for each model. However the
@@ -694,7 +783,38 @@
    This issue is also most important when only the fixed issues are considered.
    As being said before, in projects that are using non-standard indentation,
    this issue is false positive.
-   *TODO: investigate this*
+
+   The PCA scatter plot was created also for Kotlin programming language.
+   The firs principal component explains almost all variance in the code quality of pull requests.
+   However, the difference between rejected/accepted pull requests is not apparent from the PCA plot:
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/kotlin/acceptance_pca}
+   \caption{PCA scatter plot}
+   \end{figure}
+   #+END_EXPORT
+
+   To understand the link between acceptance and the introduction of some
+   quality issue, the chi-square test was performed. The $p < \num{2.2e-16}$ and
+   $\phi_c \approx 0.095$; therefore the presence of some issue has a small
+   negative effect on acceptance (similarly to the Java and Python).
+   Furthermore, three classifiers (/Bagging/, /GradientBoost/ and /RandomForest/)
+   have AUC for ROC curve above 60 and the average AUC is $57.58$.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{data/kotlin/acceptance_ct}
+   }
+   \caption{Relation between presence of issue and PR acceptance}
+   \end{figure}
+   #+END_EXPORT
+   However, taking into account solely the PRs that only modified some source
+   code, the $p = 0.627$, thus the acceptance and issue presence are independent
+   (in this context).
+
+   Only 12 of the projects have sufficient number of pull requests to perform
+   the chi-square test. There are 4 projects were the presence of some issue
+   have small impact on the PR acceptance (the average Cramer's V is $\phi_c = 0.18$).
 
    To analyze the relation between the code quality and time that is required to
    close a PR, several regression techniques were applied also on the Kotlin
@@ -774,6 +894,38 @@
 
    In context of fixed issues, the most important is warning =Use-fewer-imports= with average importance again only about 0.4 %.
 
+   The PCA scatter plot was also generated for the Haskell language.
+   Similarly to the results in already analyzed languages, there is no apparent
+   difference between accepted and rejected pull requests.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/haskell/acceptance_pca}
+   \caption{PCA scatter plot}
+   \end{figure}
+   #+END_EXPORT
+
+   For the chi-square test, the $p = 0.001438 < \alpha = 0.05$ and Cramer's V is only $\phi_c = 0.038$;
+   therefore, the presence of an issue in the PR's have only small negative effect on the
+   acceptance of the pull request. Similar results were obtain when only
+   the pull requests, that contains exclusively some modified code, were considered.
+   Furthermore, tests for the individual issue types yielded also similar results.
+   Unfortunately, there is only small number of pull requests that introduced some errors;
+   therefore the chi-square test cannot be performed on this issue category.
+   The average AUC computed for ROC curves is around 50 --- the classification algorithms
+   were unable to find some significant association between the acceptance and code quality issues.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{data/haskell/acceptance_ct}
+   }
+   \caption{Relation between presence of issue and PR acceptance}
+   \end{figure}
+   #+END_EXPORT
+   The 13 projects contains sufficient number of pull requests; the acceptance and
+   the issue presence is not independent only in four of them (the issue presence
+   have the small negative impact on the acceptance). For the =haskell/aeson= project,
+   the Cramer's V is $0.282$ --- the association is ``medium''.
+
    The issues detected by /HLint/ does not seems to have impact on time it takes to close a pull request.
    All trained models have negative $R^2$. When only fixed issues were used for regression, there
    were three models with positive $R^2$: Bagging (0.0315), ElasticNet (0.0085) and RandomForest (0.0229).
@@ -850,6 +1002,34 @@
    #+END_EXPORT
    When considering only fixed issues, the =buffer-read= is the most important issue (note);
    however, the average importance is only 0.28 %.
+
+   The PCA analysis does not reveal any significant difference between the accepted
+   and rejected pull requests (in terms of code quality).
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \input{data/c_cpp/acceptance_pca}
+   \caption{PCA scatter plot}
+   \end{figure}
+   #+END_EXPORT
+
+   Based on the chi-square test, the presence of issue in the PR have small negative impact
+   on the PR acceptance ($\phi_c = 0.117$).
+   When considering only pull requests that solely modified some source files, Cramer's V $\phi_c = 0.024$
+   --- the presence of issue also have some negative impact but even smaller than in the previous test.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{data/c_cpp/acceptance_ct}
+   }
+   \caption{Relation between presence of issue and PR acceptance}
+   \end{figure}
+   #+END_EXPORT
+   Some small impact was also discovered when the chi-square test was performed separately for
+   each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
+   Furthermore, in 6 out of 11 projects, which have enough data to perform and evaluate the chi-square test,
+   the presence of some issue in the PR have negative effect on the PR acceptance.
+   In the =minetest/minetest= and =pybind/pybind11= projects this effect is moderate;
+   for other projects the association is small.
 
    In case of C/C++, the time to close a pull request seems not to be related
    with found issues.  All the models have negative $R^2$, except the ElasticNet

@@ -325,8 +325,6 @@
 
     plot_issue_importance(fixedIssueImportance)
   #+END_SRC
-
-  *TODO:* compare importance of issues (introduced vs fixed/introduced) using some statistical methods
 * Research Question 3
 ** PCA scatterplot
    #+BEGIN_SRC R
@@ -335,14 +333,15 @@
 
      acceptancePCA <- prcomp(prsSample %>% select(-accepted))
 
+     (autoplot(acceptancePCA, data=prsSample, colour="accepted") +
+      labs(x=paste("PC1 (", summary(acceptancePCA)$importance[2,1] * 100, "\\%)", sep=""),
+           y=paste("PC2 (", summary(acceptancePCA)$importance[2,2] * 100, "\\%)", sep=""), colour="Accepted")
+     )
+
      tikz(filename="acceptance_pca.tex", width=6, height=4)
-     pallete = c("red", "green")
-     (autoplot(acceptancePCA, data=prsSample, colour="accepted") + scale_colour_manual(values=pallete) +
-                                             xlim(-0.0025, 0.0025) + ylim(-0.01, 0.01) +
-      labs(colour="Accepted",
-                                                       x=paste("PC1 (", summary(acceptancePCA)$importance[2,1] * 100, "\\%)", sep=""),
-                                                       y=paste("PC2 (", summary(acceptancePCA)$importance[2,2] * 100, "\\%)", sep="")
-                                                       )
+     (autoplot(acceptancePCA, data=prsSample, colour="accepted") + xlim(-0.0025, 0.0025) + ylim(-0.01, 0.01) +
+      labs(x=paste("PC1 (", summary(acceptancePCA)$importance[2,1] * 100, "\\%)", sep=""),
+           y=paste("PC2 (", summary(acceptancePCA)$importance[2,2] * 100, "\\%)", sep=""), colour="Accepted")
      )
      dev.off()
    #+END_SRC
@@ -418,24 +417,32 @@
 
    Test each project independently:
    #+BEGIN_SRC R
+     projects_chsqt <- tibble(Project=character(), pr_count=integer(), p.value=numeric(), V=numeric(),
+                              observed.rejected.introduced=numeric(), expected.rejected.introduced=numeric(),
+                              Independent=logical(), "Enough observations"=logical())
      for (project in unique(prs$project_name)) {
-         chsqt_print(project, to_contingency_table(prs %>% filter(project_name == project)))
+         project_prs <- prs %>% filter(project_name == project)
+         ct <- to_contingency_table(project_prs)
+         chsqt_print(project, ct)
+         chsqt <- chisq.test(ct)
+         projects_chsqt <- projects_chsqt %>% add_row(Project=project, pr_count=nrow(project_prs), p.value=chsqt$p.value,
+                                                      V=cramersV(ct), observed.rejected.introduced=chsqt$observed[[1]],
+                                                      expected.rejected.introduced=chsqt$expected[[1]] - chsqt$observed[[1]],
+                                                      Independent=(chsqt$p.value > 0.05),
+                                                      "Enough observations"=all(chsqt$expected >= 10))
      }
-   #+END_SRC
 
-   *TODO*: Do all tests for filtered/unfiltered PR's.
+     projects_chsqt %>% print(width=Inf)
 
-   *TODO* Does a fixing of some code quality issue in the PR affects its acceptance?
-   #+BEGIN_SRC R
-     fixedCont <- data.frame((prsQuality %>% transmute(accepted, issueTypes=rowSums(.[-1]<0)) %>% group_by(accepted) %>%
-                    summarize(across(everything(), tibble::lst(fixed=~sum(.>0), didNotFixed=~sum(.==0)))))[,-1])
-     rownames(fixedCont) <- c("rejected", "accepted")
+     count(projects_chsqt %>% filter(`Enough observations` == TRUE))
 
-     fixedContChisq <- chisq.test(fixedCont)
+     projects_chsqt %>% filter(`Enough observations` == TRUE) %>% print(width=Inf)
 
-     fixedContChisq
-     fixedContChisq$observed
-     round(fixedContChisq$expected, 2)
+     count(projects_chsqt %>% filter(`Enough observations` == TRUE, p.value < 0.05))
+
+     projects_chsqt %>% filter(`Enough observations` == TRUE, p.value < 0.05) %>% print(width=Inf)
+
+     projects_chsqt %>% filter(`Enough observations` == TRUE, p.value < 0.05) %>% summarize_all(mean)
    #+END_SRC
 ** ROC curves and AUCs
    Retrieve classifiers metrics:
@@ -450,6 +457,8 @@
      classificationMetrics <- import_classification_metrics("classification/Metrics/")
 
      classificationMetrics
+
+     classificationMetrics %>% summarise_all(mean)
 
      classificationMetricsIntroduced <- import_classification_metrics("classification_introduced/Metrics/")
 
@@ -490,7 +499,6 @@
 
      plot_roc_curves(classificationFixedROCs)
    #+END_SRC
-  *TODO:* compare ROCs (introduced vs fixed/introduced) using some statistical methods
 * Research Question 4
   Retrieve regression metrics:
   #+BEGIN_SRC R
@@ -563,6 +571,4 @@
 
     regressionMetricsFixed %>% summarize(across(where(is.double), ~mean(.x)))
   #+END_SRC
-
-  *TODO:* compare regression results (introduced vs fixed/introduced) using some statistical methods
 * Research Question 5
