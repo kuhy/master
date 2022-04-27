@@ -53,6 +53,7 @@
   #+END_SRC
 * Data preprocessing
 ** Dataset loading
+   Load dataset with pull requests from the CSV file:
    #+BEGIN_SRC R
      prs <- read.csv("data.csv", header=TRUE, sep = ",", check.names=FALSE)
 
