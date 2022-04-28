@@ -674,9 +674,10 @@
    requests that are adding larger number of tests to the codebase have higher
    probability to be accepted. This pull requests have also higher probability
    to introduce the =JUnitAssertionsShouldIncludeMessage=. This can be the
-   reason why this issue has the largest importance.  However,
-   performed study indicates that presence of test code does not influence PR
-   acceptance[[cite:explaratory]].
+   reason why this issue has the largest importance.  This also supports the
+   study that shows that the acceptance likelihood is increased by 17.1 % when
+   tests are included[[cite:social]]. However, another performed study indicates that
+   presence of test code does not influence PR acceptance[[cite:explaratory]].
 
    The PCA scatter plot for Java pull requests looks as follows:
    #+BEGIN_EXPORT latex
@@ -1014,8 +1015,9 @@
 
    Based on the chi-square test, the presence of issue in the PR have small negative impact
    on the PR acceptance ($\phi_c = 0.117$).
-   When considering only pull requests that solely modified some source files, Cramer's V $\phi_c = 0.024$
-   --- the presence of issue also have some negative impact but even smaller than in the previous test.
+   However, When considering only pull requests that solely modified some source files,
+   Cramer's V $\phi_c = 0.024$ and $p = 0.1 > \alpha$ --- in this settings, the issue presence
+   does not influence acceptance.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -1024,7 +1026,7 @@
    \caption{Relation between presence of issue and PR acceptance}
    \end{figure}
    #+END_EXPORT
-   Some small impact was also discovered when the chi-square test was performed separately for
+   Some small impact impact was discovered when the chi-square test was performed separately for
    each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
    Furthermore, in 6 out of 11 projects, which have enough data to perform and evaluate the chi-square test,
    the presence of some issue in the PR have negative effect on the PR acceptance.
@@ -1058,10 +1060,65 @@
    On top of that, the results from chi-square test can be also compared.
    However, cation is in order because the quality for each language is
    evaluated differently as discussed before.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{results/all_cramers_v}
+   }
+   \caption{Comparison of Cramer's V}\label{All_V}
+   \end{figure}
+   #+END_EXPORT
+   As can be seen in Figure\nbsp{}\ref{All_V}, in all studied languages the
+   presence of some issue had the negative effect on the PR acceptance (in terms
+   of chi-square tests); however, for all of the languages this effect is small ($\phi_c
+   \approx 0.1$).  The smallest effect was observed for Haskell programming
+   language and the highest effect is for C/C++.  On the other hand,
+   taking into account solely the PRs that only modified some source code of the
+   primary language, the chi-square test indicates that presence of issue and PR
+   acceptance are independent in case of the C/C++ and Kotlin. This is a possible
+   thread to validity and will be discussed in the following chapter.
+
+   The effect of code quality on the acceptance was also studied using
+   classification algorithms.  On of the metrics that was used to measure the
+   performance of the classification models is ``area under the ROC curve''
+   (AUC). When using this metric to evaluate models, the Haskell is once again
+   the language when the code quality is least important
+   (Figure\nbsp{}\ref{All_AUC}). The average AUC for Haskell models is around
+   0.5 --- the trained models are no better than random guessing.
+   The models for the Kotlin are ranked with the highest AUC score and therefore
+   are better in classification than models for other languages.
+   Except for Haskell, the average AUC is over 0.5 but under 0.6 --- these AUC
+   scores are usually considered poor[[cite:logreg]]. This indicates that code quality
+   have only small or no effect on the acceptance.
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{results/all_auc}
+   }
+   \caption{AUC for differenct languages (ROC)}
+   \end{figure}\label{All_AUC}
+   #+END_EXPORT
+
+   As discussed in the previous chapter, there seems to be no connection between
+   the code quality and the time it takes to close a pull requests (based on the trained regression models).
+   The smallest MAE have Kotlin models (around 26 days); on the other end of the spectrum are Python models
+   with average MAE equal to 78.9 days. The trained models are unusable considered that most of the pull
+   request are closed with first two weeks (83 % of Kotlin PRs and 76% of Python PRs).
+   #+BEGIN_EXPORT latex
+   \begin{figure}[H]\centering
+   \resizebox{\textwidth}{!}{%
+     \input{results/all_mae}
+   }
+   \caption{Mean absolute error for prediction of time to close a PR}
+   \end{figure}
+   #+END_EXPORT
 ** TODO Threads to validity
    - PR recognition (rejected PRs can be merged using another way)
      - manually inspect some randomly selected PRs
    - modified files in the PR's that are not written in the primary programming language can influence acceptance
+     - investigate
+   - addition or deletion of file can influence acceptance
+     - investigate
    - chosen projects
    - PR's filtering
      - linter errors
@@ -1072,6 +1129,9 @@
 * TODO Conclusion
 ** TODO Comparison with the previous results
 ** TODO Future work
+   - try different linters for the same language
+   - do the analysis only with filtered PRs (only modified and only primary language)
+     - more data needs to be collected (different dataset)
 * Appendix
   :PROPERTIES:
   :UNNUMBERED: t

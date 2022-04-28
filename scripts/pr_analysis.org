@@ -55,18 +55,23 @@
 ** Dataset loading
    Load dataset with pull requests from the CSV file:
    #+BEGIN_SRC R
-     prs <- read.csv("data.csv", header=TRUE, sep = ",", check.names=FALSE)
+     import_prs <- function(path) {
+         data <- read.csv(path, header=TRUE, sep = ",", check.names=FALSE)
+
+         # Convert strings to booleans
+         data$accepted <- data$accepted == "True"
+         data$submitter_is_project_member <- data$submitter_is_project_member == "True"
+
+         data
+     }
+
+     prs <- import_prs("data.csv")
 
      dim(prs)
 
      str(prs)
 
      summary(prs)
-   #+END_SRC
-** Convert strings to booleans
-   #+BEGIN_SRC R
-     prs$accepted <- prs$accepted == "True"
-     prs$submitter_is_project_member <- prs$submitter_is_project_member == "True"
    #+END_SRC
 ** Filter linter results
    #+BEGIN_SRC R
@@ -400,7 +405,11 @@
 
    Filter PRs that only modified some source code files and test them:
    #+BEGIN_SRC R
-     qualityModCT <- to_contingency_table(prs %>% filter(modified == linted_and_modified, added == 0, deleted == 0))
+     only_modified <- function(data) {
+         data %>% filter(modified == linted_and_modified, added == 0, deleted == 0)
+     }
+
+     qualityModCT <- to_contingency_table(only_modified(prs))
 
      chsqt_print("PR's that only modified some source code files", qualityModCT)
 
@@ -573,3 +582,76 @@
     regressionMetricsFixed %>% summarize(across(where(is.double), ~mean(.x)))
   #+END_SRC
 * Research Question 5
+  Set the working directory:
+  #+BEGIN_SRC R
+    setwd('~/Documents/master/results/')
+  #+END_SRC
+** Chi-square tests
+   Import pull requests from all languages and run chi-square tests:
+   #+BEGIN_SRC R
+     chisqtAll <- list("C/C++" = import_prs("c_cpp/data.csv"), "Haskell" = import_prs("haskell/data.csv"),
+                       "Java" = import_prs("java/data.csv"), "Kotlin" = import_prs("kotlin/data.csv"),
+                       "Python" = import_prs("python/data.csv")) %>%
+         map(~tribble(~V, ~p, ~Type,
+                      #
+                      cramersV(to_contingency_table(.x)),
+                      chisq.test(to_contingency_table(.x))$p.value,
+                      "All",
+                      #
+                      cramersV(to_contingency_table(only_modified(.x))),
+                      chisq.test(to_contingency_table(only_modified(.x)))$p.value,
+                      "Only modified")
+             ) %>% bind_rows(.id = "Language") %>% mutate(Independent = (p > 0.05))
+   #+END_SRC
+
+   Plot the Cramer's V for all languages:
+   #+BEGIN_SRC R
+     tikz(filename="all_cramers_v.tex", width=8, height=6)
+     chisqtAll %>% ggplot(aes(x=Type, y=V, fill=Independent)) + geom_bar(stat="identity", position="dodge") +
+         facet_grid(~ Language) + ylab("Cramer's V")
+     dev.off()
+   #+END_SRC
+** Classification
+   Import classification metrics for all languages:
+   #+BEGIN_SRC R
+     allClassificationMetrics <- bind_rows(list(
+         "C/C++" = import_classification_metrics("c_cpp/classification/Metrics/"),
+         "Haskell" = import_classification_metrics("haskell/classification/Metrics/"),
+         "Java" = import_classification_metrics("java/classification/Metrics/"),
+         "Kotlin" = import_classification_metrics("kotlin/classification/Metrics/"),
+         "Python" = import_classification_metrics("python/classification/Metrics/")), .id="Language")
+   #+END_SRC
+
+   Create box plot with /AUC mean/ for each language:
+   #+BEGIN_SRC R
+     tikz(filename="all_auc.tex", width=8, height=6)
+     allClassificationMetrics %>% ggplot(aes(x=Language, y=AUC_mean)) + labs(y="AUC mean") +
+         geom_boxplot() + geom_point(aes(col=Classifier), size=5)
+     dev.off()
+   #+END_SRC
+** Regression
+   Import regression metrics for all languages:
+   #+BEGIN_SRC R
+     allRegressionMetrics <- bind_rows(list(
+         "C/C++" = import_regression_metrics("c_cpp/regression/"),
+         "Haskell" = import_regression_metrics("haskell/regression/"),
+         "Java" = import_regression_metrics("java/regression/"),
+         "Kotlin" = import_regression_metrics("kotlin/regression/"),
+         "Python" = import_regression_metrics("python/regression/")), .id="Language")
+   #+END_SRC
+
+   Create box plot with /MAE/ for each language:
+   #+BEGIN_SRC R
+     tikz(filename="all_mae.tex", width=8, height=6)
+     allRegressionMetrics %>% mutate_at("MAE", function(mae) mae / 86400) %>% ggplot(aes(x=Language, y=MAE)) + labs(y="MAE (days)") +
+         geom_boxplot() + geom_point(aes(col=Regressor), size=5)
+     dev.off()
+   #+END_SRC
+
+   Compute the percentage of PRs that was close within first two weeks:
+   #+BEGIN_SRC R
+     chisqtAll <- list("C/C++" = import_prs("c_cpp/data.csv"), "Haskell" = import_prs("haskell/data.csv"),
+                       "Java" = import_prs("java/data.csv"), "Kotlin" = import_prs("kotlin/data.csv"),
+                       "Python" = import_prs("python/data.csv")) %>% map(~(nrow(.x %>% filter(time_opened < 1209600)) / nrow(.x))) %>%
+         print
+   #+END_SRC
