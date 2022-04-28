@@ -454,7 +454,7 @@
     - mention that p-values were not adjusted
     Pull request that are adding or removing some files has large influence on
     code quality. If the number of removed/added files has large impact on PR
-    acceptance, then it can be a large thread to validity of the independence
+    acceptance, then it can be a large threat to validity of the independence
     test.  The pull request acceptance can be also influenced by quality of files
     which were not linted (was written in non-primary language).  To eliminate
     the risk that the test was influenced, same test was performed on pull
@@ -1078,7 +1078,7 @@
    taking into account solely the PRs that only modified some source code of the
    primary language, the chi-square test indicates that presence of issue and PR
    acceptance are independent in case of the C/C++ and Kotlin. This is a possible
-   thread to validity and will be discussed in the following chapter.
+   threat to validity and will be discussed in the following chapter.
 
    The effect of code quality on the acceptance was also studied using
    classification algorithms.  On of the metrics that was used to measure the
@@ -1114,7 +1114,7 @@
    \caption{Mean absolute error for prediction of time to close a PR}
    \end{figure}
    #+END_EXPORT
-** Threads to validity
+** Threats to validity
    The validity of my research is endangered by several things.
    At first, the selection of the projects is one of the factors that influence
    the outcomes of the research. This study is focused primarily on the popular
@@ -1122,7 +1122,7 @@
    chapter. It is possible that projects selected using different metrics can yield
    varying results.
 
-   Another possible thread to validity is the selection of pull requests.
+   Another possible threat to validity is the selection of pull requests.
    It is usually not doable to examine all the pull request of some project.
    For the projects with huge number of PRs, the time and computational resources are
    the limiting factors. Moreover, to examine the rejected pull requests, the forked
@@ -1141,7 +1141,7 @@
    Furthermore, the different methods can be used to measure the quality of a pull
    requests. For each programming language there exists several linters that
    are focused on different set of issues and they can also use different algorithms
-   to detect the same issue. Another possible thread are false positives from linters.
+   to detect the same issue. Another possible threat are false positives from linters.
    The false positive can arise due to the fact that the files were linted in the
    isolated environment and this can introduce some issues (=import-error= etc).
    Some issues are also hard to detect; for instance, the issue can be specific to
