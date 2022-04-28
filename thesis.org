@@ -351,9 +351,11 @@
    Criteria (data from 2019-06-01):
    - is in the top 150 most favorite projects written in the given language
    - 200+ pull requests and less then 5000
+   - PRs merged using GitHub
    - https://github.com/EvanLi/Github-Ranking
    - at least 85 % of files are source files written in the given language
    - project is a program or program collection (not a book with the script etc.)
+   - The popularity of the project influences the acceptance[[cite:social]].
 
    - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
    - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
@@ -1112,20 +1114,53 @@
    \caption{Mean absolute error for prediction of time to close a PR}
    \end{figure}
    #+END_EXPORT
-** TODO Threads to validity
-   - PR recognition (rejected PRs can be merged using another way)
-     - manually inspect some randomly selected PRs
-   - modified files in the PR's that are not written in the primary programming language can influence acceptance
-     - investigate
-   - addition or deletion of file can influence acceptance
-     - investigate
-   - chosen projects
-   - PR's filtering
-     - linter errors
-     - limit of 500 PRs
-     - limited execution time for =git-contrast=
-     - not available PR's/repositories
-   - false positives from Linters (=import-error=, =relative-beyond-top-level=)
+** Threads to validity
+   The validity of my research is endangered by several things.
+   At first, the selection of the projects is one of the factors that influence
+   the outcomes of the research. This study is focused primarily on the popular
+   projects. Rationale behind the project selection is explained in the own dedicated
+   chapter. It is possible that projects selected using different metrics can yield
+   varying results.
+
+   Another possible thread to validity is the selection of pull requests.
+   It is usually not doable to examine all the pull request of some project.
+   For the projects with huge number of PRs, the time and computational resources are
+   the limiting factors. Moreover, to examine the rejected pull requests, the forked
+   repository with the required commits needs to be available. This is not always the case.
+   Sometimes the /force push/ can remove also the commits from the accepted pull requests.
+   It is also important to note that linting of some pull requests resulted in error in the
+   linter, and therefore these PRs were skipped. Pull requests were also skipped if the
+   linting time exceeded the limit (that was set to 1000 seconds) --- the PRs that
+   modified huge number of files were ignored.
+
+   Another problem is that pull request can be merged manually outside the GitHub.
+   These pull requests are not recognized as accepted. The projects were selected so that
+   the GitHub is the primary way to merge PRs. However, there still can be some PRs
+   merged using alternative methods.
+
+   Furthermore, the different methods can be used to measure the quality of a pull
+   requests. For each programming language there exists several linters that
+   are focused on different set of issues and they can also use different algorithms
+   to detect the same issue. Another possible thread are false positives from linters.
+   The false positive can arise due to the fact that the files were linted in the
+   isolated environment and this can introduce some issues (=import-error= etc).
+   Some issues are also hard to detect; for instance, the issue can be specific to
+   some particular context and the linter does not have to take this context into
+   account. The biggest difficulty with the quality evaluation is the fact that
+   everyone has unique personal perspective on code quality --- the code quality
+   does not have a single definition.
+
+   The pull requests sometimes contains also files that are not written in the
+   primary programming language of the project. The pull request can be then
+   rejected because of these files.
+
+   Lastly, there are several factors that influences the PR acceptance.
+   Some of them were discussed in previous chapters (number of commits, submitter's status etc.).
+   The one factor that influences the acceptance is number of lines that were changed [[cite:social]].
+   The more lines are added/changed the higher is the probability that the pull request will be
+   rejected, but the chance that some quality issue will be introduced is also higher.
+   In this case, it is difficult to distinguish if the pull request was rejected because
+   of the code quality or because the changes are too big.
 * TODO Conclusion
 ** TODO Comparison with the previous results
 ** TODO Future work
