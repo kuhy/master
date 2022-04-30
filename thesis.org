@@ -482,12 +482,17 @@
       - ANOVA
       - classification (machine learning)
 * Evaluation
-  *TODO*
+  The following chapter is dedicated to the findings from my research.  The first
+  five subchapters focus on individual programming languages --- here I am
+  giving the answers to the first four research questions.  The last research
+  question (*RQ5*) is answered afterward. At the end of this chapter, I am
+  discussing possible threats to validity that could eventually influence the
+  outcomes of my study.
 ** Python
    In order to analyze the influence of code quality on the pull request
-   acceptance, the 20 projects from the Python ecosystem were selected.
-   In total, 9452 pull requests were analyzed and 73 % of these PRs was accepted.
-   Pull request were more accepted in less popular projects, as can be seen in
+   acceptance, 20 projects from the Python ecosystem were selected.
+   In total, 9452 pull requests were analyzed, and 73 % of these PRs were accepted.
+   Pull requests were more accepted in less popular projects, as can be seen in
    the following scatterplot:
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -498,8 +503,8 @@
    \end{figure}
    #+END_EXPORT
 
-   At average, one pull request introduced 5.36 issues and fixed 2.44 issues;
-   accepted pull request introduced 4.62 and fixed 1.99 issues, and rejected
+   On average, one pull request introduced 5.36 issues and fixed 2.44 issues;
+   an accepted pull request introduced 4.62 and fixed 1.99 issues, and rejected
    pull request introduced 7.86 issues and fixed 4.43 on average.
    5 % trimmed mean was used to compute these values.
    #+BEGIN_EXPORT latex
@@ -513,23 +518,23 @@
 
    In the analyzed pull requests, Pylint detected 222 different issues.
 
-   The list of issues that was fixed/introduced in the largest number of pull
-   request was dominated by the conventions.  The convention that was
+   The conventions dominated the list of issues that were fixed/introduced in
+   the largest number of pull requests.  The convention that was
    fixed/introduced in the largest number of pull requests is
-   =missing-function-docstring= (in 37 % of PRs); also conventions
+   =missing-function-docstring= (in 37 % of PRs); conventions
    =invalid-name=, =line-too-long= and =consider-using-f-string= were
-   fixed/introduced in over then 20 % of pull requests. There were 15 issues
-   that were fixed/introduced in more then 10 % of PRs and 72 issues were in
+   fixed/introduced in over 20 % of pull requests. There were 15 issues
+   that were fixed/introduced in more than 10 % of PRs, and 72 issues were in
    over 1 % of PRs (out of the 222 issues which were found in the pull
-   requests).  There were 9 issues which was present in the analyzed pull
-   requests but did not influence their quality (number of these issues was not
+   requests).  There were nine issues that were present in the analyzed pull
+   requests but did not influence their quality (the number of these issues was not
    changed by any pull request). 13 issues were introduced/fixed in only one
-   pull request and 10 of them are issues classified as errors. The most common
+   pull request, and 10 of them are issues classified as errors. The most common
    error is =import-error= (24 % of PRs); however, I suspect that there will be
-   a lot of false positives which aroused due to linting in the isolated
-   environment. 60 issues were fixed in more PR's then they were introduced.
+   many false positives that arise due to linting in the isolated
+   environment. Sixty issues were fixed in more PRs than they were introduced.
    They are 24 more PRs that fixed the warning =super-init-not-called= than the
-   PR's that introduced it.
+   PRs that introduced it.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -539,12 +544,12 @@
    \end{figure}
    #+END_EXPORT
 
-   The most important Pylint issue in regards of the PR acceptance is the
+   The most important Pylint issue in regards to the PR acceptance is the
    =syntax-error=.  XGBoost classifier gives this error the 1.2 %
    importance. However, other classifiers consider this error less important.
-   The average importance of the =syntax-error= is only 0.3 %.  The syntax error
-   was introduced in 17 projects. At average, rejected pull request introduced
-   =0.027= syntax errors, and average accepted pull request even fixed =0.001=
+   On average importance of the =syntax-error= is only 0.3 %.  The syntax error
+   was introduced in 17 projects. On average, rejected pull request introduced
+   =0.027= syntax errors, and the average accepted pull request even fixed =0.001=
    syntax errors.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -555,12 +560,12 @@
 
    When only introduced issues were considered, the list
    of the most important issues looked differently. On the other hand, there
-   are some issues that appeared in top 10 in both lists: =syntax-error=,
+   are some issues that appeared in the top 10 in both lists: =syntax-error=,
    =unused-variable= and =unused-import=. The =syntax-error= is considered
-   as the most important issue by both methods.
+   the most important issue by both methods.
 
-   Using only the information about fixed issues, the most important issue
-   is =f-string-without-interpolation= (in terms of acceptance). However no classifier
+   When only the information about fixed issues is used, the most important issue
+   is =f-string-without-interpolation= (in terms of acceptance). However, no classifier
    gives this issue importance over one percent.
 
    In order to visualize the difference in quality between accepted and rejected PRs, I created PCA scatter plot:
@@ -573,7 +578,7 @@
    In the PCA scatter plot, there is no visible difference between rejected and accepted pull requests.
 
    To understand if the presence of some issue in the PR influences its acceptance, I created contingency matrices
-   and performed chi-square test of independence:
+   and performed a chi-square test of independence:
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -584,40 +589,40 @@
    #+END_EXPORT
 
    As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of
-   rejected pull requests which contained some defected is higher then
+   rejected pull requests which contained some defected is higher than
    expected. For chi-square test, $p < \num{2.2e-16}$ and therefore, the
    hypothesis that presence of some issue and PR acceptance are independent is
    rejected on significance level $\alpha = 0.05$. However, the Cramer's $\phi_c
-   \approx 0.092$ therefore the association is weak.  This conclusion supports
-   also the fact that AUC for trained classification models is slightly over 50
-   percent.  The average AUC for all models is $53.4$.
+   \approx 0.092$; therefore, the association between issue presence and acceptance is weak.
+   This conclusion also supports the fact that AUROC for trained classification models is only slightly over 0.5.
+   The average AUC for all models is $0.534$.
 
    When considering only PRs that solely modified some source files, $p < \num{5.548e-10}$
-   and therefore also there the presence of some code quality issue in the PR
+   and therefore also here the presence of some code quality issue in the PR
    influences the PR acceptance.
-   Similarly to the previous test, the $\phi_c \approx 0.087$, therefore the
-   association between presence of same issue and PR acceptance is weak.
+   Similar to the previous test, the $\phi_c \approx 0.087$; therefore, the
+   association between the presence of the same issue and PR acceptance is weak.
 
-   Similar results were obtained when the chi-square test was performed separately for each issue category.
+   Almost identical results were obtained when the chi-square test was performed separately for each issue category.
 
    When the projects were considered individually, only for nine of them the $p < \alpha$. In these projects,
    the poor code quality had a negative impact on PR acceptance.
-   In the rest of the projects, presence of some code quality issue does not seems to have an effect on
+   In the rest of the projects, the presence of some code quality issue does not seem to have an effect on
    the PR acceptance.
 
    The quality of the code does not seem to have an effect on the time it takes to close a pull request.
-   All of the trained regression models have negative $R^2$ score (when evaluated on the test set).
+   All of the trained regression models have a negative $R^2$ score (when evaluated on the test set).
    This means that trained models are worse at predicting the time than a constant (mean value).
    Similar results were obtained when only introduced issues were considered and also when only
    fixed issues were considered.
 ** Java
    The next programming language that was analyzed is Java. In total, the 8887
-   pull requests were linted and the 73 % of these pull request were accepted.
-   At average, the one pull request introduced 20 new PMD issues, but
+   pull requests were linted, and 73 % of these pull requests were accepted.
+   On average, the one pull request introduced 20 new PMD issues but,
    at the same time, also fixed 18 other issues.
 
-   Similarly to the Python projects, the pull request from the less popular project
-   were more likely to be accepted than pull request from more popular projects.
+   Like int the Python projects, the pull request from the less popular project
+   were more likely to be accepted than pull requests from more popular projects.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -628,10 +633,10 @@
    #+END_EXPORT
 
    Only 1366 pull requests (from the total of 8887 pull requests) did not change
-   the quality of the source code (did not fixed nor introduced some PMD issue).
+   the quality of the source code (did not fix nor introduce some PMD issues).
    The PMD linter was able to detect 253 different issues in the given pull requests.
    Most of the introduced issues were issues related to the code style. In total,
-   all of the pull requests introduced over the million of code style issues.
+   all of the pull requests introduced over a million code-style issues.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -645,8 +650,8 @@
    =CommentRequired= (documentation issue).  Another frequent issues are
    =LocalVariableCouldBeFinal=, =MethodArgumentCouldBeFinal= (code style issues)
    and =LawOfDemeter= (issue in code design). These issues are the only issues
-   that was introduced in more than 3000 pull requests. Similarly, the list of issues
-   that was fixed in the largest number of pull request is dominated by the
+   that were introduced in more than 3000 pull requests. Similarly, the list of issues
+   that were fixed in the largest number of the pull request is dominated by the
    very same issues.
 
    #+BEGIN_EXPORT latex
@@ -658,9 +663,9 @@
    \end{figure}
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{PMD_issues_prs}, the documentation issues
-   tend to appear in large number of pull requests (24 % at average). Moreover,
+   tend to appear in a large number of pull requests (24 % on average). Moreover,
    the typical code style issue appeared in 11 % of pull requests. On the other
-   hand, average issue that indicate error prone construct is present in only two
+   end of the spectrum, an average issue indicating an error-prone construct is present in only two
    percent of pull requests.
 
    #+BEGIN_EXPORT latex
@@ -672,14 +677,14 @@
    The most important PMD issue is =JUnitAssertionsShouldIncludeMessage=. The
    average importance of this issue is only 0.6 %. However, the AdaBoost
    classifier gives this issue 3.7 % importance.  The 0.89 issues of this type
-   are introduced in average accepted pull request. I suspect that the pull
-   requests that are adding larger number of tests to the codebase have higher
-   probability to be accepted. This pull requests have also higher probability
-   to introduce the =JUnitAssertionsShouldIncludeMessage=. This can be the
+   are introduced in an average accepted pull request. I suspect that the pull
+   requests that are adding a larger number of tests to the codebase have a higher
+   probability of being accepted. At the same time, these pull requests also have a higher probability
+   of introducing the =JUnitAssertionsShouldIncludeMessage=. This can be the
    reason why this issue has the largest importance.  This also supports the
    study that shows that the acceptance likelihood is increased by 17.1 % when
    tests are included[[cite:social]]. However, another performed study indicates that
-   presence of test code does not influence PR acceptance[[cite:explaratory]].
+   the presence of test code does not influence PR acceptance[[cite:explaratory]].
 
    The PCA scatter plot for Java pull requests looks as follows:
    #+BEGIN_EXPORT latex
@@ -690,7 +695,7 @@
    #+END_EXPORT
    In the PCA scatter plot, there is no visible difference between rejected/accepted pull requests.
 
-   In order to understand the relation between acceptance and the introduction of some quality issue,
+   To understand the relationship between acceptance and the introduction of a quality issue,
    the chi-square test was performed.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -702,35 +707,35 @@
    #+END_EXPORT
    The $p = \num{9.132e-14} < \alpha$ and $\phi_c = 0.079$; therefore, there is
    a weak relation between acceptance and issue presence. Similar results were
-   obtained when only PRs that solely modified source code of the main language were
-   considered and also when test was performed individually for each issue category.
+   obtained when only PRs that solely modified the source code of the main language were
+   considered and also when the test was performed individually for each issue category.
 
-   17 out of the 20 Java projects contained sufficient number of pull requests to
+   17 out of the 20 Java projects contained a sufficient number of pull requests to
    perform the chi-square tests. In nine of them, the code quality and acceptance are
    not independent. Unexpectedly, in one of the projects (=alibaba/fastjson=) the
-   presence of some issue has small positive effect on the acceptance.
+   presence of an issue has a small positive effect on the acceptance.
 
-   The PMD issues seems to have some effect on the time it takes to close a pull
-   requests when considering only $R^2$ computed for each model. However the
-   $R^2$ value is usually not a good metric how to evaluate non-linear models;
+   The PMD issues seem to have some effect on the time it takes to close a pull
+   request when considering only $R^2$ computed for each model. However, the
+   $R^2$ value is usually not a good metric for evaluate non-linear models;
    it can reveal some information about the model, but it does not give us
-   information how accurate the model is. There are three models that have $R^2
-   > 0.4$: Bagging, GradientBoost, RandomForest.  The linear regression have
-   $R^2 = 0.1257$, therefore for this model, 13 % of variance in time to close a
-   PR can be explained by code issues. However, all of the models have high mean
+   information on how accurate the model is. There are three models that have $R^2
+   > 0.4$: Bagging, GradientBoost and RandomForest.  The linear regression has
+   $R^2 = 0.1257$; therefore for this model, 13 % of the variance in time to close a
+   PR can be explained by quality issues. However, all of the models have high mean
    absolute error (MAE). The average MAE value for all of the models is $3934338
-   \approx 46\text{ days}$ and 87 % of all analyzed Java pull requests was
+   \approx 46\text{ days}$ and 87 % of all analyzed Java pull requests were
    closed within one month. Therefore these models are basically useless in
    practice. The other models (when considering only rejected/fixed issues) yielded
-   similar results. To conclude, the found quality issues does not have a large
+   similar results. To conclude, the found quality issues do not seem to have an
    effect on the time to close a pull request.
 ** Kotlin
-   The 20 projects were selected also from the Kotlin ecosystem.
-   Average analyzed pull request was from project that has ten thousand
+   The 20 projects were also selected from the Kotlin ecosystem.
+   The average analyzed pull request was from a project that has ten thousand
    stars and introduced nine issues and fixed only four. The 7514 pull requests
-   were analyzed (using the /ktlint/ linter) and 80 % of them were accepted.
+   were analyzed (using the /ktlint/ linter), and 80 % of them were accepted.
    The trend that maintainers of popular projects reject more pull requests can
-   be observed also in the Kotlin community.
+   also be observed in the Kotlin community.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -740,18 +745,18 @@
    \end{figure}
    #+END_EXPORT
 
-   The only 20 different issues were detected by the /ktlint/ in the analyzed projects;
-   however, this is expected, since the /ktlint/ is focused only on small set of quality issues.
+   Only 20 different issues were detected by the /ktlint/ in the analyzed projects;
+   however, this is expected since the /ktlint/ is focused only on a small set of quality issues.
 
-   The =indent= issue was introduced in the largest number of pull requests (2598). It is the
-   only issue that was introduced in more than thousand pull requests. It is also the issue
-   that was fixed in largest number of pull requests. The official Kotlin convention is
-   to use the four spaces for indentation[fn::https://kotlinlang.org/docs/coding-conventions.html]
+   The =indent= is the issue that was introduced in the largest number of pull requests (2598). It is the
+   only issue that was introduced in more than a thousand pull requests. It is also the issue
+   that was fixed in the largest number of pull requests. The official Kotlin convention is
+   to use the four spaces for indentation[fn::https://kotlinlang.org/docs/coding-conventions.html],
    and the =indent= issue signifies that this convention was violated. This issue influenced
    the code quality of more than half of the pull requests. However, this can be caused by projects
-   whose standards does not follow the official recommendations.
+   whose standards do not follow the official recommendations.
 
-   Other often violated /ktlint/ rules are =no-wildcard-imports=, =final-newline= and =import-ordering=.
+   Other often violated /ktlint/ rules are =no-wildcard-imports=, =final-newline=, and =import-ordering=.
    On the other end of the spectrum, the rule =no-line-break-after-else= was violated only once.
 
    #+BEGIN_EXPORT latex
@@ -770,13 +775,14 @@
    \end{figure}
    #+END_EXPORT
    The issue with the highest importance average is =dot-spacing=.
-   The Bagging classifier gives 1.7 % importance to this issue. The importance from other
-   classifiers is smaller --- average importance is 0.8 %.
+   The Bagging classifier gives 1.7 % importance to this issue. The importance obtained from other
+   classifiers is smaller --- the average importance is 0.8 %.
    However, this issue was introduced only in 18 PRs (13 times in the rejected pull request).
-   Furthermore, 7 accepted and 7 rejected pull requests fixed this issue.
+   Furthermore, seven accepted and seven rejected pull requests fixed this issue.
+   Therefore the impact of this issue is disputable.
 
-   It is worth mentioning that issue on the fourth place does not have a name
-   (given by /ktlint/).  This issue usually indicates invalid Kotlin file.  This
+   It is worth mentioning that fourth most important issue does not have a name
+   (given by /ktlint/).  This issue usually indicates an invalid Kotlin file.  This
    issue has high importance (relative to the other issues) also when the only
    fixed and also when only introduced issues were taken into account during the
    classification. This issue was introduced by 90 rejected PRs and by 51
@@ -785,10 +791,10 @@
    When using only introduced issues, the most important issue is =indent=.
    This issue is also most important when only the fixed issues are considered.
    As being said before, in projects that are using non-standard indentation,
-   this issue is false positive.
+   this issue is a false positive.
 
-   The PCA scatter plot was created also for Kotlin programming language.
-   The firs principal component explains almost all variance in the code quality of pull requests.
+   The PCA scatter plot was also created for the Kotlin programming language.
+   The first principal component explains almost all variance in the code quality of pull requests.
    However, the difference between rejected/accepted pull requests is not apparent from the PCA plot:
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -798,11 +804,11 @@
    #+END_EXPORT
 
    To understand the link between acceptance and the introduction of some
-   quality issue, the chi-square test was performed. The $p < \num{2.2e-16}$ and
-   $\phi_c \approx 0.095$; therefore the presence of some issue has a small
+   quality issue, I performed the chi-square test on Kotlin dataset. The $p < \num{2.2e-16}$ and
+   $\phi_c \approx 0.095$; therefore, the presence of some issue has a small
    negative effect on acceptance (similarly to the Java and Python).
-   Furthermore, three classifiers (/Bagging/, /GradientBoost/ and /RandomForest/)
-   have AUC for ROC curve above 60 and the average AUC is $57.58$.
+   Furthermore, three classifiers (/Bagging/, /GradientBoost/, and /RandomForest/)
+   have AUC for ROC curve above 60, and the average AUC is $57.58$.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -815,28 +821,28 @@
    code, the $p = 0.627$, thus the acceptance and issue presence are independent
    (in this context).
 
-   Only 12 of the projects have sufficient number of pull requests to perform
-   the chi-square test. There are 4 projects were the presence of some issue
-   have small impact on the PR acceptance (the average Cramer's V is $\phi_c = 0.18$).
+   Only 12 of the projects have a sufficient number of pull requests to evaluate
+   the chi-square test. There are four projects where the presence of some issue
+   has a small impact on the PR acceptance (the average Cramer's V is $\phi_c = 0.18$).
 
    To analyze the relation between the code quality and time that is required to
-   close a PR, several regression techniques were applied also on the Kotlin
-   dataset.  For linear regression, $R^2 = 0.164$, therefore trained model is
+   close a PR, I applied several regression techniques also to the Kotlin
+   dataset.  For linear regression, $R^2 = 0.164$, therefore the trained model is
    able to explain 16 % of the variance in the time to close a PR. The $MAE =
-   2375121 \approx 27\text{ days}$; therefore the model does not perform so well
-   on the dataset, taking into consideration that 89 % of pull request were
+   2375121 \approx 27\text{ days}$; therefore, the model does not perform so well
+   on the dataset, taking into consideration that 89 % of pull requests were
    closed within one month. The mean absolute error for other models was similar
    to the $MAE$ obtained for linear regression.
 ** Haskell
-   Haskell is the only purely functional programming language that I analyzed.
-   The 18 out of 20 selected Haskell projects has under the 5000 stars. There
-   are only two exceptions: PureScript with 7632 stars and Pandoc that has over
+   Haskell is the only purely functional programming language that was analyzed.
+   The 18 out of 20 selected Haskell projects have under the 5000 stars. There
+   are only two exceptions: PureScript with 7632 stars and Pandoc, which has over
    15000 stars. The Pandoc has the also smallest percentage of accepted pull
    requests.  However, excluding the Pandoc, there is no visible connection
-   between number of stars and acceptance in the selected projects. When the
-   outliers are filtered, the trend tends to be opposite of previous languages:
+   between the number of stars and acceptance in the selected projects. When the
+   outliers are filtered, the trend tends to be the opposite of previous languages:
    more accepted are pull requests of projects with more stars.  However, only
-   20 projects are not sufficient to make such conclusions about whole
+   20 projects are not sufficient to make such conclusions about the whole
    population of Haskell projects.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -847,14 +853,14 @@
    \end{figure}
    #+END_EXPORT
 
-   The 6949 pull request were analyzed. Interesting is that in the over than 60
+   The 6949 pull requests were analyzed. Interestingly, in over 60
    % of pull requests, no change in the code quality was detected. Moreover, the
-   /hlint/ is able to recognize large number of different issues (321 issue
+   /HLint/ is able to recognize a large number of different issues (321 issue
    types were detected in selected pull requests). On the other hand, some issues
-   were counted twice because they appeared as suggestion but also as a warning
+   were counted twice because they appeared as a suggestion but also as a warning
    (in the different contexts).
-   These facts can indicate that large
-   number of submitted pull requests follows the high quality standards.
+   These facts can indicate that a large
+   number of submitted pull requests follow high-quality standards.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth + 2cm}{!}{%
@@ -864,14 +870,14 @@
    \end{figure}
    #+END_EXPORT
 
-   The 78 percent of pull requests was accepted and the average pull request introduced
+   Seventy-eight percent of pull requests were accepted, and the average pull request introduced
    only 0.6 issues and fixed 0.3 issues. The most common types of issues were suggestions
    and warnings. The error that was introduced in the largest number of pull requests is
-   =Use-newTVarIO= and this error was introduced only in 8 pull requests. The most common
+   =Use-newTVarIO=, and this error was introduced only in 8 pull requests. The most common
    suggestions were =Redundant-bracket= (introduced in 499 PRs) and =Redundant-$= (444 PRs).
    The warning =Unused-LANGUAGE-pragma= was introduced in 323 pull requests and =Eta-reduce=
    warning in 214 of them. There were only ten issues that were introduced in 100 and more
-   pull requests. 105 issue types were detected in the analyzed code but no PR introduce
+   pull requests; and another 105 issue types were detected in the analyzed code, but no PR introduced
    any of those issues.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -882,7 +888,7 @@
    \end{figure}
    #+END_EXPORT
 
-   The most important Haskell issue is suggestion =Use-if=. However, no classifier gives this
+   The most important Haskell issue is the suggestion =Use-if=. However, no classifier gives this
    issue importance over one percent. Therefore the actual impact of this issue is disputable.
    This issue was introduced in 18 rejected PRs and fixed in 11. There are 19 accepted PRs that
    introduced =Use-if= and 27 accepted PRs that fixed it.
@@ -892,13 +898,13 @@
    \caption{Ten most important HLint issues}
    \end{figure}
    #+END_EXPORT
-   When only introduced issues were taken into account, the most important issues is =Move-brackets-to-avoid-$= (suggestion).
+   When only introduced issues were taken into account, the most important issue is =Move-brackets-to-avoid-$= (suggestion).
    The AdaBoost classifier gives this issue 1 % importance, although the average importance is only 0.4 %.
 
-   In context of fixed issues, the most important is warning =Use-fewer-imports= with average importance again only about 0.4 %.
+   In the context of fixed issues, the most important is warning =Use-fewer-imports= with average importance again only about 0.4 %.
 
    The PCA scatter plot was also generated for the Haskell language.
-   Similarly to the results in already analyzed languages, there is no apparent
+   Similar to the results in already analyzed languages, there is no apparent
    difference between accepted and rejected pull requests.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -908,14 +914,14 @@
    #+END_EXPORT
 
    For the chi-square test, the $p = 0.001438 < \alpha = 0.05$ and Cramer's V is only $\phi_c = 0.038$;
-   therefore, the presence of an issue in the PR's have only small negative effect on the
-   acceptance of the pull request. Similar results were obtain when only
-   the pull requests, that contains exclusively some modified code, were considered.
-   Furthermore, tests for the individual issue types yielded also similar results.
-   Unfortunately, there is only small number of pull requests that introduced some errors;
+   therefore, the presence of an issue in the PRs has only a small negative impact on the
+   acceptance of the pull request. Similar results were obtained when only
+   the pull requests that contain exclusively some modified code were considered.
+   Furthermore, tests for the individual issue types also yielded similar results.
+   Unfortunately, there is only a small number of pull requests that introduced some errors;
    therefore the chi-square test cannot be performed on this issue category.
    The average AUC computed for ROC curves is around 50 --- the classification algorithms
-   were unable to find some significant association between the acceptance and code quality issues.
+   were unable to distinguish between the accepted and rejected PRs using the code quality.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -924,21 +930,21 @@
    \caption{Relation between presence of issue and PR acceptance}
    \end{figure}
    #+END_EXPORT
-   The 13 projects contains sufficient number of pull requests; the acceptance and
-   the issue presence is not independent only in four of them (the issue presence
-   have the small negative impact on the acceptance). For the =haskell/aeson= project,
+   The 13 projects contain a sufficient number of pull requests; the acceptance and
+   the issue presence are not independent only in four of them (there, the issue presence
+   have a small negative impact on the acceptance). For the =haskell/aeson= project,
    the Cramer's V is $0.282$ --- the association is ``medium''.
 
-   The issues detected by /HLint/ does not seems to have impact on time it takes to close a pull request.
+   The issues detected by /HLint/ do not seem to have an impact on the time it takes to close a pull request.
    All trained models have negative $R^2$. When only fixed issues were used for regression, there
-   were three models with positive $R^2$: Bagging (0.0315), ElasticNet (0.0085) and RandomForest (0.0229).
+   were three models with positive $R^2$: Bagging (0.0315), ElasticNet (0.0085), and RandomForest (0.0229).
    However, all of them have high mean absolute error: Bagging ($2193658 \approx 25\text{ days}$),
-   ElasticNet (2255678) and RandomForest (2201347).
+   ElasticNet (2255678), and RandomForest (2201347).
 ** C/C++
    The C and C++ programming languages are analyzed together because they share
-   lot of similarities.  This usually enables to use the same linter for both
+   a lot of similarities.  This usually enables use of the same linter for both
    languages. Moreover, it is not uncommon that projects that are written in C++
-   contains also some C code and vice versa.  The 9 selected projects has more
+   also contain some C code and vice versa.  The nine selected projects have more
    code written in C, while the rest of the 11 projects is more C++-oriented.
 
    In analyzed projects, there is no visible connection between the acceptance
@@ -952,10 +958,10 @@
    \end{figure}
    #+END_EXPORT
 
-   I analyzed 8774 C/C++ pull requests. The 77 % of them are accepted pull requests.
-   The typical pull request introduces 0.25 issues and fixes 0.12 issues, the typical
-   rejected PR introduces 0.79 issues and typical accepted PR only 0.15 issues.
-   The 79 % of pull request did not change the quality of the source code
+   I analyzed 8774 C/C++ pull requests. Seventy-seven percent of them have been accepted.
+   The typical pull request introduces 0.25 issues and fixes 0.12 issues; the typical
+   rejected PR introduces 0.79 issues, and the typical accepted PR only 0.15 issues.
+   The 79 % of pull requests did not change the quality of the source code
    (in terms of the /flawfinder/ quality rules).
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -966,15 +972,15 @@
    \end{figure}
    #+END_EXPORT
 
-   The most common type of issue is note. Least common are errors. The
+   The most common type of issue is the note. The least common are errors. The
    /flawfinder/ was able to identify 137 different issues in the studied
-   PRs. All of the top ten issues (in terms of umber of PRs which introduced
+   PRs. All of the top ten issues (in terms of number of PRs which introduced
    them) are notes. The most common note is =buffer-char= (``Statically-sized
    arrays can be improperly restricted leading to potential overflows or other
    issues\dots{}''). The most common error is =buffer-strcat= (``Does not check
-   for buffer overflows when concatenating to destination\dots'') and it is the
+   for buffer overflows when concatenating to destination\dots''), and it is the
    11 most introduced issue (introduced in 69 pull requests). There are 36 issues
-   that were present in the analyzed code but they were not introduced in any
+   that were present in the analyzed code, but they were not introduced in any
    pull request; 21 of them are errors.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -985,18 +991,18 @@
    \end{figure}
    #+END_EXPORT
 
-   Classification algorithms ranks as the most important issue the
+   Classification algorithms rank as the most important issue the
    =format-printf= (``If format strings can be influenced by an attacker, they
    can be exploited\dots''). However, this issue is only a /note/.  Therefore it
-   does not have to indicate a defect (there will probably be large number of
-   false positives). AdaBoost and XGBoost algorithms gives this issue importance
+   does not have to indicate a defect (there will probably be a large number of
+   false positives). AdaBoost and XGBoost algorithms give this issue importance
    of 1 %. The average importance is 0.7%.  This issue is also most important
-   when only introduced issues are considered.  Second most important issue has
-   average importance only 0.26 %.
+   when only introduced issues are considered.  The second most important issue has
+   average importance of only 0.26 %.
 
    The most important error is =buffer-StrCpyNA= (``Does not check for buffer
-   overflows when copying to destination\dots'') with average importance only
-   0.9 %. This error is sixth most important issue.
+   overflows when copying to destination\dots'') with average importance of only
+   0.9 %. This error is the sixth most important issue.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \input{results/c_cpp/issue_importance}
@@ -1015,7 +1021,7 @@
    \end{figure}
    #+END_EXPORT
 
-   Based on the chi-square test, the presence of issue in the PR have small negative impact
+   Based on the chi-square test, the presence of an issue in the PR has a small negative impact
    on the PR acceptance ($\phi_c = 0.117$).
    However, When considering only pull requests that solely modified some source files,
    Cramer's V $\phi_c = 0.024$ and $p = 0.1 > \alpha$ --- in this settings, the issue presence
@@ -1030,38 +1036,38 @@
    #+END_EXPORT
    Some small impact impact was discovered when the chi-square test was performed separately for
    each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
-   Furthermore, in 6 out of 11 projects, which have enough data to perform and evaluate the chi-square test,
-   the presence of some issue in the PR have negative effect on the PR acceptance.
-   In the =minetest/minetest= and =pybind/pybind11= projects this effect is moderate;
-   for other projects the association is small.
+   Furthermore, in 6 out of 11 projects which have enough data to perform and evaluate the chi-square test,
+   the presence of some issue in the PR has a negative effect on the PR acceptance.
+   In the =minetest/minetest= and =pybind/pybind11= projects, this effect is moderate;
+   for other projects, the association is small.
 
-   In case of C/C++, the time to close a pull request seems not to be related
-   with found issues.  All the models have negative $R^2$, except the ElasticNet
-   regressor. For the ElasticNet, $MAE = 4681624$ (mean absolute error is 54
+   In the case of C/C++, the time to close a pull request seems not to be related
+   to found issues.  All the models have negative $R^2$, except the ElasticNet
+   regressor. For the ElasticNet, $MAE = 4681624$ (the mean absolute error is 54
    days) --- therefore, this model also cannot be used to predict the time to
    close a PR.  Models considering only rejected issues and also models
    considering only accepted issues have yielded similar results.
 ** Programming languages and code quality impact
    Comparing the code quality of projects written in different programming
-   languages is difficult task.  Each language have different programming
-   constructs, syntax and type system. For instance, Python, which is
-   dynamically-typed multi-paradigm programming language, has completely
-   distinct characteristics than Haskell, which is purely functional programming
-   language with strong, static type system.
+   languages is a difficult task.  Each language has different programming
+   constructs, syntax, and type system. For instance, Python, which is
+   a dynamically-typed multi-paradigm programming language, has completely
+   distinct characteristics from Haskell, which is a purely functional programming
+   language with a strong, static type system.
 
-   Moreover, every linter is different and have unique set of rules.  The
-   /ktlint/ is focused on code clarity and community conventions whereas
+   Moreover, every linter is different and has a unique set of rules.  The
+   /ktlint/ is focused on code clarity and community conventions, whereas
    /flawfinder/ checks code for potentially dangerous functions. On the other
-   hand, the /PMD/ is more general-oriented linter that contains large set of
-   rules for Java programming language. Lastly, the /HLint/ is oriented mainly
-   on code simplification and spotting of redundancies.
+   hand, the /PMD/ is a more general-oriented linter that contains a large set of
+   rules for the Java programming language. Lastly, the /HLint/ is oriented mainly
+   on code simplification and spotting redundancies.
 
-   On the other hand, there are some metrics that evaluates how effectively
-   can trained models predict the acceptance of PR/time to close a PR;
-   and these metrics can be compared across different programming language.
-   On top of that, the results from chi-square test can be also compared.
-   However, cation is in order because the quality for each language is
-   evaluated differently as discussed before.
+   On the other hand, there are some metrics that evaluate how effectively
+   trained models predict the acceptance of PR or time to close a PR;
+   and these metrics can be compared across different programming languages.
+   On top of that, the results from the chi-square test can also be compared.
+   However, the cation is in order because the code quality for each language is
+   evaluated differently, as discussed before.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -1070,19 +1076,19 @@
    \caption{Comparison of Cramer's V}\label{All_V}
    \end{figure}
    #+END_EXPORT
-   As can be seen in Figure\nbsp{}\ref{All_V}, in all studied languages the
-   presence of some issue had the negative effect on the PR acceptance (in terms
-   of chi-square tests); however, for all of the languages this effect is small ($\phi_c
+   As can be seen in Figure\nbsp{}\ref{All_V}, in all studied languages, the
+   presence of some issue have a negative effect on the PR acceptance (in terms
+   of chi-square tests); however, for all of the languages, this effect is small ($\phi_c
    \approx 0.1$).  The smallest effect was observed for Haskell programming
-   language and the highest effect is for C/C++.  On the other hand,
+   language and the highest effect for C/C++.  On the other hand,
    taking into account solely the PRs that only modified some source code of the
-   primary language, the chi-square test indicates that presence of issue and PR
-   acceptance are independent in case of the C/C++ and Kotlin. This is a possible
-   threat to validity and will be discussed in the following chapter.
+   primary language, the chi-square test indicates that the presence of issue and PR
+   acceptance are independent in the case of the C/C++ and Kotlin. This is a possible
+   threat to validity.
 
-   The effect of code quality on the acceptance was also studied using
-   classification algorithms.  On of the metrics that was used to measure the
-   performance of the classification models is ``area under the ROC curve''
+   The effect of code quality on acceptance was also studied using
+   classification algorithms.  One of the metrics that were used to measure the
+   performance of the classification models is the ``area under the ROC curve''
    (AUC). When using this metric to evaluate models, the Haskell is once again
    the language when the code quality is least important
    (Figure\nbsp{}\ref{All_AUC}). The average AUC for Haskell models is around
@@ -1091,7 +1097,12 @@
    are better in classification than models for other languages.
    Except for Haskell, the average AUC is over 0.5 but under 0.6 --- these AUC
    scores are usually considered poor[[cite:logreg]]. This indicates that code quality
-   have only small or no effect on the acceptance.
+   has only a small or no effect on the acceptance.
+
+   As can be seen, similar results were obtained for all of the languages.
+   In all of the languages, the code quality impact is small (based on the chi-square tests
+   and also based on the results from classification algorithms). There is no language
+   that significantly differs from others.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -1102,10 +1113,12 @@
    #+END_EXPORT
 
    As discussed in the previous chapter, there seems to be no connection between
-   the code quality and the time it takes to close a pull requests (based on the trained regression models).
-   The smallest MAE have Kotlin models (around 26 days); on the other end of the spectrum are Python models
-   with average MAE equal to 78.9 days. The trained models are unusable considered that most of the pull
-   request are closed with first two weeks (83 % of Kotlin PRs and 76% of Python PRs).
+   the code quality and the time it takes to close pull requests (based on the
+   trained regression models).  The smallest MAE was scored by Kotlin models
+   (around 26 days); on the other end of the spectrum are Python models with an
+   average MAE equal to 78.9 days. The trained models are unusable, considering
+   that most of the pull requests are closed within the first two weeks (83 % of Kotlin
+   PRs and 76% of Python PRs).
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -1117,47 +1130,47 @@
 ** Threats to validity
    The validity of my research is endangered by several things.
    At first, the selection of the projects is one of the factors that influence
-   the outcomes of the research. This study is focused primarily on the popular
-   projects. Rationale behind the project selection is explained in the own dedicated
-   chapter. It is possible that projects selected using different metrics can yield
+   the outcomes of the research. This study is focused primarily on popular
+   projects. The rationale behind the project selection is explained in the own dedicated
+   subchapter. It is possible that projects selected using different metrics can yield
    varying results.
 
    Another possible threat to validity is the selection of pull requests.
-   It is usually not doable to examine all the pull request of some project.
-   For the projects with huge number of PRs, the time and computational resources are
+   It is usually not doable to examine all the pull requests of some project.
+   For the projects with a huge number of PRs, the time and computational resources are
    the limiting factors. Moreover, to examine the rejected pull requests, the forked
    repository with the required commits needs to be available. This is not always the case.
-   Sometimes the /force push/ can remove also the commits from the accepted pull requests.
-   It is also important to note that linting of some pull requests resulted in error in the
+   Sometimes the /force push/ can also remove the commits from the accepted pull requests.
+   It is also important to note that linting of some pull requests resulted in an error in the
    linter, and therefore these PRs were skipped. Pull requests were also skipped if the
    linting time exceeded the limit (that was set to 1000 seconds) --- the PRs that
-   modified huge number of files were ignored.
+   modified a huge number of files were ignored.
 
-   Another problem is that pull request can be merged manually outside the GitHub.
+   Another problem is that pull requests can be merged manually outside GitHub.
    These pull requests are not recognized as accepted. The projects were selected so that
-   the GitHub is the primary way to merge PRs. However, there still can be some PRs
+   GitHub is the primary way to merge PRs. However, there still can be some PRs
    merged using alternative methods.
 
-   Furthermore, the different methods can be used to measure the quality of a pull
-   requests. For each programming language there exists several linters that
-   are focused on different set of issues and they can also use different algorithms
+   Furthermore, different methods can be used to measure the quality of pull
+   requests. For each programming language, there exist several linters that
+   are focused on a different set of issues, and they can also use different algorithms
    to detect the same issue. Another possible threat are false positives from linters.
-   The false positive can arise due to the fact that the files were linted in the
-   isolated environment and this can introduce some issues (=import-error= etc).
+   The false-positive can arise due to the fact that the files were linted in the
+   isolated environment, and this can introduce some issues (=import-error=, etc.).
    Some issues are also hard to detect; for instance, the issue can be specific to
-   some particular context and the linter does not have to take this context into
-   account. The biggest difficulty with the quality evaluation is the fact that
-   everyone has unique personal perspective on code quality --- the code quality
+   some particular context, and the linter does not have to take this context into
+   account. The greatest difficulty with the quality evaluation is the fact that
+   everyone has a unique personal perspective on code quality --- code quality
    does not have a single definition.
 
-   The pull requests sometimes contains also files that are not written in the
-   primary programming language of the project. The pull request can be then
+   The pull requests sometimes contain also files that are not written in the
+   primary programming language of the project. The pull request then can be
    rejected because of these files.
 
-   Lastly, there are several factors that influences the PR acceptance.
-   Some of them were discussed in previous chapters (number of commits, submitter's status etc.).
-   The one factor that influences the acceptance is number of lines that were changed [[cite:social]].
-   The more lines are added/changed the higher is the probability that the pull request will be
+   Lastly, there are several factors that influence PR acceptance.
+   Some of them were discussed in previous chapters (number of commits, submitter's status, etc.).
+   The one factor that influences the acceptance is a number of lines that were changed[[cite:social]].
+   The more lines are added/changed, the higher the probability that the pull request will be
    rejected, but the chance that some quality issue will be introduced is also higher.
    In this case, it is difficult to distinguish if the pull request was rejected because
    of the code quality or because the changes are too big.
