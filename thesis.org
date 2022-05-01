@@ -346,7 +346,8 @@
    to the OCLint in order to shrink the total execution time of the static
    analysis.
 
-   *TODO:* add information about versions of linters, issue categories etc.
+   - *TODO:* add information about versions of linters, issue categories etc.
+   - *TODO:* flawfinder instead of OCLint
 ** TODO Projects selection
    Criteria (data from 2019-06-01):
    - is in the top 150 most favorite projects written in the given language
@@ -370,123 +371,95 @@
      - [[cite:explaratory]]
 ** TODO Computational resources
 * Data analysis
-** TODO Scripts
-   - Put this into appendix?
-*** Data preprocessing
-    In order to simplify analysis of retrieved data, I created the script that
-    takes multiple JSON files with the data about each individual project and
-    converts them into the CSV files. Each row in the CSV file represents some
-    pull request. This script also filters the pull requests which are not
-    suitable for the analysis --- PRs that do not contains any source code written
-    in the primary language or PRs that contained corrupted files (the linter was
-    unable to analyze those files).
-*** Pull request classification
-    The retrieved data about the pull request were subsequently analyzed in order
-    to answer my research questions.  For this analysis was used the Python
-    script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] provided by Lenurdazzi
-    et al. (this script was used for machine learning classification methods)
-*** Pull request regression
-*** Main script
-    - rest of the analysis
-    - divided by research questions
-    - aggregation of results from the classification and regression
-    - export to LaTeX and PDF
-** Statistical methods
-   In this chapter, I am explaining which statistical methods were chosen in
-   order to answer the research questions.  Research questions 1 to 4 were
-   analyzed separately for each programming language; therefore, also the
-   techniques that will be discussed were applied separately.  Only the last
-   research question discuss multiple languages at the same time and compares
-   results retrieved from the individual analysis of each language.
+  In this chapter, I am explaining which statistical methods were chosen in
+  order to answer the research questions.  Research questions 1 to 4 were
+  analyzed separately for each programming language; therefore, also the
+  techniques that will be discussed were applied separately.  Only the last
+  research question discuss multiple languages at the same time and compares
+  results retrieved from the individual analysis of each language.
 *** Which code issues are typically introduced by the pull requests?
     At first, in order to answer the *RQ_1*, I summarized the retrieved data for each project
     --- I counted how many suitable pull requests were analyzed and
-    how many of them are accepted/rejected. Then I created a scatter plot between number of
-    stars and percentage of accepted PRs.
+    how many of them were accepted/rejected. Then I created a scatter plot between the number of
+    stars and the percentage of accepted PRs.
 
-    I also summarized all pull requests regardless of their project. I computed average number
-    of introduced issues, fixed issues etc. Then I created heat map that shows how many PRs
+    I also summarized all pull requests regardless of their project. I computed the average number
+    of introduced issues, fixed issues, etc. Then I created a heat map that shows how many PRs
     introduced/fixed some specific number of issues.
 
-    Then for each issue individually I computed how many accepted/rejected pull
-    request introduced/fixed this issue, how many times this issue occurred in
-    some pull request etc. I created multiple lists of issues sorted by various parameters.
+    Then for each issue individually, I computed how many accepted/rejected pull
+    requests introduced/fixed this issue, how many times this issue occurred in
+    some pull request, etc. I created multiple lists of issues sorted by various parameters.
     I sorted issues by the number of rejected/accepted PRs that fixed/introduced them.
-    I also listed issues and percentage of PRs that changed their quality. I examined the
-    issues that were fixed in larger number of PRs then introduced. Then I created a scatter plot
+    I also listed issues and the percentage of PRs that changed their quality. I examined the
+    issues that were fixed in a larger number of PRs than introduced. Then I created a scatter plot
     that shows which issue category is the most common.
 
     These steps were applied individually for each programming language to determine
     how does the average PR look line in terms of code quality.
 *** Are there some particular issues/code smells that affect the pull request acceptance?
-    In order to discover issues that affects the acceptance of pull requests most, the classification models were created.
-    The aim of these models is to classify pull request into two groups (accepted PRs and rejected PRs) by using the information
-    about quality change in the given pull request. Multiple classification algorithms were used:
-    - LogisticRegression :: Despite its name, logistic regression is a linear model used for classification. It uses so
-      called /logistic function/ that turns the inputs (code quality issues)
-      into the probability of dependent variable (PR acceptance) being 1 (PR is
+    In order to discover issues that affect the acceptance of pull requests
+    most, the classification models were created.  The aim of these models is to
+    classify pull requests into two groups (accepted PRs and rejected PRs) by
+    using the information about the quality change in the given pull
+    request. Multiple classification algorithms were
+    used[fn::https://scikit-learn.org/stable/modules/classes.html]:
+    - LogisticRegression :: Despite its name, logistic regression is a linear model used for classification. It uses
+      a so-called /logistic function/ that turns the inputs (code quality issues)
+      into the probability of the dependent variable (PR acceptance) being 1 (PR is
       accepted).
-      - https://en.wikipedia.org/wiki/Logistic_regression#cite_note-1
-      - https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-    - DecisionTrees :: This algorithm constructs the tree where leafs represents the different classes (PR accepted/rejected)
-      and inner nodes represents so called /split criterion/ --- the condition
+    - DecisionTrees :: This algorithm constructs the tree where leaves represent the different classes (PR accepted/rejected),
+      and inner nodes represent the so-called /split criterion/ --- the condition
       (or predicate) on single/multiple attributes (code quality issues).
-      The /split criterion/ defines to which subtree given data (pull
-      request) belong to.
-      - https://www.amazon.com/Data-Classification-Algorithms-Applications-Knowledge/dp/1466586745
+      The /split criterion/ defines to which subtree given input (pull
+      request) belongs.
     - Bagging :: The Bagging algorithm is trying to predict the data class (PR being rejected/accepted)
-      using multiple different classifiers. It is using bootstrapping[fn::random sampling with replacement]
-      to construct the different data set for each
+      using multiple different classifiers. It uses bootstrapping[fn::random sampling with replacement]
+      to construct the different data sets for each
       classifier. The outputs from these classifiers are then aggregated to form
       the final prediction.
-      - https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
     - RandomForest :: This classifier leverages the bagging method in order to create the forest of
       uncorrelated decision trees (to avoid bias and overfitting). Unlike the decision trees,
-      the RandomForest is using only subset of features (code quality issues) to generate the decision tree
+      the RandomForest uses only a subset of features (code quality issues) to generate the decision tree
       (this ensures the low correlation between the trees).
-      - https://www.ibm.com/cloud/learn/random-forest
     - ExtraTrees :: ExtraTrees is a classifier similar to RandomForest.
-      The main difference is that ExtraTrees algorithm generates /split
+      The main difference is that the ExtraTrees algorithm generates /split
       criterions/ using randomization.  Another key difference is that
-      ExtraTrees is using whole original sample for each tree (instead of
+      ExtraTrees uses whole original sample for each tree (instead of
       bootstrapping).
-      - https://quantdare.com/what-is-the-difference-between-extra-trees-and-random-forest/
-    - AdaBoost :: The AdaBoost is another algorithm that is using multiple weak classifiers (usually DecisionTrees with only one
+    - AdaBoost :: The AdaBoost is another algorithm that leverages multiple weak classifiers (usually DecisionTrees with only one
       /split criterion/) to predict the final result. It begins by fitting a
-      classifier on the original dataset.  The each subsequent classifier is
+      classifier on the original dataset. Each subsequent classifier is
       improved using the results from the previous one (incorrectly classified
-      pull requests have the higher chance to be selected in the next
+      pull requests have a higher chance of being selected in the next
       classifier).
-      - https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
     - GradientBoost :: The GradientBoost algorithm is similar to the AdaBoost. It is also
-      using multiple weak classifiers, and they are trained one-by-one. However,
+      using multiple weak classifiers, and they are trained one by one. However,
       instead of improving the
       subsequent classifier by changing the training dataset distribution, the GradientBoost algorithm
-      trains the classifiers using the residual errors of predecessors. Furthermore, the GradientBoost is
-      using larger trees than AdaBoost.
-      - https://www.mygreatlearning.com/blog/gradient-boosting/
+      trains the classifiers using the residual errors of predecessors. Furthermore, the GradientBoost
+      works with larger trees than AdaBoost.
     - XGBoost :: XGBoost is a popular variant of gradient boosting. It is designed to be fast
       and efficient.
-      - https://github.com/dmlc/xgboost
-    Each of those algorithms was run on three different datasets --- dataset
-    with quality change, dataset containing only introduced issues and dataset
-    with only fixed issues. In the first dataset, the quality change for some issue was
-    represented by the integer and this integer was negative if the issue was fixed in the PR
-    and positive if the issues was introduced. The other datasets were created by filtering
+    Each of those algorithms was run on three different datasets --- a dataset
+    with quality change, a dataset containing only introduced issues, and a dataset
+    with only fixed issues. In the first dataset, the quality change for some issues was
+    represented by the integer, and this integer was negative if the issue was fixed in the PR
+    and positive if the issue was introduced. The other datasets were created by filtering
     positive/negative values from the first dataset. Running the classification algorithms on
     the dataset with only fixed issues can help to understand if the improvement in code quality
     can also influence the acceptance.
 
     In order to recognize issues that have some effect on the PR acceptance,
     the /drop-column importance/ mechanism[fn::https://explained.ai/rf-importance/] was used.
-    This mechanism is resource-intense (requires lot of computational power), but is usually more reliable
-    then the classic importance mechanisms.
+    This mechanism is resource-intense (requires a lot of computational power) but is usually more reliable
+    than the classic importance mechanisms.
 
-    To evaluate the model accuracy, the dataset was split into five parts
+    The dataset was split into five parts to better evaluate the model accuracy
     (5-fold cross-validation).  Each model was then trained five times ---
-    distinct dataset was used for training and for validation.  Several metrics
+    a distinct dataset was used for training and for validation.  Several metrics
     (precision, recall, AUROC, F-measure\dots) were used to evaluate the
-    reliability of each model. Afterwards, the average metrics over all folds
+    reliability of each model. Afterward, the average metrics over all folds
     were computed.
 
     The same technique was used by Lenarduzzi et al.[[cite:quality]]. The script
@@ -496,80 +469,78 @@
     At first, the PCA (principal component analysis) scatter plot was created to
     visualize the difference between accepted and rejected pull requests.
 
-    The impact of presence of some code issue in the PR on the PR acceptance was
-    determined using the chi-square test. In order to perform this test, dataset
-    was transformed to /contingency table/.  This table ($2 \times 2$) contained
+    The impact of the presence of some code issue in the PR on the PR acceptance was
+    determined using the chi-square test. In order to perform this test, the dataset
+    was transformed into a /contingency table/.  This table ($2 \times 2$) contained
     the number of accepted/rejected PRs with/without a code quality issue.
     After that, the chi-square test of independence was performed on the
     /contingency table/.  The /significance level/ was set to $\alpha =
     0.05$. However, relying only on statistical significance can be misleading
     because it is affected by sample size. To understand the practical
     significance of the test (/effect size/), the Cramer's V denoted as $\phi_c$
-    was also computed. The values of Cramer's V ranges between 0 (no
+    was also computed. The Cramer's V ranges between 0 (no
     association) and 1 (complete association).
-    - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3900058/
 
-    Pull request that are adding or removing some files has large influence on
-    code quality. If the number of removed/added files has large impact on PR
-    acceptance, then it can be a large threat to validity of the independence
-    test.  The pull request acceptance can be also influenced by quality of files
-    which were not linted (was written in non-primary language).  To eliminate
-    the risk that the test was influenced, same test was performed on pull
-    requests that only modified some source files and these files were written in the
-    primary language.
+    Pull request that adds or removes some files greatly influences
+    code quality. If the number of removed/added files has a large impact on PR
+    acceptance (regardless of code quality), then it can be a large threat to
+    the validity of the independence test.  The pull request acceptance can also be
+    influenced by the quality of files which were not linted (were written in
+    non-primary language).  To eliminate the risk that the test was influenced,
+    the same test was performed on pull requests that only modified some source
+    files, and these files were written in the primary language.
 
-    Moreover, the chi-square test was performed independently for each issue category
-    to understand if there are some issue categories that has a higher influence on
-    the quality.
+    Moreover, the chi-square test was performed independently for each issue
+    category to understand if there are some issue categories that have a
+    stronger influence on the quality.
 
-    The test was also computed for each project separately. Unluckily,
-    there are some projects that contains insufficient number of pull requests.
-    According to Cochran[[cite:cochran]], all expected counts should be 10 or greater.
-    Therefore, the tests were evaluated only for some projects.
+    The test was also computed for each project separately. Unluckily, there are
+    some projects that contain an insufficient number of pull requests.  According
+    to Cochran[[cite:cochran]], all expected counts should be ten or greater.
+    Therefore, the tests were performed only on some projects (that have a sufficient
+    number of expected counts).
 
     It is important to note that p-values were not adjusted in any way.
 
     The metrics obtained from classification algorithms were also used to
-    determine if the code quality have some impact on the PR acceptance.
+    determine if the code quality has some impact on PR acceptance.
 *** Does code quality influence the time it takes to close a pull request?
-    In order to find the possible link between the code quality and time it
-    takes to close a PR, the regression algorithms were used. At first, the
+    In order to find the possible link between the code quality and the time it
+    takes to close a PR, regression algorithms were used. At first, the
     dataset was split into two parts --- training and test set.  After that, the
     regression model was trained on the training set. Then, the importance of
     individual quality issues was determined using the /permutation importance/
-    mechanism. To evaluate the model itself, the model was used to predict the
-    time based on the data from test set. Metrics such as /mean absolute error/
-    (MAE), /mean squared error/ (MSE) and /coefficient of determination/ ($R^2$)
+    mechanism. Afterward, the model was used to predict the
+    time based on the data from the test set. Metrics such as /mean absolute error/
+    (MAE), /mean squared error/ (MSE), and /coefficient of determination/ ($R^2$)
     were computed using the predicted and expected values and used to evaluate the
     models.
 
-    Following regressors were used:
-    - LinearRegression :: Linear regression is commonly used type of predictive models.
+    Following regressors were used[fn::https://scikit-learn.org/stable/modules/linear_model.html]:
+    - LinearRegression :: Linear regression is a commonly used type of predictive model.
       It is used for modeling the linear relationship between explanatory variables (code quality issues)
       and a scalar response (time to close a PR). The model that minimizes the residual sum of squares
       is selected.
-      - https://en.wikipedia.org/wiki/Linear_regression
     - ElasticNet :: ElasticNet is an extension of linear regression. It is adding $L_1$ (lasso regression)
       and $L_2$ (ridge regression) penalties in order to make the linear model more robust.
       The problem with the classic linear regression is that the estimated coefficients can be
       too high due to overfitting. Because of that, the model parameters are added to the
-      /loss function/[fn::function that is minimized during the regression] as a penalty.
-      - https://machinelearningcompass.com/machine_learning_models/elastic_net_regression/
-    - Some of the already discussed methods used for classification, were used also for regression.
+      /loss function/[fn::a function that is minimized during the regression] as a penalty.
+    - Some of the already discussed methods used for classification were also used for regression.
       Following methods were used for both classification and regression:
       *DecisionTree*, *RandomForest*, *AdaBoost*, *Bagging*, and *GradientBoost*.
 *** Is code quality impact higher in projects that are using some particular programming language?
-    The *RQ3* discuss the impact of code quality on individual
+    The *RQ3* discusses the impact of code quality on individual
     programming languages. The findings from the *RQ3* for each
-    language are compared in the *RQ5*. This comparison is complicated
-    task, because each language has different characteristics and
-    different linter was used to measure the code quality.
+    language are compared in the *RQ5*. This comparison is a complicated
+    task because each language has different characteristics, and
+    a different linter was used to measure its code quality.
 
     The results from chi-square tests were compared to identify
-    possible difference between the languages (in terms of code
+    the possible difference between the languages (in terms of code
     quality). The metrics retrieved from classification models were
     also compared. Finally, the code quality effect on the time to close a PR
-    were compared between the languages (using the metrics from regressors).
+    was compared between the languages (using the metrics from regressors).
 * Evaluation
   The following chapter is dedicated to the findings from my research.  The first
   five subchapters focus on individual programming languages --- here I am
@@ -1274,6 +1245,27 @@
   :UNNUMBERED: t
   :END:
   \addcontentsline{toc}{chapter}{Appendix}
+** Scripts used for analysis
+   - *TODO:* fix grammar
+   In order to simplify analysis of retrieved data, I created the script (=pr_process.py=) that
+   takes multiple JSON files with the data about each individual project and
+   converts them into the CSV files. Each row in the CSV file represents some
+   pull request. This script also filters the pull requests which are not
+   suitable for the analysis --- PRs that do not contains any source code written
+   in the primary language or PRs that contained corrupted files (the linter was
+   unable to analyze those files).
+
+   The retrieved data about the pull request were subsequently analyzed in order
+   to answer my research questions. For the classification (*RQ_2*) was used the Python
+   script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] (=pr_classification.py=) provided by Lenurdazzi
+   et al.[[cite:quality]].
+
+   I also created the script (=pr_reqression.py=) that runs the regression algorithms on the data in order to answer *RQ_4*.
+   This script is written in Python and it uses scikit-learn[fn::https://scikit-learn.org/stable/index.html] library.
+
+   The rest of the analysis was done using the =analysis.R=. This small R program imports the data
+   generated by other scripts. This data are then analyzed using various statistical methods.
+   Script is also used to plot graphs, create tables and then export them directly into the LaTeX.
 ** Projects
    #+BEGIN_EXPORT latex
    \begin{table}[htbp]
