@@ -1234,8 +1234,45 @@
    rejected, but the chance that some quality issue will be introduced is also higher.
    In this case, it is difficult to distinguish if the pull request was rejected because
    of the code quality or because the changes are too big.
-* TODO Conclusion
-** TODO Comparison with the previous results
+* Conclusion
+  I analyzed 41576 pull requests from 100 projects written in 5 different
+  programming languages (Python, Java, Kotlin, Haskell, C/C++) to study the
+  relationship between the code quality and pull request acceptance.  The
+  quality of the individual pull requests was measured using static code
+  analysis.
+
+  Almost half of the analyzed PRs introduced some code quality issue, and 31 %
+  of pull requests fixed some issue. However, data differs significantly between
+  the languages (because different static analysis tools were used).  In C/C++
+  projects, only 16 % of pull requests introduced some issue, while in Java,
+  almost 76 % of PRs. The proportion of accepted pull requests was different for
+  each project; however, on average, 76 % of PRs were accepted.
+
+  Several statistic techniques were used to understand if the code quality
+  affects PR acceptance. For each language, the chi-square test of independence
+  was performed, and the number of accepted PRs without a code quality issue was always
+  higher than expected. However, in all languages, the impact on acceptance was
+  only small ($\phi_c \approx 0.1$).
+
+  Multiple classification algorithms were used to predict the pull request acceptance
+  using the code quality. However, all of them performed poorly ($AUROC < 0.6$).
+  The most problematic was the Haskell language --- all models were no better than a random
+  predictor ($AUROC \approx 0.5$).
+
+  The trained models were also used to understand the importance of individual issues.
+  Unfortunately, no issue with a significant impact on the PR acceptance was detected.
+  All discovered issues have average importance below 1 % (between all models).
+
+  The influence of code quality on time to close a PR was also
+  studied. Several regression models were trained to predict this time. However,
+  all of the trained models have very high /mean absolute error/: around one month.
+  This makes models worthless because most of the PRs are closed within two
+  weeks.
+
+  To conclude, the poor code quality seems to have a small negative impact on the
+  pull request acceptance. However, there seems to be no effect on the time it
+  takes to close a PR.
+** TODO Related work
 ** TODO Future work
    - try different linters for the same language
    - do the analysis only with filtered PRs (only modified and only primary language)

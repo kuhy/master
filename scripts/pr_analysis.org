@@ -586,22 +586,26 @@
   #+BEGIN_SRC R
     setwd('~/Documents/master/results/')
   #+END_SRC
+
+  Import all pull requests:
+  #+BEGIN_SRC R
+    prsAll <- list("C/C++" = import_prs("c_cpp/data.csv"), "Haskell" = import_prs("haskell/data.csv"),
+                   "Java" = import_prs("java/data.csv"), "Kotlin" = import_prs("kotlin/data.csv"),
+                   "Python" = import_prs("python/data.csv"))
+  #+END_SRC
 ** Chi-square tests
    Import pull requests from all languages and run chi-square tests:
    #+BEGIN_SRC R
-     chisqtAll <- list("C/C++" = import_prs("c_cpp/data.csv"), "Haskell" = import_prs("haskell/data.csv"),
-                       "Java" = import_prs("java/data.csv"), "Kotlin" = import_prs("kotlin/data.csv"),
-                       "Python" = import_prs("python/data.csv")) %>%
-         map(~tribble(~V, ~p, ~Type,
-                      #
-                      cramersV(to_contingency_table(.x)),
-                      chisq.test(to_contingency_table(.x))$p.value,
-                      "All",
-                      #
-                      cramersV(to_contingency_table(only_modified(.x))),
-                      chisq.test(to_contingency_table(only_modified(.x)))$p.value,
-                      "Only modified")
-             ) %>% bind_rows(.id = "Language") %>% mutate(Independent = (p > 0.05))
+     prsAll %>% map(~tribble(~V, ~p, ~Type,
+                             #
+                             cramersV(to_contingency_table(.x)),
+                             chisq.test(to_contingency_table(.x))$p.value,
+                             "All",
+                             #
+                             cramersV(to_contingency_table(only_modified(.x))),
+                             chisq.test(to_contingency_table(only_modified(.x)))$p.value,
+                             "Only modified")
+                    ) %>% bind_rows(.id = "Language") %>% mutate(Independent = (p > 0.05))
    #+END_SRC
 
    Plot the Cramer's V for all languages:
@@ -650,8 +654,33 @@
 
    Compute the percentage of PRs that was close within first two weeks:
    #+BEGIN_SRC R
-     chisqtAll <- list("C/C++" = import_prs("c_cpp/data.csv"), "Haskell" = import_prs("haskell/data.csv"),
-                       "Java" = import_prs("java/data.csv"), "Kotlin" = import_prs("kotlin/data.csv"),
-                       "Python" = import_prs("python/data.csv")) %>% map(~(nrow(.x %>% filter(time_opened < 1209600)) / nrow(.x))) %>%
-         print
+     prsAll %>% map(~(nrow(.x %>% filter(time_opened < 1209600)) / nrow(.x))) %>% print
    #+END_SRC
+* Summary
+  Print the total number of PRs for all languages:
+  #+BEGIN_SRC R
+    Reduce("+", prsAll %>% map(~nrow(.x)))
+  #+END_SRC
+
+  Print the number of accepted PRs:
+  #+BEGIN_SRC R
+    Reduce("+", prsAll %>% map(~nrow(.x %>% filter(accepted == TRUE))))
+  #+END_SRC
+
+  Print the number of PRs that introduced some issue:
+  #+BEGIN_SRC R
+    Reduce("+", prsAll %>% map(~(.x %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")),
+                                                                             ~if_else(.x < 0, 0L, .x))),
+                                               fixed=rowSums(mutate_all(select(., starts_with("results_")),
+                                                                        ~if_else(.x > 0, 0L, -.x)))) %>% filter(introduced > 0) %>%
+                                 nrow)))
+  #+END_SRC
+
+  Print the number of PRs that fixed some issue:
+  #+BEGIN_SRC R
+    Reduce("+", prsAll %>% map(~(.x %>% mutate(introduced=rowSums(mutate_all(select(., starts_with("results_")),
+                                                                             ~if_else(.x < 0, 0L, .x))),
+                                               fixed=rowSums(mutate_all(select(., starts_with("results_")),
+                                                                        ~if_else(.x > 0, 0L, -.x)))) %>% filter(fixed > 0) %>%
+                                 nrow)))
+  #+END_SRC
