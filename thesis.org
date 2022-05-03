@@ -470,10 +470,10 @@
     visualize the difference between accepted and rejected pull requests.
 
     The impact of the presence of some code issue in the PR on the PR acceptance was
-    determined using the chi-square test. In order to perform this test, the dataset
+    determined using the $\chi^2$ test. In order to perform this test, the dataset
     was transformed into a /contingency table/.  This table ($2 \times 2$) contained
     the number of accepted/rejected PRs with/without a code quality issue.
-    After that, the chi-square test of independence was performed on the
+    After that, the $\chi^2$ test of independence was performed on the
     /contingency table/.  The /significance level/ was set to $\alpha =
     0.05$. However, relying only on statistical significance can be misleading
     because it is affected by sample size. To understand the practical
@@ -490,7 +490,7 @@
     the same test was performed on pull requests that only modified some source
     files, and these files were written in the primary language.
 
-    Moreover, the chi-square test was performed independently for each issue
+    Moreover, the $\chi^2$ test was performed independently for each issue
     category to understand if there are some issue categories that have a
     stronger influence on the quality.
 
@@ -536,7 +536,7 @@
     task because each language has different characteristics, and
     a different linter was used to measure its code quality.
 
-    The results from chi-square tests were compared to identify
+    The results from $\chi^2$ tests were compared to identify
     the possible difference between the languages (in terms of code
     quality). The metrics retrieved from classification models were
     also compared. Finally, the code quality effect on the time to close a PR
@@ -638,7 +638,7 @@
    In the PCA scatter plot, there is no visible difference between rejected and accepted pull requests.
 
    To understand if the presence of some issue in the PR influences its acceptance, I created contingency matrices
-   and performed a chi-square test of independence:
+   and performed a $\chi^2$ test of independence:
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -650,7 +650,7 @@
 
    As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of
    rejected pull requests which contained some defected is higher than
-   expected. For chi-square test, $p < \num{2.2e-16}$ and therefore, the
+   expected. For $\chi^2$ test, $p < \num{2.2e-16}$ and therefore, the
    hypothesis that presence of some issue and PR acceptance are independent is
    rejected on significance level $\alpha = 0.05$. However, the Cramer's $\phi_c
    \approx 0.092$; therefore, the association between issue presence and acceptance is weak.
@@ -663,7 +663,7 @@
    Similar to the previous test, the $\phi_c \approx 0.087$; therefore, the
    association between the presence of the same issue and PR acceptance is weak.
 
-   Almost identical results were obtained when the chi-square test was performed separately for each issue category.
+   Almost identical results were obtained when the $\chi^2$ test was performed separately for each issue category.
 
    When the projects were considered individually, only for nine of them the $p < \alpha$. In these projects,
    the poor code quality had a negative impact on PR acceptance.
@@ -756,7 +756,7 @@
    In the PCA scatter plot, there is no visible difference between rejected/accepted pull requests.
 
    To understand the relationship between acceptance and the introduction of a quality issue,
-   the chi-square test was performed.
+   the $\chi^2$ test was performed.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
    \resizebox{\textwidth}{!}{%
@@ -771,7 +771,7 @@
    considered and also when the test was performed individually for each issue category.
 
    17 out of the 20 Java projects contained a sufficient number of pull requests to
-   perform the chi-square tests. In nine of them, the code quality and acceptance are
+   perform the $\chi^2$ tests. In nine of them, the code quality and acceptance are
    not independent. Unexpectedly, in one of the projects (=alibaba/fastjson=) the
    presence of an issue has a small positive effect on the acceptance.
 
@@ -864,7 +864,7 @@
    #+END_EXPORT
 
    To understand the link between acceptance and the introduction of some
-   quality issue, I performed the chi-square test on Kotlin dataset. The $p < \num{2.2e-16}$ and
+   quality issue, I performed the $\chi^2$ test on Kotlin dataset. The $p < \num{2.2e-16}$ and
    $\phi_c \approx 0.095$; therefore, the presence of some issue has a small
    negative effect on acceptance (similarly to the Java and Python).
    Furthermore, three classifiers (/Bagging/, /GradientBoost/, and /RandomForest/)
@@ -882,7 +882,7 @@
    (in this context).
 
    Only 12 of the projects have a sufficient number of pull requests to evaluate
-   the chi-square test. There are four projects where the presence of some issue
+   the $\chi^2$ test. There are four projects where the presence of some issue
    has a small impact on the PR acceptance (the average Cramer's V is $\phi_c = 0.18$).
 
    To analyze the relation between the code quality and time that is required to
@@ -973,13 +973,13 @@
    \end{figure}
    #+END_EXPORT
 
-   For the chi-square test, the $p = 0.001438 < \alpha = 0.05$ and Cramer's V is only $\phi_c = 0.038$;
+   For the $\chi^2$ test, the $p = 0.001438 < \alpha = 0.05$ and Cramer's V is only $\phi_c = 0.038$;
    therefore, the presence of an issue in the PRs has only a small negative impact on the
    acceptance of the pull request. Similar results were obtained when only
    the pull requests that contain exclusively some modified code were considered.
    Furthermore, tests for the individual issue types also yielded similar results.
    Unfortunately, there is only a small number of pull requests that introduced some errors;
-   therefore the chi-square test cannot be performed on this issue category.
+   therefore the $\chi^2$ test cannot be performed on this issue category.
    The average AUC computed for ROC curves is around 50 --- the classification algorithms
    were unable to distinguish between the accepted and rejected PRs using the code quality.
    #+BEGIN_EXPORT latex
@@ -1081,7 +1081,7 @@
    \end{figure}
    #+END_EXPORT
 
-   Based on the chi-square test, the presence of an issue in the PR has a small negative impact
+   Based on the $\chi^2$ test, the presence of an issue in the PR has a small negative impact
    on the PR acceptance ($\phi_c = 0.117$).
    However, When considering only pull requests that solely modified some source files,
    Cramer's V $\phi_c = 0.024$ and $p = 0.1 > \alpha$ --- in this settings, the issue presence
@@ -1094,9 +1094,9 @@
    \caption{Relation between presence of issue and PR acceptance}
    \end{figure}
    #+END_EXPORT
-   Some small impact impact was discovered when the chi-square test was performed separately for
+   Some small impact impact was discovered when the $\chi^2$ test was performed separately for
    each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
-   Furthermore, in 6 out of 11 projects which have enough data to perform and evaluate the chi-square test,
+   Furthermore, in 6 out of 11 projects which have enough data to perform and evaluate the $\chi^2$ test,
    the presence of some issue in the PR has a negative effect on the PR acceptance.
    In the =minetest/minetest= and =pybind/pybind11= projects, this effect is moderate;
    for other projects, the association is small.
@@ -1125,7 +1125,7 @@
    On the other hand, there are some metrics that evaluate how effectively
    trained models predict the acceptance of PR or time to close a PR;
    and these metrics can be compared across different programming languages.
-   On top of that, the results from the chi-square test can also be compared.
+   On top of that, the results from the $\chi^2$ test can also be compared.
    However, the cation is in order because the code quality for each language is
    evaluated differently, as discussed before.
    #+BEGIN_EXPORT latex
@@ -1138,11 +1138,11 @@
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{All_V}, in all studied languages, the
    presence of some issue have a negative effect on the PR acceptance (in terms
-   of chi-square tests); however, for all of the languages, this effect is small ($\phi_c
+   of $\chi^2$ tests); however, for all of the languages, this effect is small ($\phi_c
    \approx 0.1$).  The smallest effect was observed for Haskell programming
    language and the highest effect for C/C++.  On the other hand,
    taking into account solely the PRs that only modified some source code of the
-   primary language, the chi-square test indicates that the presence of issue and PR
+   primary language, the $\chi^2$ test indicates that the presence of issue and PR
    acceptance are independent in the case of the C/C++ and Kotlin. This is a possible
    threat to validity.
 
@@ -1160,7 +1160,7 @@
    has only a small or no effect on the acceptance.
 
    As can be seen, similar results were obtained for all of the languages.
-   In all of the languages, the code quality impact is small (based on the chi-square tests
+   In all of the languages, the code quality impact is small (based on the $\chi^2$ tests
    and also based on the results from classification algorithms). There is no language
    that significantly differs from others.
    #+BEGIN_EXPORT latex
@@ -1249,7 +1249,7 @@
   each project; however, on average, 76 % of PRs were accepted.
 
   Several statistic techniques were used to understand if the code quality
-  affects PR acceptance. For each language, the chi-square test of independence
+  affects PR acceptance. For each language, the $\chi^2$ test of independence
   was performed, and the number of accepted PRs without a code quality issue was always
   higher than expected. However, in all languages, the impact on acceptance was
   only small ($\phi_c \approx 0.1$).
@@ -1272,11 +1272,47 @@
   To conclude, the poor code quality seems to have a small negative impact on the
   pull request acceptance. However, there seems to be no effect on the time it
   takes to close a PR.
-** TODO Related work
-** TODO Future work
-   - try different linters for the same language
-   - do the analysis only with filtered PRs (only modified and only primary language)
-     - more data needs to be collected (different dataset)
+*** Related work
+    Best of my knowledge, there is only one study[[cite:quality]] about the effect of code quality
+    on the pull request acceptance. Lenarduzzi et al. analyzed 28 well-known Java projects.
+    I reused the script they provided for PR classification and also applied similar statistical
+    techniques so that my findings could be compared with theirs.
+    The $\chi^2$ test of independence yielded similar results (they obtained $\phi_c = 0.12$).
+    My classification models have slightly better performance (mean $AUROC$ is higher by $0.023$).
+    The difference in performance can be caused by various factors --- project
+    selection and the ratio of accepted pull requests (only 53 % of PRs they studied were accepted).
+    The code quality was evaluated using the same linter (PMD). However, I also took into
+    account issues that were fixed by the PR. Moreover, a different technique was used to identify
+    issues that were introduced in the PR (they used diff-files provided by GitHub API).
+    Similar to my findings, Lenarduzzi et al. did not identify any particular issues that have a significant
+    effect on the acceptance.
+
+    I extended the work of Lenarduzzi with an analysis of four new programming
+    languages (Python, Kotlin, Haskell, and C/C++).  I also added the analysis
+    of the delivery time of pull requests, and as far as I know, this is the first
+    study that researches the relationship between the code quality and the time it
+    takes to close a pull request.
+*** Future work
+    I consider my work complete. However, there is still plenty of
+    possibilities for how to improve and expand my work.
+    Several improvements can be made to obtain more reliable data for analysis.
+    If the pull request is not merged using GitHub, then the PR is incorrectly classified as rejected.
+    It is possible to utilize some heuristics that will recognize merging through plain Git utilities.
+
+    For the proper quality evaluation, the linter choice is essential. Each
+    linter is focused on some specific set of issues, and this can introduce
+    some form of bias. It would be beneficial to use multiple linters for one
+    programming language. The linters used for C/C++ and Kotlin are not very
+    sophisticated.  However, adding a more advanced linter for C/C++ is
+    complicated --- the state-of-the-art linters require information about
+    compiler flags. This information cannot always be retrieved automatically
+    (from makefiles).  Therefore, a lot of pull requests require manual
+    customization.
+
+    Some projects use linters as part of the /continuous integration/ or
+    during the build process. Additional research needs to be performed to
+    understand if the maintainers of those projects are more strict about the
+    code quality, and therefore the effect on the PR acceptance is larger.
 * Appendix
   :PROPERTIES:
   :UNNUMBERED: t
