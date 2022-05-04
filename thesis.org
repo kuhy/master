@@ -271,8 +271,9 @@
   further discussed in the following sections.
 
   *TODO*: mention that data from REST API are not complete (GH API limit)
+  *TODO*: mention the limits (timeout, 500, must contain source code of primary language)
 ** GHTorrent database
-   As stated before, the script called =gh_info.py= uses the GHTorrent database
+   As stated before, the script called =gh_info.py= uses the GHTorrent database[[cite:ghtorrent]]
    in order to retrieve GitHub data. GitHub REST API can be leveraged to obtain
    many interesting factors which can possibly influence the acceptance of pull
    requests. All the data that are obtained using the =gh_info.py= are listed
@@ -348,27 +349,23 @@
 
    - *TODO:* add information about versions of linters, issue categories etc.
    - *TODO:* flawfinder instead of OCLint
-** TODO Projects selection
-   Criteria (data from 2019-06-01):
-   - is in the top 150 most favorite projects written in the given language
-   - 200+ pull requests and less then 5000
-   - PRs merged using GitHub
-   - https://github.com/EvanLi/Github-Ranking
-   - at least 85 % of files are source files written in the given language
-   - project is a program or program collection (not a book with the script etc.)
-   - The popularity of the project influences the acceptance[[cite:social]].
-
-   - https://dl.acm.org/doi/abs/10.1145/2597073.2597122
-   - https://dl.acm.org/doi/abs/10.1145/3379597.3387489
-   - https://zenodo.org/record/3858046
-   - https://github.com/XLipcak/rev-rec
-   - https://ghtorrent.org/
-     - https://github.com/gousiosg/pullreqs
-     - How can I cite this work? (on the web)
-   - Kalliamvakou et al. noted that data about PR's mined from GitHub are not always reliable,
-     because PR can be also merged using several different approaches.
-     - https://dl.acm.org/doi/10.1145/2597073.2597074
-     - [[cite:explaratory]]
+** Projects selection
+   In total, 100 projects were selected written in five different
+   programming languages (20 projects for each language).  The analyzed GitHub
+   projects were selected based on the following criteria:
+   - The primary programming language is Python, Java, Kotlin, Haskell, or C/C++.
+   - The project is popular --- is in the top 150 most favorite projects written in the given language.
+     One of the reasons to analyze popular projects is the fact that popularity influences the acceptance[[cite:social]].
+     Popular projects also usually contains high number of pull requests.
+     Two different lists of popular projects were used: projects sorted by the
+     number of stars using GHTorrent database (data from \nth{1} June, 2019) and the list from
+     GitHub[fn::https://github.com/EvanLi/Github-Ranking] (data from \nth{1} January, 2022).
+   - The project contains at least 200 pull requests that are suitable for analysis.
+     This means that PR needs to contain at least one file written in the
+     primary language and the data about PR needs to be publicly available.
+   - The project is using GitHub to merge pull requests (for most of the pull requests).
+   - The project is a library, program or collection of programs. Repositories which primary purpose is
+     to store configuration files, documentation, books, etc. were ignored.
 ** TODO Computational resources
 * Data analysis
   In this chapter, I am explaining which statistical methods were chosen in
@@ -1207,7 +1204,7 @@
    modified a huge number of files were ignored.
 
    Another problem is that pull requests can be merged manually outside GitHub.
-   These pull requests are not recognized as accepted. The projects were selected so that
+   These pull requests are not recognized as accepted[[cite:ghperils]]. The projects were selected so that
    GitHub is the primary way to merge PRs. However, there still can be some PRs
    merged using alternative methods.
 
