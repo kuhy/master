@@ -1,6 +1,7 @@
 #+TITLE: Source Code Quality impact @@latex:\\@@ on Pull Requests acceptance
 #+AUTHOR: Ondřej Kuhejda
-#+OPTIONS: num:2
+#+OPTIONS: num:2 ':t
+#+LANGUAGE: en
 * Introduction
 ** Problem statement
    - RQ_1 :: Which code issues are typically introduced by the pull requests?
@@ -226,20 +227,25 @@
    - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
 ** TODO Create table that compares already performed studies with my thesis
 * Data mining
-  *TODO*: update graph
   #+BEGIN_EXPORT latex
   \begin{figure}[htb]\centering
   \begin{tikzpicture}
-  \node (n1) [align=center] {Project\\name};
-  \node (n2) [box, above=of n1, align=center] {\texttt{gh\_info.py}};
-  \node (n3) [cloud, draw, above=of n2, align=center] {GHTorrent\\database};
-  \node (n4) [right=of n2, align=center] {Pull requests\\information};
+  \node (n1) [align=center] {Project name};
+
+  \node (n2) [box, above=2cm of n1, align=center] {\texttt{gh\_db.py}\\(\texttt{gh\_rest.py})};
+  \node (n3) [cloud, draw, above=of n2, align=center, inner sep=-3mm] {GHTorrent database\\(GitHub REST API)};
+  \node (c1) [container, fit=(n2)(n3)] {};
+
+  \node (n4) [right=2cm of n2, align=center, margin] {Pull requests\\information};
+
   \node (n5) [box, right=of n4] {\texttt{git-contrast}};
   \node (n6) [cloud, draw, above=of n5] {Linters};
-  \node (n7) [below=of n5, align=center] {Pull requests\\code quality};
-  \node (n8) [below=of n4, align=center] {Project\\information};
+  \node (c2) [container, fit=(n5)(n6)] {};
 
-  \node [container, fit=(n1)(n2)(n3)(n4)(n5)(n6)(n7)(n8)] {};
+  \node (c3) [container, thick, fit=(c1)(c2)] {};
+
+  \node (n7) [below=2.5cm of n5, align=center] {JSON};
+
   \node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
 
   \draw[->] (n1) to (n2);
@@ -247,108 +253,130 @@
   \draw[->] (n2) to (n4);
   \draw[->] (n4) to (n5);
   \draw[<->] (n5) to (n6);
-  \draw[->] (n5) to (n7);
-  \draw[->] (n2) to (n8);
+  \draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
+  \draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Pull requests\\code quality} (n7);
   \end{tikzpicture}
   \caption{The \texttt{pr\_quality.py} workflow}\label{workflow}
   \end{figure}
   #+END_EXPORT
   Information about the pull requests are retrieved using the =pr_quality.py=
   script. This scripts takes names of the projects that will be analyzed as the
-  input and it outputs the JSON files containing the requested data. This script
-  uses internally two other scripts --- =gh_info.py= and =git-contrast=.
+  input and it outputs the JSON files containing information about the projects and their code quality.  The script
+  needs to retrieve the metadata for each project and its pull requests.  There are
+  two possible sources that can be used: GitHub REST API and GHTorrent
+  database. Which source will be used can be specified by passing argument to
+  the tool. Metadata are then used to determine which objects needs to be fetched
+  form the GitHub to perform the code quality analysis. The analysis of the pull
+  request itself is performed by external tool called =git-contrast=.
 
-  =gh_info.py= is responsible for querying the GHTorrent database in order to
-  obtain data about the projects. The GHTorrent database is an offline mirror of
-  data offered through the Github REST API. =gh_info.py= returns a JSON file
+  The =gh_db.py= is script responsible for querying the GHTorrent database in order to
+  obtain data about the projects. The GHTorrent database[[cite:ghtorrent]] is an offline mirror of
+  data offered through the GitHub REST API. =gh_db.py= returns a JSON file
   with the information about the project such as number of stars, number of
   contributors or information about pull requests and their commits.
 
-  However, the Github REST API lacks the information about the code quality of
+  Alternative script that can be used by =pr_qality.py= is =gh_rest.py=.
+  This script is using the GitHub REST API directly. The advantage of this
+  script is that it can retrieve the newest data from the GitHub. Unfortunately,
+  the REST API is limited by the number of requests per hour. Because of that,
+  the =gh_rest.py= is programmed to retrieve only subset of data that are
+  obtained by =gh_db.py= (data not crucial for the analysis are
+  omitted).
+
+  However, the GitHub lacks the information about the code quality of
   the pull requests. This is where the =git-contrast= comes into the play.
   =git-contrast= is the command-line application which analyzes the code quality
   of the given pull request using the external linters. This application is
   further discussed in the following sections.
+** GitHub metadata
+   As stated before, the script =gh_db.py= and =gh_rest.py= are used
+   to retrieve data from GitHub. The GitHub can be leveraged to obtain
+   many interesting metadata which can possibly influence the acceptance of pull
+   requests. All the metadata that are obtained using the scripts are listed
+   in the Table [[table:ghdata]].
+   #+CAPTION: Data retrieved from GitHub
+   #+LABEL: table:ghdata
+   #+ATTR_LaTeX: :align |llcc| :placement [h]
+   |--------------------+---------------------------+------------+--------------|
+   | Level              | Metadata                  | =gh_db.py= | =gh_rest.py= |
+   |--------------------+---------------------------+------------+--------------|
+   |--------------------+---------------------------+------------+--------------|
+   | Repository level   | Project name              | \ding{51}  | \ding{51}    |
+   |                    | Programming language      | \ding{51}  | \ding{51}    |
+   |                    | Time of creation          | \ding{51}  | \ding{51}    |
+   |                    | Number of forks           | \ding{51}  | \ding{51}    |
+   |                    | Number of commits         | \ding{51}  | \ding{55}    |
+   |                    | Number of project members | \ding{51}  | \ding{55}    |
+   |                    | Number of stars           | \ding{51}  | \ding{51}    |
+   |--------------------+---------------------------+------------+--------------|
+   | Submitter level    | Username                  | \ding{51}  | \ding{51}    |
+   |                    | Number of followers       | \ding{51}  | \ding{55}    |
+   |                    | Status in the project     | \ding{51}  | \ding{51}    |
+   |--------------------+---------------------------+------------+--------------|
+   | Pull request level | Pull request ID           | \ding{51}  | \ding{51}    |
+   |                    | Is PR accepted?           | \ding{51}  | \ding{51}    |
+   |                    | Time opened               | \ding{51}  | \ding{51}    |
+   |                    | Head repository           | \ding{51}  | \ding{51}    |
+   |                    | Head commit               | \ding{51}  | \ding{51}    |
+   |                    | Base commit               | \ding{51}  | \ding{51}    |
+   |                    | Number of commits         | \ding{51}  | \ding{55}    |
+   |                    | Number of comments        | \ding{51}  | \ding{55}    |
+   |--------------------+---------------------------+------------+--------------|
 
-  *TODO*: mention that data from REST API are not complete (GH API limit)
-  *TODO*: mention the limits (timeout, 500, must contain source code of primary language)
-** GHTorrent database
-   As stated before, the script called =gh_info.py= uses the GHTorrent database[[cite:ghtorrent]]
-   in order to retrieve GitHub data. GitHub REST API can be leveraged to obtain
-   many interesting factors which can possibly influence the acceptance of pull
-   requests. All the data that are obtained using the =gh_info.py= are listed
-   in the following table:
-   #+CAPTION: Data retrieved from the GHTorrent
-   #+ATTR_LaTeX: :align |llc|
-   |--------------------+---------------------------+-----------|
-   | Level              | Variable                  | Factor    |
-   |--------------------+---------------------------+-----------|
-   |--------------------+---------------------------+-----------|
-   | Repository level   | Project name              | \ding{55} |
-   |                    | Programming language      | \ding{51} |
-   |                    | Time of creation          | \ding{51} |
-   |                    | Number of forks           | \ding{51} |
-   |                    | Number of commits         | \ding{51} |
-   |                    | Number of project members | \ding{51} |
-   |                    | Number of watchers        | \ding{51} |
-   |--------------------+---------------------------+-----------|
-   | Submitter level    | Username                  | \ding{55} |
-   |                    | Number of followers       | \ding{51} |
-   |                    | Status in the project     | \ding{51} |
-   |--------------------+---------------------------+-----------|
-   | Pull request level | Pull request ID           | \ding{55} |
-   |                    | Is PR accepted?           | \ding{51} |
-   |                    | Time opened               | \ding{51} |
-   |                    | Head repository           | \ding{55} |
-   |                    | Head commit               | \ding{55} |
-   |                    | Base commit               | \ding{55} |
-   |                    | Number of commits         | \ding{51} |
-   |                    | Number of comments        | \ding{51} |
-   |--------------------+---------------------------+-----------|
-
-   Variables marked with ticks (\ding{51}) are factors that can possibly
-   influence code quality and they can be used for pull request acceptance
-   analysis. Other variables (\ding{55}) are not meant to be used as an part of
-   an data analysis itself, but are kept here for better orientation; and some
-   of them are later used by the =git-contrast= tool (in order to pull the
-   commits which will be subsequently analyzed by linters).
-** =git-contrast=
+   Metadata like ``Number of stars'' or ``Time opened'' are required for the
+   statistical analysis.  Others are not meant to be used as an part of an
+   analysis itself, but are kept here for better orientation; and some of them
+   are needed for the =git-contrast= tool, such as ``Head commit'', ``Base commit'', etc.
+** Evaluating code quality
    =git-contrast= is the command line application that I implemented in order to
    be able to analyze the code quality of the given pull request. =git-contrast=
    expects two commit hashes on the input and returns the information about the
-   change in code quality between these commits on the output. This is done by
-   running the linter on the files in the state of the first commit and then in
-   the state of the second commit. The number of found code quality issues is
+   change in code quality between these commits on the output.
+   The number of found code quality issues is
    then written to the standard output.
 
    To measure the change of the quality in the pull request, we simple run the
    =git-contrast= on the ``head commit'' and the ``base commit'' of the given
    pull request. =git-contrast= supports several linters; which linter will be
-   used is determined by the file extension of the tested file. Linters that are
-   supported by =git-contrast= are listed in the following table:
-   #+CAPTION: Linters supported by the =git-contrast=
-   #+ATTR_LaTeX: :align |lll|
-   |------------+-----------------------+-----------------------|
-   | Linter     | Programming languages | File extensions       |
-   |------------+-----------------------+-----------------------|
-   |------------+-----------------------+-----------------------|
-   | *OCLint*   | C/C++                 | =.c=, =.cpp= and =.h= |
-   | *HLint*    | Haskell               | =.hs=                 |
-   | *ktlint*   | Kotlin                | =.kt= and =.kts=      |
-   | *PMD*      | Java                  | =.java=               |
-   | *Pylint*   | Python                | =.py=                 |
-   |------------+-----------------------+-----------------------|
+   used is determined by the file extension of the tested file (Table [[table:linters]]).
+   #+CAPTION: Linters supported by =git-contrast=
+   #+LABEL: table:linters
+   #+ATTR_LaTeX: :align |lcll|
+   |--------------+---------+----------------------+-----------------------|
+   | Linter       | Version | Programming language | File extensions       |
+   |--------------+---------+----------------------+-----------------------|
+   |--------------+---------+----------------------+-----------------------|
+   | [[https://pylint.pycqa.org/][*Pylint*]]     |  2.12.2 | Python               | =.py=                 |
+   | [[https://pmd.github.io/][*PMD*]]        |  6.42.0 | Java                 | =.java=               |
+   | [[https://ktlint.github.io/][*ktlint*]]     |  0.43.2 | Kotlin               | =.kt= and =.kts=      |
+   | [[https://github.com/ndmitchell/hlint][*HLint*]]      |   3.2.8 | Haskell              | =.hs=                 |
+   | [[https://dwheeler.com/flawfinder/][*flawfinder*]] |  2.0.19 | C/C++                | =.c=, =.cpp= and =.h= |
+   |--------------+---------+----------------------+-----------------------|
 
    The most problematic was to statically analyze the C/C++ source files because
    some linters also need the information how the source code should be
-   compiled. Luckily, this information can be usually automatically obtained
-   from the makefiles. Another problem is the speed. At first, I was using the
-   Cppcheck linter for the static analysis of C/C++ but I was forced to switch
-   to the OCLint in order to shrink the total execution time of the static
-   analysis.
+   compiled. I tested the OCLint and Cppcheck linters but without success.
+   The compilation flags cannot be always automatically determined from the makefiles.
+   Because of that, I settled on using the flawfinder which performs simpler analysis and
+   does not require compilation flags.
 
-   - *TODO:* add information about versions of linters, issue categories etc.
-   - *TODO:* flawfinder instead of OCLint
+   Following linters are supported by =git-contrast=:
+   - Pylint :: Python linter that is able to detect programming error and helps
+     enforcing coding standard[fn::https://peps.python.org/pep-0008/].
+     Issues are divided into following categories: conventions, code smells,
+     warnings (Python-specific problems), errors.
+   - PMD :: Linter that is able to discover common programming flaws. It is mainly
+     concerned with Java and Apex programming languages. PMD is extensible, but also
+     provides many predefined rulesets: ``Best Practices'', ``Code style'', ``Security''\dots
+     All Java rule sets available in basic installation were used to evaluate code quality.
+   - ktlint :: Simple static analyzer focused on the code clarity and community
+     conventions[fn::https://kotlinlang.org/docs/coding-conventions.html].
+     This linter uses only a small set of carefully selected rules.
+   - HLint :: Tool for suggesting possible improvements to Haskell code.
+     Every hint has one of the following severity levels: error, warning, suggestion.
+   - flawfinder :: Simple program that examines C/C++ code and searches for potentially
+     dangerous functions. This is done using the built-in database of functions with
+     well-known problems. Linter uses following risk levels: note, warning, error.
 ** Projects selection
    In total, 100 projects were selected written in five different
    programming languages (20 projects for each language).  The analyzed GitHub
@@ -1201,7 +1229,9 @@
    It is also important to note that linting of some pull requests resulted in an error in the
    linter, and therefore these PRs were skipped. Pull requests were also skipped if the
    linting time exceeded the limit (that was set to 1000 seconds) --- the PRs that
-   modified a huge number of files were ignored.
+   modified a huge number of files were ignored. Furthermore, for some projects,
+   the number of analyzed pull requests was limited to 500 to reduce the total
+   time required for analysis.
 
    Another problem is that pull requests can be merged manually outside GitHub.
    These pull requests are not recognized as accepted[[cite:ghperils]]. The projects were selected so that
