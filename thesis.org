@@ -120,9 +120,9 @@
   the PR.
 
   The reasons why contributors abandon their PRs were also
-  studied[[cite:abandonment]]. The reason number one was the ``Lack of answers from
-  integrators.''; moreover, the ``Lack of time'' and the ``Pull request is
-  obsolete'' was also often stated as the main reason.
+  studied[[cite:abandonment]]. The reason number one was the "Lack of answers from
+  integrators."; moreover, the "Lack of time" and the "Pull request is
+  obsolete" was also often stated as the main reason.
 
   Even though the different open-source communities solve the problem of pull
   request acceptance in a different manner, three main governance styles can be
@@ -179,8 +179,8 @@
    The /pull request level/ is interested in the data that are connected to the
    PR itself.  For instance, on the /PR level/, one can study if there is
    a correlation between PR acceptance and the number of GitHub comments in
-   the PR. Another parameter that can be used is ``Number of Files Changed'' or
-   ``Number of Commits''.
+   the PR. Another parameter that can be used is "Number of Files Changed" or
+   "Number of Commits".
 
    One of the factors that negatively influence the acceptance rate is the
    already mentioned number of commits in the pull request. The high number of
@@ -216,7 +216,7 @@
    acceptance and its quality.
    - Does code quality affect pull request acceptance?[[cite:quality]]
 ** TODO Unsorted
-   - study ``Influence of Social and Technical Factors''[[cite:social]] was replicated[[cite:personality]]
+   - study "Influence of Social and Technical Factors"[[cite:social]] was replicated[[cite:personality]]
    - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
      - contains interesting table with factors that influences acceptance
    - Pull Request Decision Explained: An Empirical Overview[[cite:empirical]]
@@ -323,10 +323,10 @@
    |                    | Number of comments        | \ding{51}  | \ding{55}    |
    |--------------------+---------------------------+------------+--------------|
 
-   Metadata like ``Number of stars'' or ``Time opened'' are required for the
+   Metadata like "Number of stars" or "Time opened" are required for the
    statistical analysis.  Others are not meant to be used as an part of an
    analysis itself, but are kept here for better orientation; and some of them
-   are needed for the =git-contrast= tool, such as ``Head commit'', ``Base commit'', etc.
+   are needed for the =git-contrast= tool, such as "Head commit", "Base commit", etc.
 ** Evaluating code quality
    =git-contrast= is the command line application that I implemented in order to
    be able to analyze the code quality of the given pull request. =git-contrast=
@@ -336,7 +336,7 @@
    then written to the standard output.
 
    To measure the change of the quality in the pull request, we simple run the
-   =git-contrast= on the ``head commit'' and the ``base commit'' of the given
+   =git-contrast= on the "head commit" and the "base commit" of the given
    pull request. =git-contrast= supports several linters; which linter will be
    used is determined by the file extension of the tested file (Table [[table:linters]]).
    #+CAPTION: Linters supported by =git-contrast=
@@ -367,7 +367,7 @@
      warnings (Python-specific problems), errors.
    - PMD :: Linter that is able to discover common programming flaws. It is mainly
      concerned with Java and Apex programming languages. PMD is extensible, but also
-     provides many predefined rulesets: ``Best Practices'', ``Code style'', ``Security''\dots
+     provides many predefined rulesets: "Best Practices", "Code style", "Security"\dots
      All Java rule sets available in basic installation were used to evaluate code quality.
    - ktlint :: Simple static analyzer focused on the code clarity and community
      conventions[fn::https://kotlinlang.org/docs/coding-conventions.html].
@@ -1018,7 +1018,7 @@
    The 13 projects contain a sufficient number of pull requests; the acceptance and
    the issue presence are not independent only in four of them (there, the issue presence
    have a small negative impact on the acceptance). For the =haskell/aeson= project,
-   the Cramer's V is $0.282$ --- the association is ``medium''.
+   the Cramer's V is $0.282$ --- the association is "medium".
 
    The issues detected by /HLint/ do not seem to have an impact on the time it takes to close a pull request.
    All trained models have negative $R^2$. When only fixed issues were used for regression, there
@@ -1060,10 +1060,10 @@
    The most common type of issue is the note. The least common are errors. The
    /flawfinder/ was able to identify 137 different issues in the studied
    PRs. All of the top ten issues (in terms of number of PRs which introduced
-   them) are notes. The most common note is =buffer-char= (``Statically-sized
+   them) are notes. The most common note is =buffer-char= ("Statically-sized
    arrays can be improperly restricted leading to potential overflows or other
-   issues\dots{}''). The most common error is =buffer-strcat= (``Does not check
-   for buffer overflows when concatenating to destination\dots''), and it is the
+   issues\dots{}"). The most common error is =buffer-strcat= ("Does not check
+   for buffer overflows when concatenating to destination\dots"), and it is the
    11 most introduced issue (introduced in 69 pull requests). There are 36 issues
    that were present in the analyzed code, but they were not introduced in any
    pull request; 21 of them are errors.
@@ -1077,16 +1077,16 @@
    #+END_EXPORT
 
    Classification algorithms rank as the most important issue the
-   =format-printf= (``If format strings can be influenced by an attacker, they
-   can be exploited\dots''). However, this issue is only a /note/.  Therefore it
+   =format-printf= ("If format strings can be influenced by an attacker, they
+   can be exploited\dots"). However, this issue is only a /note/.  Therefore it
    does not have to indicate a defect (there will probably be a large number of
    false positives). AdaBoost and XGBoost algorithms give this issue importance
    of 1 %. The average importance is 0.7%.  This issue is also most important
    when only introduced issues are considered.  The second most important issue has
    average importance of only 0.26 %.
 
-   The most important error is =buffer-StrCpyNA= (``Does not check for buffer
-   overflows when copying to destination\dots'') with average importance of only
+   The most important error is =buffer-StrCpyNA= ("Does not check for buffer
+   overflows when copying to destination\dots") with average importance of only
    0.9 %. This error is the sixth most important issue.
    #+BEGIN_EXPORT latex
    \begin{figure}[H]\centering
@@ -1173,7 +1173,7 @@
 
    The effect of code quality on acceptance was also studied using
    classification algorithms.  One of the metrics that were used to measure the
-   performance of the classification models is the ``area under the ROC curve''
+   performance of the classification models is the "area under the ROC curve"
    (AUC). When using this metric to evaluate models, the Haskell is once again
    the language when the code quality is least important
    (Figure\nbsp{}\ref{All_AUC}). The average AUC for Haskell models is around
