@@ -1,4 +1,4 @@
-#+TITLE: Source Code Quality impact @@latex:\\@@ on Pull Requests acceptance
+#+TITLE: Source Code Quality Impact @@latex:\\@@ on Pull Requests Acceptance
 #+AUTHOR: Ondřej Kuhejda
 #+OPTIONS: num:2 ':t
 #+LANGUAGE: en
@@ -90,6 +90,7 @@
    heavily depends on the programming language of the studied source code. Which
    linters were used for the purposes of this thesis is discussed later in the
    text.
+**** TODO identify common metrics used for the definition of code quality (e.g., cyclomatic complexity);
 **** TODO cite: https://www.utcluj.ro/media/page_document/78/Foundations%20of%20software%20testing%20-%20ISTQB%20Certification.pdf
 ** TODO GitHub
    - GitHub issues and code quality
@@ -256,44 +257,45 @@
   \draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
   \draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Pull requests\\code quality} (n7);
   \end{tikzpicture}
-  \caption{The \texttt{pr\_quality.py} workflow}\label{workflow}
+  \caption{The \texttt{pr\_quality.py} workflow}\label{fig:mining_workflow}
   \end{figure}
   #+END_EXPORT
-  Information about the pull requests are retrieved using the =pr_quality.py=
-  script. This scripts takes names of the projects that will be analyzed as the
-  input and it outputs the JSON files containing information about the projects and their code quality.  The script
-  needs to retrieve the metadata for each project and its pull requests.  There are
-  two possible sources that can be used: GitHub REST API and GHTorrent
-  database. Which source will be used can be specified by passing argument to
-  the tool. Metadata are then used to determine which objects needs to be fetched
-  form the GitHub to perform the code quality analysis. The analysis of the pull
-  request itself is performed by external tool called =git-contrast=.
+  Information about the pull requests is retrieved using the =pr_quality.py=
+  script. This script takes the names of the projects that will be analyzed as the
+  input, and it outputs the JSON files containing information about the projects
+  and their code quality (Figure\nbsp{}\ref{fig:mining_workflow}). The script
+  needs to retrieve the metadata for each project and its pull requests. There
+  are two possible sources that can be used: GitHub REST API and the GHTorrent
+  database. Which source will be used can be specified by passing an argument to
+  the tool. Metadata are then used to determine which objects need to be
+  fetched from the GitHub to perform the code quality analysis. The analysis of
+  the pull request itself is performed by an external tool called =git-contrast=.
 
-  The =gh_db.py= is script responsible for querying the GHTorrent database in order to
+  The =gh_db.py= is a script responsible for querying the GHTorrent database in order to
   obtain data about the projects. The GHTorrent database[[cite:ghtorrent]] is an offline mirror of
   data offered through the GitHub REST API. =gh_db.py= returns a JSON file
-  with the information about the project such as number of stars, number of
-  contributors or information about pull requests and their commits.
+  with the information about the project, such as the number of stars, number of
+  contributors, or information about pull requests and their commits.
 
-  Alternative script that can be used by =pr_qality.py= is =gh_rest.py=.
-  This script is using the GitHub REST API directly. The advantage of this
-  script is that it can retrieve the newest data from the GitHub. Unfortunately,
+  An alternative script that can be used by =pr_qality.py= is =gh_rest.py=.
+  This script uses the GitHub REST API directly. The advantage of this
+  script is that it can retrieve the newest data from GitHub. Unfortunately,
   the REST API is limited by the number of requests per hour. Because of that,
-  the =gh_rest.py= is programmed to retrieve only subset of data that are
+  the =gh_rest.py= is programmed to retrieve only a subset of data that are
   obtained by =gh_db.py= (data not crucial for the analysis are
   omitted).
 
-  However, the GitHub lacks the information about the code quality of
-  the pull requests. This is where the =git-contrast= comes into the play.
-  =git-contrast= is the command-line application which analyzes the code quality
+  However, GitHub lacks information about the code quality of
+  the pull requests. This is where the =git-contrast= comes into play.
+  =git-contrast= is the command-line application that analyzes the code quality
   of the given pull request using the external linters. This application is
   further discussed in the following sections.
 ** GitHub metadata
-   As stated before, the script =gh_db.py= and =gh_rest.py= are used
-   to retrieve data from GitHub. The GitHub can be leveraged to obtain
-   many interesting metadata which can possibly influence the acceptance of pull
+   As stated before, the scripts =gh_db.py= and =gh_rest.py= are used
+   to retrieve data from GitHub. GitHub can be leveraged to obtain
+   many interesting metadata, which can possibly influence the acceptance of pull
    requests. All the metadata that are obtained using the scripts are listed
-   in the Table [[table:ghdata]].
+   in Table [[table:ghdata]].
    #+CAPTION: Data retrieved from GitHub
    #+LABEL: table:ghdata
    #+ATTR_LaTeX: :align |llcc| :placement [h]
@@ -324,20 +326,20 @@
    |--------------------+---------------------------+------------+--------------|
 
    Metadata like "Number of stars" or "Time opened" are required for the
-   statistical analysis.  Others are not meant to be used as an part of an
-   analysis itself, but are kept here for better orientation; and some of them
+   statistical analysis.  Others are not meant to be used as a part of the
+   analysis itself but are kept here for better orientation, and some of them
    are needed for the =git-contrast= tool, such as "Head commit", "Base commit", etc.
 ** Evaluating code quality
-   =git-contrast= is the command line application that I implemented in order to
-   be able to analyze the code quality of the given pull request. =git-contrast=
+   =git-contrast= is the command-line application that I implemented in order to
+   be able to analyze the code quality of the given pull request. The =git-contrast=
    expects two commit hashes on the input and returns the information about the
    change in code quality between these commits on the output.
    The number of found code quality issues is
    then written to the standard output.
 
-   To measure the change of the quality in the pull request, we simple run the
-   =git-contrast= on the "head commit" and the "base commit" of the given
-   pull request. =git-contrast= supports several linters; which linter will be
+   To measure the change in the quality of the pull request, the
+   =git-contrast= is run on the "head commit" and the "base commit" of the given
+   pull request. The =git-contrast= supports several linters; which linter will be
    used is determined by the file extension of the tested file (Table [[table:linters]]).
    #+CAPTION: Linters supported by =git-contrast=
    #+LABEL: table:linters
@@ -354,46 +356,46 @@
    |--------------+---------+----------------------+-----------------------|
 
    The most problematic was to statically analyze the C/C++ source files because
-   some linters also need the information how the source code should be
+   some linters also need the information on how the source code should be
    compiled. I tested the OCLint and Cppcheck linters but without success.
-   The compilation flags cannot be always automatically determined from the makefiles.
-   Because of that, I settled on using the flawfinder which performs simpler analysis and
+   The compilation flags cannot always be automatically determined from the makefiles.
+   Because of that, I settled on using the flawfinder, which performs a simpler analysis and
    does not require compilation flags.
 
-   Following linters are supported by =git-contrast=:
-   - Pylint :: Python linter that is able to detect programming error and helps
-     enforcing coding standard[fn::https://peps.python.org/pep-0008/].
-     Issues are divided into following categories: conventions, code smells,
-     warnings (Python-specific problems), errors.
+   The following linters are supported by =git-contrast=:
+   - Pylint :: Python linter that is able to detect programming errors and helps
+     enforce coding standards[fn::https://peps.python.org/pep-0008/].
+     Issues are divided into the following categories: conventions, code smells,
+     warnings (Python-specific problems), and errors.
    - PMD :: Linter that is able to discover common programming flaws. It is mainly
-     concerned with Java and Apex programming languages. PMD is extensible, but also
+     concerned with Java and Apex programming languages. PMD is extensible but also
      provides many predefined rulesets: "Best Practices", "Code style", "Security"\dots
-     All Java rule sets available in basic installation were used to evaluate code quality.
+     All Java rule sets available in the basic installation were used to evaluate code quality.
    - ktlint :: Simple static analyzer focused on the code clarity and community
      conventions[fn::https://kotlinlang.org/docs/coding-conventions.html].
      This linter uses only a small set of carefully selected rules.
    - HLint :: Tool for suggesting possible improvements to Haskell code.
-     Every hint has one of the following severity levels: error, warning, suggestion.
-   - flawfinder :: Simple program that examines C/C++ code and searches for potentially
+     Every hint has one of the following severity levels: error, warning, and suggestion.
+   - flawfinder :: A simple program that examines C/C++ code and searches for potentially
      dangerous functions. This is done using the built-in database of functions with
-     well-known problems. Linter uses following risk levels: note, warning, error.
+     well-known problems. Linter uses the following risk levels: note, warning, and error.
 ** Projects selection
    In total, 100 projects were selected written in five different
    programming languages (20 projects for each language).  The analyzed GitHub
    projects were selected based on the following criteria:
    - The primary programming language is Python, Java, Kotlin, Haskell, or C/C++.
-   - The project is popular --- is in the top 150 most favorite projects written in the given language.
-     One of the reasons to analyze popular projects is the fact that popularity influences the acceptance[[cite:social]].
-     Popular projects also usually contains high number of pull requests.
+   - The project is popular --- it is in the top 150 most favorite projects written in the given language.
+     One of the reasons to analyze popular projects is the fact that popularity influences acceptance[[cite:social]].
+     Popular projects also usually contain a high number of pull requests.
      Two different lists of popular projects were used: projects sorted by the
-     number of stars using GHTorrent database (data from \nth{1} June, 2019) and the list from
-     GitHub[fn::https://github.com/EvanLi/Github-Ranking] (data from \nth{1} January, 2022).
+     number of stars using the GHTorrent database (data from \nth{1} June 2019) and the list from
+     GitHub[fn::https://github.com/EvanLi/Github-Ranking] (data from \nth{1} January 2022).
    - The project contains at least 200 pull requests that are suitable for analysis.
      This means that PR needs to contain at least one file written in the
      primary language and the data about PR needs to be publicly available.
    - The project is using GitHub to merge pull requests (for most of the pull requests).
-   - The project is a library, program or collection of programs. Repositories which primary purpose is
-     to store configuration files, documentation, books, etc. were ignored.
+   - The project is a library, program, or collection of programs. Repositories whose primary purpose is
+     to store configuration files, documentation, books, etc., were ignored.
 ** TODO Computational resources
 * Data analysis
   In this chapter, I am explaining which statistical methods were chosen in
@@ -669,11 +671,11 @@
    \resizebox{\textwidth}{!}{%
      \input{results/python/acceptance_ct}
    }
-   \caption{Relation between presence of issue and PR acceptance}\label{Python_CT}
+   \caption{Relation between presence of issue and PR acceptance}\label{fig:python_ct}
    \end{figure}
    #+END_EXPORT
 
-   As can be seen in Figure\nbsp{}\ref{Python_CT}, the observed number of
+   As can be seen in Figure\nbsp{}\ref{fig:python_ct}, the observed number of
    rejected pull requests which contained some defected is higher than
    expected. For $\chi^2$ test, $p < \num{2.2e-16}$ and therefore, the
    hypothesis that presence of some issue and PR acceptance are independent is
@@ -744,10 +746,10 @@
    \resizebox{\textwidth + 2cm}{!}{%
      \input{results/java/issues_types_and_prs}
    }
-   \caption{PMD issues and \% of PRs which fixed/introduced them}\label{PMD_issues_prs}
+   \caption{PMD issues and \% of PRs which fixed/introduced them}\label{fig:pmd_issues_prs}
    \end{figure}
    #+END_EXPORT
-   As can be seen in Figure\nbsp{}\ref{PMD_issues_prs}, the documentation issues
+   As can be seen in Figure\nbsp{}\ref{fig:pmd_issues_prs}, the documentation issues
    tend to appear in a large number of pull requests (24 % on average). Moreover,
    the typical code style issue appeared in 11 % of pull requests. On the other
    end of the spectrum, an average issue indicating an error-prone construct is present in only two
@@ -1158,10 +1160,10 @@
    \resizebox{\textwidth}{!}{%
      \input{results/all_cramers_v}
    }
-   \caption{Comparison of Cramer's V}\label{All_V}
+   \caption{Comparison of Cramer's V}\label{all_v}
    \end{figure}
    #+END_EXPORT
-   As can be seen in Figure\nbsp{}\ref{All_V}, in all studied languages, the
+   As can be seen in Figure\nbsp{}\ref{fig:all_v}, in all studied languages, the
    presence of some issue have a negative effect on the PR acceptance (in terms
    of $\chi^2$ tests); however, for all of the languages, this effect is small ($\phi_c
    \approx 0.1$).  The smallest effect was observed for Haskell programming
@@ -1176,7 +1178,7 @@
    performance of the classification models is the "area under the ROC curve"
    (AUC). When using this metric to evaluate models, the Haskell is once again
    the language when the code quality is least important
-   (Figure\nbsp{}\ref{All_AUC}). The average AUC for Haskell models is around
+   (Figure\nbsp{}\ref{fig:all_auc}). The average AUC for Haskell models is around
    0.5 --- the trained models are no better than random guessing.
    The models for the Kotlin are ranked with the highest AUC score and therefore
    are better in classification than models for other languages.
@@ -1194,7 +1196,7 @@
      \input{results/all_auc}
    }
    \caption{AUC for differenct languages (ROC)}
-   \end{figure}\label{All_AUC}
+   \end{figure}\label{fig:all_auc}
    #+END_EXPORT
 
    As discussed in the previous chapter, there seems to be no connection between
