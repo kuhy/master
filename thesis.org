@@ -10,99 +10,132 @@
    - RQ_4 :: Does code quality influence the time it takes to close a pull request?
    - RQ_5 :: Is code quality impact higher in projects that are using some particular programming language?
 * Code quality in pull-based development
-  The pull-based development model created novel ways how can developers
-  interact between each other. Instead of pushing code changes (patches) into
-  one central repository, developers can work in more decentralized and
+  The pull-based development model created novel ways how developers can
+  interact with each other. Instead of pushing code changes (patches) into
+  one central repository, developers can work in a more decentralized and
   distributed way. This is mainly done by using distributed version control
-  systems such as Git. Git enables developers to clone repositories and thus to
-  work independently on projects. Furthermore, the Git's branching model helps
+  systems such as Git. Git enables developers to clone repositories and thus
+  work independently on projects. Furthermore, Git's branching model helps
   developers to keep track of repository changes and helps to handle the
-  conflicts between the different changes of the same code base.
+  conflicts between the different changes of the same code base [[cite:exploratory]].
 
   To furthermore ease the complicated process of resolving conflicts between
   different changes (of the same code base) and to provide a more user-friendly
-  environment for developers, platforms such as GitHub was created. These
-  platforms adds new ways how the developers can interact beyond the basic
+  environment for developers, platforms such as GitHub were created. These
+  platforms add new ways how the developers can interact beyond the basic
   functionality of Git:
-  - The forks enables to create the server-side copy of the repository.
-  - Pull requests (on some platforms called merge requests) enables to merge code directly on the platform.
-  - Users can report issues found in the projects; therefore, platform can also serve as a bug-tracking system.
+  - The forks enable the creation of the server-side copy of the repository.
+  - Pull requests[fn::pull request is commonly abbreviated as PR]
+    (on some platforms called merge requests) enables to merge code directly on the platform.
+  - Users can report issues found in the projects; therefore, the platform can also serve as a bug-tracking system.
   - The comments can be added to the pull requests and issues in order to build up social interaction between developers.
-  - Users can star projects and follow other users, projects, pull requests or issues.
+  - Users can star projects and follow other users, projects, pull requests, or issues.
 
   In this study, I choose to use GitHub as the main source for data
   mining. GitHub is one of the leading platforms that enables pull-based
-  collaboration between developers. GitHub hosts huge amount of publicly
+  collaboration between developers. GitHub hosts a huge amount of publicly
   available repositories and GitHub also provides public REST API that can be
   easily leveraged for data mining.
 
-  The aim of this thesis is to obtain large amount of data about GitHub projects
-  and analyze the pull request in regard of their code quality. How the code
-  quality can be analyzed and how the GitHub platforms contributes to quality of
+  The aim of this thesis is to obtain a large amount of data about GitHub projects
+  and analyze the pull request in regard to their code quality. How the code
+  quality can be analyzed and how the GitHub platforms contribute to the quality of
   the code itself is discussed in the following chapters.
-**** TODO cite: An Exploratory Study of the Pull-based Software Development Model
 ** Code quality
-   Code quality is very important aspect of every program --- software with high
-   code quality has competitive advantage, is more stable and is also more
-   maintainable then software which is poorly written.
+   Code quality is a very important aspect of every program --- software with high
+   code quality has a competitive advantage, is more stable, and is also more
+   maintainable than software that is poorly written.
 
-   To be able to evaluate the software in regard of its quality, there needs to
-   be some way how can be code quality measured. The testing can be used exactly
+   To be able to evaluate the software in regard to its quality, there needs to
+   be some way how the code quality can measured. The testing can be used exactly
    for this purpose --- as a tool for measuring the quality of the source code.
    There are multiple ways how can be testing performed. Testing techniques can
-   be divided into two categories: static and dynamic testing techniques.
+   be divided into two categories: static and dynamic testing techniques[[cite:istqb]].
 
-   In order to use dynamic testing techniques on large number of programs, there
-   are two large obstacles --- the program needs to be executed and there needs
-   to be some inputs (with expected outputs) that can be then used for testing.
-   Program execution can be problematic. Some programs needs to be compiled
-   before they can be executed; others requires special environment for its
-   execution (specific hardware, operating system or shared libraries required
-   by the program). Moreover, the most of the programs does not have sets of
-   input that can be used for testing. There exists some techniques that can be
-   used also without the predefined inputs such as fuzzing, but these techniques
+   In order to use dynamic testing techniques on a large number of programs, there
+   are two large obstacles --- the program needs to be executed, and there need
+   to be some inputs (with expected outputs) that can then be used for testing.
+   Program execution can be problematic. Some programs need to be compiled
+   before they can be executed; others require a special environment for their
+   execution (specific hardware, operating system, or shared libraries required
+   by the program). Moreover, most of the programs do not have predefined sets of
+   input that can be used for testing. There exist some techniques that can also be
+   used without the predefined inputs, such as fuzzing, but these techniques
    are usually time-consuming. Because of that, dynamic testing techniques are
-   not viable option when dealing with the large number of programs.
+   not a viable option when dealing with a large number of programs.
 
-   On the other hand, static testing methods suits the analysis of the large
-   number of programs better. Static techniques include usage formal and
-   informal reviews, walkthroughs and inspections; however, these techniques are
-   performed by humans and therefore are not usable for large datasets. Because
+   On the other hand, static testing methods suit the analysis of a large
+   number of programs better. Static techniques encompass the usage of formal and
+   informal reviews, walkthroughs, and inspections; however, these techniques are
+   performed by humans and therefore are not viable for large datasets. Because
    of that, in this thesis, the quality of the given source code is evaluated
    using the tools for automatic static analysis (called linters). Linters are
-   used to find defects and code smells in the source code without the need of
-   source code's execution.
+   used to find defects and code smells in the source code without the need for
+   the source code's execution.
 
-   There are several categories of issues which can be detected using linters.
-   Source code can be checked if it follows a conventions of the given
-   programming language. For instance, Python has an official style guide for
-   Python code --- PEP 8[fn::https://www.python.org/dev/peps/pep-0008/]. This
-   guide defines the conventions that should be followed such as proper
-   indentation of the code blocks, maximum line length or naming conventions.
-
-   Furthermore, code can be analyzed against refactoring related checks; for
-   instance linter can detect if some part of the code is redundant and
-   therefore could be omitted. Linters can also detect actual errors such as
-   type mismatches or syntax errors.
+   The ISO/IEC 25010[[cite:ISO25010]] defines several quality characteristics which can be identified in the software.
+   I will now discuss these characteristics in the context of static analysis:
+   - Performance efficiency :: evaluates if the application is using the optimal amount of resources.
+     The static analysis can help to create a faster code.  For instance, some
+     linters are able to detect constructs/functions that are ineffective and
+     consume more resources than required.
+   - Usability :: is the degree to which the software is easy to use. This quality is often evaluated through
+     /usability testing/. On the other hand, there are some properties that can be checked via static analysis,
+     such as proper documentation of public interfaces, which contributes to the application's learnability.
+   - Reliability :: defines how stable and fault-tolerant the software is.
+     Static analysis can unravel error-prone constructs and multi-threading issues
+     (that negatively influence stability) and ensure that exception handling is properly implemented.
+   - Security :: is concerned with the confidentiality, integrity, and authenticity of the software.
+     Linters can detect several security-related issues in the source code, such as the use of vulnerable functions
+     or use of the hard-coded values for cryptographic operations.
+   - Maintainability :: is the ease with which can be application modified.
+     Static analysis can help to ensure that source code is clean and
+     understandable.  Source code can be checked if it follows the conventions of
+     the given programming language. For instance, Python has an official style
+     guide for Python code --- PEP 8[fn::https://www.python.org/dev/peps/pep-0008/].
+     This guide defines the conventions that should be followed, such as proper
+     indentation of the code blocks, maximum line length, or naming conventions.
+     Furthermore, code can be analyzed if the software is properly designed and
+     does not use complicated constructs; for instance linter can detect if some
+     part of the code is redundant, complicated, or too coupled.
+   - Portability :: is the ability to execute software on multiple platforms.
+     Some linters are capable of detecting functions and data types that are not portable.
 
    However, it is important to note that not all linters have the same
-   capabilities. Number of issues which can be detected by the given linter also
-   heavily depends on the programming language of the studied source code. Which
-   linters were used for the purposes of this thesis is discussed later in the
-   text.
-**** TODO identify common metrics used for the definition of code quality (e.g., cyclomatic complexity);
-**** TODO cite: https://www.utcluj.ro/media/page_document/78/Foundations%20of%20software%20testing%20-%20ISTQB%20Certification.pdf
-** TODO GitHub
-   - GitHub issues and code quality
-   - Ways to merge code
-     - An Exploratory Study of the Pull-based Software Development Model
-   - PRs and code review
-   - PRs CI/CD and code quality
-     - Wait for It: Determinants of Pull Request Evaluation Latency on GitHub[[cite:latency]]
-       - CI and latency
-     - Trautsch et al.[[cite:pmd]] analyzed several open-source projects in regards to
-       usage of static analysis tools.  They found out that incorporating a static
-       analysis tool in a build process reduces the defect density.
+   capabilities. Issues that can be detected by the given linter heavily
+   depend on the used programming language (some quality issues are
+   language-specific). Which linters were used for the purposes of this thesis
+   is discussed later in the text.
+
+   The code issues (the number of their occurrences) identified by linters were
+   used as a metric to evaluate the code quality of the given pull request.  The
+   same approach was used by Lenarduzzi et al.[[cite:quality]] during the evaluation
+   of the pull requests code quality.
+** GitHub and code quality
+   GitHub brings many features that may potentially improve code quality.
+   GitHub has a built-in bug tracker which can be used to report issues found in the code.
+   Because the issues can be reported by users outside of the core development team,
+   the code quality issues can be detected earlier and more efficiently. Bug trackers
+   also enable prioritization of issues which helps to decide which problems need attention first.
+
+   Moreover, GitHub enables the creation of pull requests --- a mechanism by which the developers can propose changes to
+   the code base. When the pull request is submitted, the maintainers of the repository decide if the changes
+   will be applied (merged) or not (rejected). Quality can be one factor that can influence this decision.
+   The versatility of Git enables pull requests to be merged in various ways[[cite:exploratory]]: through GitHub facilities,
+   using Git merge, or by committing the patch.
+
+   One of the pull requests advantages is the integration with the code review functionality. Maintainers of the projects
+   can review the code to improve internal code quality and maintainability.
+
+   GitHub provides CI/CD[fn::continuous integration/continuous delivery]
+   functionality via GitHub Actions[fn::https://github.com/features/actions].
+   This enables to automatically run static analysis or automated tests whenever
+   some predefined event occurs, such as creating a new pull request.  Another
+   possibility is to add a linter directly to the build process and then trigger
+   the build using the GitHub Actions.  Trautsch et al.[[cite:pmd]] analyzed several
+   open-source projects in regards to the usage of static analysis tools.  They
+   found out that incorporating a static analysis tool in a build process
+   reduces the defect density.
 * Pull request acceptance
   Pull request acceptance is a problem that has been studied multiple
   times. Several surveys were performed in order to understand why pull requests
@@ -222,7 +255,7 @@
      - contains interesting table with factors that influences acceptance
    - Pull Request Decision Explained: An Empirical Overview[[cite:empirical]]
      - also contains interesting table with factors that influences acceptance
-   - An Exploratory Study of the Pull-Based Software Development Model[[cite:explaratory]]
+   - An Exploratory Study of the Pull-Based Software Development Model[[cite:exploratory]]
    - Which Pull Requests Get Accepted and Why? A study of popular NPM Packages[[cite:npm]]
    - Rejection Factors of Pull Requests Filed by Core Team Developers in Software Projects with High Acceptance Rates[[cite:developers]]
    - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
@@ -771,7 +804,7 @@
    reason why this issue has the largest importance.  This also supports the
    study that shows that the acceptance likelihood is increased by 17.1 % when
    tests are included[[cite:social]]. However, another performed study indicates that
-   the presence of test code does not influence PR acceptance[[cite:explaratory]].
+   the presence of test code does not influence PR acceptance[[cite:exploratory]].
 
    The PCA scatter plot for Java pull requests looks as follows:
    #+BEGIN_EXPORT latex
@@ -1160,7 +1193,7 @@
    \resizebox{\textwidth}{!}{%
      \input{results/all_cramers_v}
    }
-   \caption{Comparison of Cramer's V}\label{all_v}
+   \caption{Comparison of Cramer's V}\label{fig:all_v}
    \end{figure}
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{fig:all_v}, in all studied languages, the
