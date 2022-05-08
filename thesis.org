@@ -3,6 +3,13 @@
 #+OPTIONS: num:2 ':t
 #+LANGUAGE: en
 * Introduction
+  Does code quality influence the acceptance of pull requests? There are many
+  factors that influence the pull requests acceptance.
+
+  - What is the problem?
+    - Integrators perceive code quality as the most important factor.
+    - There is a study
+  - What I did
 ** Problem statement
    - RQ_1 :: Which code issues are typically introduced by the pull requests?
    - RQ_2 :: Are there some particular issues/code smells that affect the pull request acceptance?
@@ -17,7 +24,7 @@
   systems such as Git. Git enables developers to clone repositories and thus
   work independently on projects. Furthermore, Git's branching model helps
   developers to keep track of repository changes and helps to handle the
-  conflicts between the different changes of the same code base [[cite:exploratory]].
+  conflicts between the different changes of the same code base[[cite:exploratory]].
 
   To furthermore ease the complicated process of resolving conflicts between
   different changes (of the same code base) and to provide a more user-friendly
@@ -41,7 +48,7 @@
   and analyze the pull request in regard to their code quality. How the code
   quality can be analyzed and how the GitHub platforms contribute to the quality of
   the code itself is discussed in the following chapters.
-** Code quality
+** Measuring code quality
    Code quality is a very important aspect of every program --- software with high
    code quality has a competitive advantage, is more stable, and is also more
    maintainable than software that is poorly written.
@@ -154,13 +161,13 @@
   the PR.
 
   The reasons why contributors abandon their PRs were also
-  studied[[cite:abandonment]]. The reason number one was the "Lack of answers from
+  studied[[cite:abandonment]]. Reason number one was the "Lack of answers from
   integrators."; moreover, the "Lack of time" and the "Pull request is
   obsolete" was also often stated as the main reason.
 
-  Even though the different open-source communities solve the problem of pull
-  request acceptance in a different manner, three main governance styles can be
-  identified --- protective, equitable, lenient. Protective governance style
+  Even though the different open-source communities can approach the pull request acceptance in
+  a different manner, three main governance styles can be
+  identified --- protective, equitable, and lenient. The protective governance style
   values trust in the contributor-maintainer relationship. The equitable
   governance style tries to be unbiased towards the contributors, and the
   lenient style prioritizes the growth and openness of the community[[cite:foss]].
@@ -175,7 +182,7 @@
 
    For instance, the programming language used in the project also influences
    the acceptance of the PRs. Pull requests containing Java, JavaScript, or C++
-   code have a smaller chance to be accepted than PRs containing the code
+   code have a smaller chance of being accepted than PRs containing the code
    written in Go or Scala[[cite:factors]].
 
    Furthermore, older projects and projects with a large team have a
@@ -196,7 +203,10 @@
    that the PR will be accepted increases by 63.3%[[cite:social]].
 
    Moreover, users that contributed to a larger number of projects have a higher
-   chance that their PR will be accepted[[cite:npm2]].
+   chance that their PR will be accepted[[cite:npm2]]. The acceptance of the new
+   pull request also correlates with the acceptance of other older pull requests
+   created by the same submitter[[cite:npm]][[cite:replication]]. Furthermore,
+   the first pull requests of users are more likely to be rejected[[cite:developers]].
 
    The gender of the submitter is another factor that plays a role in PR
    acceptance. A study showed that woman's PR are accepted more often, but only
@@ -210,56 +220,55 @@
    chance that PR will be accepted is also higher when the submitter and closer
    have different personalities[[cite:personality]].
 ** Pull request level
-   The /pull request level/ is interested in the data that are connected to the
+   The /pull request level/ is interested in the data about
    PR itself.  For instance, on the /PR level/, one can study if there is
    a correlation between PR acceptance and the number of GitHub comments in
-   the PR. Another parameter that can be used is "Number of Files Changed" or
-   "Number of Commits".
+   the PR.
 
    One of the factors that negatively influence the acceptance rate is the
-   already mentioned number of commits in the pull request. The high number of
-   commits decreases the probability of acceptance. On the other hand, PR's with
-   only one commit are exceptions --- they have a smaller chance to be accepted
+   number of commits in the pull request. The high number of
+   commits decreases the probability of acceptance. On the other hand, PRs with
+   only one commit are exceptions --- they have a smaller chance of being accepted
    than pull requests which contain two commits[[cite:npm2]].
 
-   Another observation is that more discussed PR's has a smaller chance to be
+   Another observation is that more discussed PRs have a smaller chance of being
    accepted[[cite:social]].  Another study did not find a large difference between
-   accepted and rejected PR's based on the number of comments but found that
-   discussions in rejected PR's have a longer duration[[cite:discussion]].
+   accepted and rejected PRs based on the number of comments but found that
+   discussions in rejected PRs have a longer duration[[cite:discussion]].
+   Moreover, the increasing number of changed lines decreases the
+   likelihood of PR acceptance[[cite:social]].
 
-   Proper testing is the crucial part of every project, and therefore it also
-   influences the pull request acceptance.  PR's including more tests have a
-   higher chance to be accepted, and an increasing number of changed lines
-   decreases the likelihood of PR acceptance[[cite:social]].
+   The code quality is an essential factor on the /pull request level/, and it
+   is this study's main interest.  The code quality as the acceptance factor is
+   examined in the following subchapter.
+*** Code quality
+    One of the tools that ensure that the code has high quality is testing.
+    Proper testing is a crucial part of every project.  Testing plays a
+    significant role in discovering bugs and therefore leads to higher code
+    quality.  One study found that PRs, including more tests, have a higher
+    chance of being accepted[[cite:social]]. However, another study yields no
+    relation between acceptance and test inclusion[[cite:exploratory]].
 
-   Testing plays a significant role in discovering bugs and therefore leads to
-   higher code quality. On the other hand, many test cases do not have
-   to mean that code has a high quality. The code quality is an essential
-   factor on the /pull request level/, therefore, is this study's main interest.
-   Works that are also interested in the code quality and the pull
-   request acceptance are examined in the following chapter.
+    Another factor that is closely tied to code quality is the code style.
+    Proper and consistent code style increases the maintainability of the
+    software.  The code style inconsistency has a small (but not negligible)
+    negative effect on acceptance. PRs with larger code style inconsistency
+    (with the codebase) have a smaller chance of being accepted.  Code style
+    inconsistency also negatively influences the time required to close a
+    PR[[cite:style]].
 
-   Another factor that is closely tied to code quality is the code style.
-   This factor has a small (but not negligible) negative effect on
-   acceptance. This means that PRs with larger code style inconsistency
-   (with the codebase) have a smaller chance of being accepted[[cite:style]].
-** TODO Code quality
-   Although most integrators view code quality as the most important factor
-   regarding PR acceptance, to the best of my knowledge, only one study was
-   performed to discover whether there is a connection between the PR's
-   acceptance and its quality.
-   - Does code quality affect pull request acceptance?[[cite:quality]]
-** TODO Unsorted
-   - study "Influence of Social and Technical Factors"[[cite:social]] was replicated[[cite:personality]]
-   - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
-     - contains interesting table with factors that influences acceptance
-   - Pull Request Decision Explained: An Empirical Overview[[cite:empirical]]
-     - also contains interesting table with factors that influences acceptance
-   - An Exploratory Study of the Pull-Based Software Development Model[[cite:exploratory]]
-   - Which Pull Requests Get Accepted and Why? A study of popular NPM Packages[[cite:npm]]
-   - Rejection Factors of Pull Requests Filed by Core Team Developers in Software Projects with High Acceptance Rates[[cite:developers]]
-   - Pull Request Prioritization Algorithm based on Acceptance and Response Probability[[cite:prioritization]]
-** TODO Create table that compares already performed studies with my thesis
+    Although many integrators view code quality as the most important factor
+    regarding PR acceptance[[cite:integrator]], to the best of my knowledge, only
+    one study[[cite:quality]] was performed to discover whether there is a
+    connection between the PR's acceptance and the quality flaws found in the
+    code (taking into account more complicated aspects than code style or test
+    inclusion).
+
+    Lenarduzzi et al. analyzed 28 open-source projects. The results show that
+    there is no significant connection between code quality and PR acceptance.
+    The key difference (from my thesis) is that they analyzed only projects written
+    in Java. Furthermore, my thesis investigates the connection between the time to close a
+    PR and the PR quality (unlike them). Further comparison is at the end of the thesis.
 * Data mining
   #+BEGIN_EXPORT latex
   \begin{figure}[htb]\centering
@@ -1335,7 +1344,7 @@
   pull request acceptance. However, there seems to be no effect on the time it
   takes to close a PR.
 *** Related work
-    Best of my knowledge, there is only one study[[cite:quality]] about the effect of code quality
+    Best of my knowledge, there is only one study[[cite:quality]] about the effect of quality flaws
     on the pull request acceptance. Lenarduzzi et al. analyzed 28 well-known Java projects.
     I reused the script they provided for PR classification and also applied similar statistical
     techniques so that my findings could be compared with theirs.
@@ -1471,6 +1480,11 @@
    - check the Lenarduzzi paper
    - table with recall, precision etc.
 ** ROC curves
+** TODO Create table that compares already performed studies with my thesis
+   - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
+     - contains interesting table with factors that influences acceptance
+   - Pull Request Decision Explained: An Empirical Overview[[cite:empirical]]
+     - also contains interesting table with factors that influences acceptance
 * Setup :noexport:
 #+LATEX_CLASS: fithesis4
 #+LATEX_CLASS_OPTIONS: [digital,oneside,oldtable,nolof,nolot,nocover]
