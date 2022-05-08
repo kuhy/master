@@ -2,20 +2,55 @@
 #+AUTHOR: Ondřej Kuhejda
 #+OPTIONS: num:2 ':t
 #+LANGUAGE: en
-* Introduction
-  Does code quality influence the acceptance of pull requests? There are many
-  factors that influence the pull requests acceptance.
+* Introduction :export:
+  Does code quality influence the acceptance of pull requests?  Although many
+  project maintainers view the code quality as the most important factor
+  regarding the pull request acceptance[[cite:integrator]], a recent
+  study shows that presence of quality flaws in the code does not
+  influence the acceptance or rejection of pull requests[[cite:quality]].
 
-  - What is the problem?
-    - Integrators perceive code quality as the most important factor.
-    - There is a study
-  - What I did
-** Problem statement
-   - RQ_1 :: Which code issues are typically introduced by the pull requests?
-   - RQ_2 :: Are there some particular issues/code smells that affect the pull request acceptance?
-   - RQ_3 :: Is there a relationship between the source code quality and the pull request acceptance?
-   - RQ_4 :: Does code quality influence the time it takes to close a pull request?
-   - RQ_5 :: Is code quality impact higher in projects that are using some particular programming language?
+  To the best of my knowledge, that is the only study that investigated if
+  quality issues affects the acceptance of pull requests. Lenarduzzi et al.
+  analyzed 28 well-known Java projects and applied several statistical
+  techniques to find the relation between code quality and pull request
+  acceptance.  The quality of the pull requests was evaluated using the
+  open-source tool called PMD. This tool is able to perform static analysis of the
+  code and detect common programming flaws, such as code-smells, anti-patters,
+  or code-style violations. Traditional statistical techniques did not find
+  any connection between the code quality and pull request acceptance.
+  Because of that, they trained several machine learning models to predict the
+  acceptance based on the quality issues found in the code. However,
+  machine learning models yielded similar results as traditional techniques.
+
+  Unfortunately, the study performed by Lenarduzzi et al. analyzed only projects
+  written in Java. Moreover, 22 out of 28 analyzed projects were from the Apache
+  Software Foundation. This is the major threat to generalizability of their
+  findings. To address these shortcomings, I analyzed one hundred projects from
+  five different programming languages --- Python, Java, Kotlin, Haskell, and
+  C/C++ (twenty projects per language). For each programming language, different
+  tool for static analysis was used to evaluate the code quality.
+  I applied similar techniques as Lenarduzzi et al. to analyze the relation between the
+  code quality and pull request acceptance. Furthermore, the regression models were
+  created to predict the time required to close a pull request using the code quality.
+  Subsequently, the retrieved results were compared between individual languages.
+  Specially, the research questions I am trying to answer are following:
+  - RQ_1 :: Which code issues are typically introduced by the pull requests?
+  - RQ_2 :: Are there some particular issues/code smells that affect the pull request acceptance?
+  - RQ_3 :: Is there a relationship between the source code quality and the pull request acceptance?
+  - RQ_4 :: Does code quality influence the time it takes to close a pull request?
+  - RQ_5 :: Is code quality impact higher in projects that are using some particular programming language?
+
+  This thesis first discuss the code quality and its link to pull-based
+  development model.  After that, the various factors that influence the pull
+  request acceptance are mentioned.  Next part of the thesis is dedicated to the
+  research design. At first, I state how the data about the project was
+  retrieved and which methods were used to evaluate the code quality of
+  individual pull requests. Then, the used statistical methods are being
+  introduced. Furthermore, the retrieved results are evaluated separately for
+  each programming language. Towards the end, results are compared between
+  languages and potential threats to validity are discussed.  Finally, I
+  summarize my findings and compare them to the findings of Lenarduzzi et al.
+  Moreover, the potential extensions of my work are proposed.
 * Code quality in pull-based development
   The pull-based development model created novel ways how developers can
   interact with each other. Instead of pushing code changes (patches) into
