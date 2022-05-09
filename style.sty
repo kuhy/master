@@ -1,6 +1,6 @@
 \usepackage[main=english]{babel}
 \thesissetup{
-  date       = 2022/05/25,
+  date       = 2022/05/16,
   university = mu,
   faculty    = fi,
   department = Department of Computer Systems and Communications,
@@ -11,15 +11,29 @@
       code quality, pull request, static code analysis
   },
   abstract   = {%
-      TODO
+      The high code quality makes the software more robust and sustainable and
+      decreases technical debt. This thesis investigates the effect of code quality
+      on the pull request acceptance and on pull request evaluation latency.  This
+      will help us understand if the project maintainers pay sufficient attention
+      to the code quality. To unravel the code quality influence, I analyzed one hundred
+      open-source projects from five different programming languages: Python, Java,
+      Kotlin, Haskell, and C/C++. The code quality of the individual pull
+      requests was evaluated using static code analysis. Several machine learning
+      models were utilized to predict the pull request acceptance based on the code
+      quality. The poor code quality seems to have a slight negative impact on the
+      pull request acceptance. However, there seems to be no effect on the time
+      required to close a pull request.
   },
   thanks     = {%
       I would like to thank my supervisor, Bruno Rossi,
-      for his guidance throughout the whole process.\newline
-
+      for his guidance throughout the whole process.
+      I am gratefully indebted to him for his very valuable
+      comments on this thesis.\\[0.7cm]
       \noindent
-      Computational resources were supplied by the project ``e-Infrastruktura CZ''
-      supported by the Ministry of Education, Youth and Sports of the Czech Republic.
+      Computational resources were supplied by the project
+      ``e-Infrastruktura CZ'' supported by the Ministry of Education,
+      Youth and Sports of the Czech Republic. This thesis would not
+      have been possible without them.
   },
   bib        = bibliography.bib,
 }
