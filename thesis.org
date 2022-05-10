@@ -3,37 +3,38 @@
 #+OPTIONS: num:2 ':t
 #+LANGUAGE: en
 * Introduction
-  Does code quality influence the acceptance of pull requests?  Although many
-  project maintainers view code quality as the most important factor
-  regarding pull request acceptance[[cite:integrator]], a recent
-  study shows that the presence of quality flaws in the code does not
-  influence the acceptance or rejection of pull requests[[cite:quality]].
+  /Does code quality influence the acceptance of pull requests?/ Although many
+  project maintainers view code quality as the most important factor regarding
+  pull request acceptance[[cite:integrator]], a recent study by Lenarduzzi et al.
+  shows that the presence of quality flaws in the code does not influence the
+  acceptance or rejection of pull requests[[cite:quality]].
 
-  To the best of my knowledge, that is the only study that investigated if
-  quality issues affect the acceptance of pull requests. Lenarduzzi et al.
+  To the best of my knowledge, study by Lenarduzzi et al. is the only one that
+  investigated if quality issues affect the acceptance of pull requests. They
   analyzed 28 well-known Java projects and applied several statistical
   techniques to find the relation between code quality and pull request
-  acceptance.  The quality of the pull requests was evaluated using the
-  open-source tool called PMD. This tool is able to perform static analysis of the
-  code and detect common programming flaws, such as code-smells, anti-patterns,
-  or code-style violations. Traditional statistical techniques did not find
-  any connection between the code quality and pull request acceptance.
-  Because of that, they trained several machine learning models to predict the
-  acceptance based on the quality issues found in the code. However,
+  acceptance. The quality of the pull requests was evaluated using the
+  open-source tool called PMD. This tool is able to perform static analysis of
+  the code and detect common programming flaws, such as code-smells,
+  anti-patterns, or code-style violations. Traditional statistical techniques
+  did not find any connection between the code quality and pull request
+  acceptance. Because of that, they trained several machine learning models to
+  predict the acceptance based on the quality issues found in the code. However,
   machine learning models yielded similar results as traditional techniques.
 
-  Unfortunately, the study performed by Lenarduzzi et al. analyzed only projects
-  written in Java. Moreover, 22 out of 28 analyzed projects were from the Apache
-  Software Foundation. This is the major threat to the generalizability of their
-  findings. To address these shortcomings, I analyzed one hundred projects from
-  five different programming languages --- Python, Java, Kotlin, Haskell, and
-  C/C++ (twenty projects per language). For each programming language, a different
-  tool for static analysis was used to evaluate the code quality.
-  I applied similar techniques as Lenarduzzi et al. to analyze the relationship between the
-  code quality and pull request acceptance. Furthermore, the regression models were
-  created to predict the time required to close a pull request using the code quality.
-  Subsequently, the retrieved results were compared between individual languages.
-  Especially, the questions I am trying to answer are the following:
+  Unfortunately, the study performed by Lenarduzzi et al., while an extensive
+  study, analyzed only projects written in Java. Moreover, 22 out of 28 analyzed
+  projects were from the Apache Software Foundation. This is the major threat to
+  the generalizability of their findings. To address these shortcomings, I
+  analyzed one hundred projects from five different programming languages ---
+  Python, Java, Kotlin, Haskell, and C/C++ (twenty projects per language). For
+  each programming language, a different tool for static analysis was used to
+  evaluate the code quality. I applied similar techniques as Lenarduzzi et
+  al. to analyze the relationship between the code quality and pull request
+  acceptance. Furthermore, the regression models were created to predict the
+  time required to close a pull request using the code quality. Subsequently,
+  the retrieved results were compared between individual languages.
+  The research questions set for this thesis are the following:
   - RQ_1 :: Which code issues are typically introduced by the pull requests?
   - RQ_2 :: Are there some particular quality flaws that affect the acceptance of the pull request?
   - RQ_3 :: Is there a relationship between the source code quality and the pull request acceptance?
@@ -41,16 +42,19 @@
   - RQ_5 :: Is code quality impact higher in projects that are using some particular programming language?
 
   This thesis first discusses code quality and its link to the pull-based
-  development model.  After that, the various factors that influence the pull
-  request acceptance are mentioned. The next part of the thesis is dedicated to the
-  research design. At first, I state how the data about the project was
-  retrieved and which methods were used to evaluate the code quality of
-  individual pull requests. Then, the used statistical methods are
-  introduced. Furthermore, the retrieved results are evaluated separately for
-  each programming language. Towards the end, results are compared between
-  languages, and potential threats to validity are discussed.  Finally, I
+  development model (Chapter\nbsp{}[[Code quality in pull-based development]]).
+  After that, the various factors that influence the pull request acceptance are
+  mentioned (Chapter\nbsp{}[[Pull request acceptance]]). The next part of the thesis
+  is dedicated to the research design. At first, I state how the data about the
+  project was retrieved and which methods were used to evaluate the code quality
+  of individual pull requests (Chapter\nbsp{}[[Data mining]]). Then, the used
+  statistical methods are introduced (Chapter\nbsp{}[[Data analysis]]). Furthermore,
+  the retrieved results are evaluated separately for each programming language
+  (Chapter\nbsp{}[[Evaluation]]). Towards the end, results are compared between
+  languages, and potential threats to validity are discussed. Finally, I
   summarize my findings and compare them to the findings of Lenarduzzi et al.
-  Moreover, the potential extensions of my work are proposed.
+  (Chapter\nbsp{}[[Conclusion]]). Moreover, the potential extensions of my work are
+  proposed.
 * Code quality in pull-based development
   The pull-based development model created novel ways how developers can
   interact with each other. Instead of pushing code changes (patches) into
@@ -277,8 +281,8 @@
    is this study's main interest.  The code quality as the acceptance factor is
    examined in the following subchapter.
 *** Code quality
-    One of the tools that ensure that the code has high quality is testing.
-    Proper testing is a crucial part of every project.  Testing plays a
+    One of the instruments that ensure that the code has high quality is testing.
+    Proper testing is a crucial part of every project. Testing plays a
     significant role in discovering bugs and therefore leads to higher code
     quality.  One study found that PRs, including more tests, have a higher
     chance of being accepted[[cite:social]]. However, another study yields no
@@ -299,11 +303,11 @@
     code (taking into account more complicated aspects than code style or test
     inclusion).
 
-    Lenarduzzi et al. analyzed 28 open-source projects. The results show that
+    Lenarduzzi et al.[[cite:quality]] analyzed 28 open-source projects. The results show that
     there is no significant connection between code quality and PR acceptance.
     The key difference (from my thesis) is that they analyzed only projects written
     in Java. Furthermore, my thesis investigates the connection between the time to close a
-    PR and the PR quality (unlike them). Further comparison is at the end of the thesis.
+    PR and the PR quality. Further comparison is at the end of the thesis.
 * Data mining
   #+BEGIN_EXPORT latex
   \begin{figure}[htb]\centering
@@ -476,180 +480,186 @@
 ** TODO Computational resources
 * Data analysis
   In this chapter, I am explaining which statistical methods were chosen in
-  order to answer the research questions.  Research questions 1 to 4 were
+  order to answer the research questions. RQ_1--RQ_4 were
   analyzed separately for each programming language; therefore, also the
   techniques that will be discussed were applied separately.  Only the last
   research question discuss multiple languages at the same time and compares
   results retrieved from the individual analysis of each language.
-*** Which code issues are typically introduced by the pull requests?
-    At first, in order to answer the *RQ_1*, I summarized the retrieved data for each project
-    --- I counted how many suitable pull requests were analyzed and
-    how many of them were accepted/rejected. Then I created a scatter plot between the number of
-    stars and the percentage of accepted PRs.
+** RQ_1: Which code issues are typically introduced by the pull requests?
+   At first, in order to answer the RQ_1, I summarized the retrieved data for each project
+   --- I counted how many suitable pull requests were analyzed and
+   how many of them were accepted/rejected. Then I created a scatter plot between the number of
+   stars and the percentage of accepted PRs.
 
-    I also summarized all pull requests regardless of their project. I computed the average number
-    of introduced issues, fixed issues, etc. Then I created a heat map that shows how many PRs
-    introduced/fixed some specific number of issues.
+   I also summarized all pull requests regardless of their project. I computed the average number
+   of introduced issues, fixed issues, etc. Then I created a heat map that shows how many PRs
+   introduced/fixed some specific number of issues.
 
-    Then for each issue individually, I computed how many accepted/rejected pull
-    requests introduced/fixed this issue, how many times this issue occurred in
-    some pull request, etc. I created multiple lists of issues sorted by various parameters.
-    I sorted issues by the number of rejected/accepted PRs that fixed/introduced them.
-    I also listed issues and the percentage of PRs that changed their quality. I examined the
-    issues that were fixed in a larger number of PRs than introduced. Then I created a scatter plot
-    that shows which issue category is the most common.
+   Then for each issue individually, I computed how many accepted/rejected pull
+   requests introduced/fixed this issue, how many times this issue occurred in
+   some pull request, etc. I created multiple lists of issues sorted by various parameters.
+   I sorted issues by the number of rejected/accepted PRs that fixed/introduced them.
+   I also listed issues and the percentage of PRs that changed their quality. I examined the
+   issues that were fixed in a larger number of PRs than introduced. Then I created a scatter plot
+   that shows which issue category is the most common.
 
-    These steps were applied individually for each programming language to determine
-    how does the average PR look line in terms of code quality.
-*** Are there some particular quality flaws that affect the acceptance of the pull request?
-    In order to discover issues that affect the acceptance of pull requests
-    most, the classification models were created.  The aim of these models is to
-    classify pull requests into two groups (accepted PRs and rejected PRs) by
-    using the information about the quality change in the given pull
-    request. Multiple classification algorithms were
-    used[fn::https://scikit-learn.org/stable/modules/classes.html]:
-    - LogisticRegression :: Despite its name, logistic regression is a linear model used for classification. It uses
-      a so-called /logistic function/ that turns the inputs (code quality issues)
-      into the probability of the dependent variable (PR acceptance) being 1 (PR is
-      accepted).
-    - DecisionTrees :: This algorithm constructs the tree where leaves represent the different classes (PR accepted/rejected),
-      and inner nodes represent the so-called /split criterion/ --- the condition
-      (or predicate) on single/multiple attributes (code quality issues).
-      The /split criterion/ defines to which subtree given input (pull
-      request) belongs.
-    - Bagging :: The Bagging algorithm is trying to predict the data class (PR being rejected/accepted)
-      using multiple different classifiers. It uses bootstrapping[fn::random sampling with replacement]
-      to construct the different data sets for each
-      classifier. The outputs from these classifiers are then aggregated to form
-      the final prediction.
-    - RandomForest :: This classifier leverages the bagging method in order to create the forest of
-      uncorrelated decision trees (to avoid bias and overfitting). Unlike the decision trees,
-      the RandomForest uses only a subset of features (code quality issues) to generate the decision tree
-      (this ensures the low correlation between the trees).
-    - ExtraTrees :: ExtraTrees is a classifier similar to RandomForest.
-      The main difference is that the ExtraTrees algorithm generates /split
-      criterions/ using randomization.  Another key difference is that
-      ExtraTrees uses whole original sample for each tree (instead of
-      bootstrapping).
-    - AdaBoost :: The AdaBoost is another algorithm that leverages multiple weak classifiers (usually DecisionTrees with only one
-      /split criterion/) to predict the final result. It begins by fitting a
-      classifier on the original dataset. Each subsequent classifier is
-      improved using the results from the previous one (incorrectly classified
-      pull requests have a higher chance of being selected in the next
-      classifier).
-    - GradientBoost :: The GradientBoost algorithm is similar to the AdaBoost. It is also
-      using multiple weak classifiers, and they are trained one by one. However,
-      instead of improving the
-      subsequent classifier by changing the training dataset distribution, the GradientBoost algorithm
-      trains the classifiers using the residual errors of predecessors. Furthermore, the GradientBoost
-      works with larger trees than AdaBoost.
-    - XGBoost :: XGBoost is a popular variant of gradient boosting. It is designed to be fast
-      and efficient.
-    Each of those algorithms was run on three different datasets --- a dataset
-    with quality change, a dataset containing only introduced issues, and a dataset
-    with only fixed issues. In the first dataset, the quality change for some issues was
-    represented by the integer, and this integer was negative if the issue was fixed in the PR
-    and positive if the issue was introduced. The other datasets were created by filtering
-    positive/negative values from the first dataset. Running the classification algorithms on
-    the dataset with only fixed issues can help to understand if the improvement in code quality
-    can also influence the acceptance.
+   These steps were applied individually for each programming language to determine
+   how does the average PR look line in terms of code quality.
+** RQ_2: Are there some particular quality flaws that affect the acceptance of the pull request?
+   In order to discover issues that affect the acceptance of pull requests
+   most, the classification models were created.  The aim of these models is to
+   classify pull requests into two groups (accepted PRs and rejected PRs) by
+   using the information about the quality change in the given pull
+   request. Multiple classification algorithms were
+   used[fn::https://scikit-learn.org/stable/modules/classes.html]:
+   - LogisticRegression[[cite:logisticreg]] :: Despite its name, logistic regression
+     is a linear model used for classification. It uses
+     a so-called /logistic function/ that turns the inputs (code quality issues)
+     into the probability of the dependent variable (PR acceptance) being 1 (PR is
+     accepted).
+   - DecisionTrees[[cite:dectrees]] :: This algorithm constructs the tree where leaves represent
+     the different classes (PR accepted/rejected),
+     and inner nodes represent the so-called /split criterion/ --- the condition
+     (or predicate) on single/multiple attributes (code quality issues).
+     The /split criterion/ defines to which subtree given input (pull
+     request) belongs.
+   - Bagging[[cite:bagging]] :: The Bagging algorithm is trying to predict the data class (PR being rejected/accepted)
+     using multiple different classifiers. It uses bootstrapping[fn::random sampling with replacement]
+     to construct the different data sets for each
+     classifier. The outputs from these classifiers are then aggregated to form
+     the final prediction.
+   - RandomForest[[cite:randforest]] :: This classifier leverages the bagging method in order to create the forest of
+     uncorrelated decision trees (to avoid bias and overfitting). Unlike the decision trees,
+     the RandomForest uses only a subset of features (code quality issues) to generate the decision tree
+     (this ensures the low correlation between the trees).
+   - ExtraTrees[[cite:extratrees]] :: ExtraTrees is a classifier similar to RandomForest.
+     The main difference is that the ExtraTrees algorithm generates /split
+     criterions/ using randomization.  Another key difference is that
+     ExtraTrees uses whole original sample for each tree (instead of
+     bootstrapping).
+   - AdaBoost[[cite:adaboost]] :: The AdaBoost is another algorithm that leverages multiple weak classifiers
+     (usually DecisionTrees with only one /split criterion/) to predict the final result. It begins by fitting a
+     classifier on the original dataset. Each subsequent classifier is
+     improved using the results from the previous one (incorrectly classified
+     pull requests have a higher chance of being selected in the next
+     classifier).
+   - GradientBoost[[cite:gradient]] :: The GradientBoost algorithm is similar to the AdaBoost. It is also
+     using multiple weak classifiers, and they are trained one by one. However,
+     instead of improving the
+     subsequent classifier by changing the training dataset distribution, the GradientBoost algorithm
+     trains the classifiers using the residual errors of predecessors. Furthermore, the GradientBoost
+     works with larger trees than AdaBoost.
+   - XGBoost[[cite:xgboost]] :: XGBoost is a popular variant of gradient boosting. It is designed to be fast
+     and efficient. It can generate multiple tree nodes in parallel. Furthermore, /regularization/ is used
+     to prevent overfitting.
+   Each of those algorithms was run on three different datasets:
+   - a dataset with quality change
+   - a dataset containing only introduced issues
+   - a dataset with only fixed issues
+   In the first dataset, the quality change for some issues was
+   represented by the integer, and this integer was negative if the issue was fixed in the PR
+   and positive if the issue was introduced. The other datasets were created by filtering
+   positive/negative values from the first dataset. Running the classification algorithms on
+   the dataset with only fixed issues can help to understand if the improvement in code quality
+   can also influence the acceptance.
 
-    In order to recognize issues that have some effect on the PR acceptance,
-    the /drop-column importance/ mechanism[fn::https://explained.ai/rf-importance/] was used.
-    This mechanism is resource-intense (requires a lot of computational power) but is usually more reliable
-    than the classic importance mechanisms.
+   In order to recognize issues that have some effect on the PR acceptance,
+   the /drop-column importance/ mechanism[fn::https://explained.ai/rf-importance/] was used.
+   This mechanism is resource-intense (requires a lot of computational power) but is usually more reliable
+   than the classic importance mechanisms.
 
-    The dataset was split into five parts to better evaluate the model accuracy
-    (5-fold cross-validation).  Each model was then trained five times ---
-    a distinct dataset was used for training and for validation.  Several metrics
-    (precision, recall, AUROC, F-measure\dots) were used to evaluate the
-    reliability of each model. Afterward, the average metrics over all folds
-    were computed.
+   The dataset was split into five parts to better evaluate the model accuracy
+   (5-fold cross-validation).  Each model was then trained five times ---
+   a distinct dataset was used for training and for validation.  Several metrics
+   (precision, recall, AUROC, F-measure\dots) were used to evaluate the
+   reliability of each model. Afterward, the average metrics over all folds
+   were computed.
 
-    The same technique was used by Lenarduzzi et al.[[cite:quality]]. The script
-    they provided (slightly modified) was used to run the classification
-    algorithms.
-*** Is there a relationship between the source code quality and the pull request acceptance?
-    At first, the PCA (principal component analysis) scatter plot was created to
-    visualize the difference between accepted and rejected pull requests.
+   The same technique was used by Lenarduzzi et al.[[cite:quality]]. The script
+   they provided was used to run the classification algorithms. It was only
+   slightly modified to improve the user interface. Furthermore, the option
+   to filter only fixed/introduced issues was added.
+** RQ_3: Is there a relationship between the source code quality and the pull request acceptance?
+   At first, the PCA (principal component analysis) scatter plot was created to
+   visualize the difference between accepted and rejected pull requests.
 
-    The impact of the presence of some code issue in the PR on the PR acceptance was
-    determined using the $\chi^2$ test. In order to perform this test, the dataset
-    was transformed into a /contingency table/.  This table ($2 \times 2$) contained
-    the number of accepted/rejected PRs with/without a code quality issue.
-    After that, the $\chi^2$ test of independence was performed on the
-    /contingency table/.  The /significance level/ was set to $\alpha =
-    0.05$. However, relying only on statistical significance can be misleading
-    because it is affected by sample size. To understand the practical
-    significance of the test (/effect size/), the Cramer's V denoted as $\phi_c$
-    was also computed. The Cramer's V ranges between 0 (no
-    association) and 1 (complete association).
+   The impact of the presence of some code issue in the PR on the PR acceptance was
+   determined using the $\chi^2$ test. In order to perform this test, the dataset
+   was transformed into a /contingency table/.  This table ($2 \times 2$) contained
+   the number of accepted/rejected PRs with/without a code quality issue.
+   After that, the $\chi^2$ test of independence was performed on the
+   /contingency table/.  The /significance level/ was set to $\alpha =
+   0.05$. However, relying only on statistical significance can be misleading
+   because it is affected by sample size. To understand the practical
+   significance of the test (/effect size/), the Cramer's V denoted as $\phi_c$
+   was also computed. The Cramer's V ranges between 0 (no
+   association) and 1 (complete association).
 
-    Pull request that adds or removes some files greatly influences
-    code quality. If the number of removed/added files has a large impact on PR
-    acceptance (regardless of code quality), then it can be a large threat to
-    the validity of the independence test.  The pull request acceptance can also be
-    influenced by the quality of files which were not linted (were written in
-    non-primary language).  To eliminate the risk that the test was influenced,
-    the same test was performed on pull requests that only modified some source
-    files, and these files were written in the primary language.
+   Pull request that adds or removes some files greatly influences
+   code quality. If the number of removed/added files has a large impact on PR
+   acceptance (regardless of code quality), then it can be a large threat to
+   the validity of the independence test.  The pull request acceptance can also be
+   influenced by the quality of files which were not linted (were written in
+   non-primary language).  To eliminate the risk that the test was influenced,
+   the same test was performed on pull requests that only modified some source
+   files, and these files were written in the primary language.
 
-    Moreover, the $\chi^2$ test was performed independently for each issue
-    category to understand if there are some issue categories that have a
-    stronger influence on the quality.
+   Moreover, the $\chi^2$ test was performed independently for each issue
+   category to understand if there are some issue categories that have a
+   stronger influence on the quality.
 
-    The test was also computed for each project separately. Unluckily, there are
-    some projects that contain an insufficient number of pull requests.  According
-    to Cochran[[cite:cochran]], all expected counts should be ten or greater.
-    Therefore, the tests were performed only on some projects (that have a sufficient
-    number of expected counts).
+   The test was also computed for each project separately. Unluckily, there are
+   some projects that contain an insufficient number of pull requests.  According
+   to Cochran[[cite:cochran]], all expected counts should be ten or greater.
+   Therefore, the tests were performed only on some projects (that have a sufficient
+   number of expected counts).
 
-    It is important to note that p-values were not adjusted in any way.
+   It is important to note that p-values were not adjusted in any way.
 
-    The metrics obtained from classification algorithms were also used to
-    determine if the code quality has some impact on PR acceptance.
-*** Does code quality influence the time required to close a pull request?
-    In order to find the possible link between the code quality and the time it
-    takes to close a PR, regression algorithms were used. At first, the
-    dataset was split into two parts --- training and test set.  After that, the
-    regression model was trained on the training set. Then, the importance of
-    individual quality issues was determined using the /permutation importance/
-    mechanism. Afterward, the model was used to predict the
-    time based on the data from the test set. Metrics such as /mean absolute error/
-    (MAE), /mean squared error/ (MSE), and /coefficient of determination/ ($R^2$)
-    were computed using the predicted and expected values and used to evaluate the
-    models.
+   The metrics obtained from classification algorithms were also used to
+   determine if the code quality has some impact on PR acceptance.
+** RQ_4: Does code quality influence the time required to close a pull request?
+   In order to find the possible link between the code quality and the time it
+   takes to close a PR, regression algorithms were used. At first, the
+   dataset was split into two parts --- training and test set.  After that, the
+   regression model was trained on the training set. Then, the importance of
+   individual quality issues was determined using the /permutation importance/
+   mechanism. Afterward, the model was used to predict the
+   time based on the data from the test set. Metrics such as /mean absolute error/
+   (MAE), /mean squared error/ (MSE), and /coefficient of determination/ ($R^2$)
+   were computed using the predicted and expected values and used to evaluate the
+   models.
 
-    Following regressors were used[fn::https://scikit-learn.org/stable/modules/linear_model.html]:
-    - LinearRegression :: Linear regression is a commonly used type of predictive model.
-      It is used for modeling the linear relationship between explanatory variables (code quality issues)
-      and a scalar response (time to close a PR). The model that minimizes the residual sum of squares
-      is selected.
-    - ElasticNet :: ElasticNet is an extension of linear regression. It is adding $L_1$ (lasso regression)
-      and $L_2$ (ridge regression) penalties in order to make the linear model more robust.
-      The problem with the classic linear regression is that the estimated coefficients can be
-      too high due to overfitting. Because of that, the model parameters are added to the
-      /loss function/[fn::a function that is minimized during the regression] as a penalty.
-    - Some of the already discussed methods used for classification were also used for regression.
-      Following methods were used for both classification and regression:
-      *DecisionTree*, *RandomForest*, *AdaBoost*, *Bagging*, and *GradientBoost*.
-*** Is code quality impact higher in projects that are using some particular programming language?
-    The *RQ3* discusses the impact of code quality on individual
-    programming languages. The findings from the *RQ3* for each
-    language are compared in the *RQ5*. This comparison is a complicated
-    task because each language has different characteristics, and
-    a different linter was used to measure its code quality.
+   Following regressors were used[fn::https://scikit-learn.org/stable/modules/linear_model.html]:
+   - LinearRegression[[cite:linreg]] :: Linear regression is a commonly used type of predictive model.
+     It is used for modeling the linear relationship between explanatory variables (code quality issues)
+     and a scalar response (time to close a PR). The model that minimizes the residual sum of squares
+     is selected.
+   - ElasticNet[[cite:elasticnet]] :: ElasticNet is an extension of linear regression. It is adding $L_1$ (lasso regression)
+     and $L_2$ (ridge regression) penalties in order to make the linear model more robust.
+     The problem with the classic linear regression is that the estimated coefficients can be
+     too high due to overfitting. Because of that, the model parameters are added to the
+     /loss function/[fn::a function that is minimized during the regression] as a penalty.
+   - Some of the already discussed methods used for classification were also used for regression.
+     Following methods were used for both classification and regression:
+     *DecisionTree*, *RandomForest*, *AdaBoost*, *Bagging*, and *GradientBoost*.
+** RQ_5: Is code quality impact higher in projects that are using some particular programming language?
+   The RQ_3 discusses the impact of code quality on individual
+   programming languages. The findings from the RQ_3 for each
+   language are compared in the RQ_5. This comparison is a complicated
+   task because each language has different characteristics, and
+   a different linter was used to measure its code quality.
 
-    The results from $\chi^2$ tests were compared to identify
-    the possible difference between the languages (in terms of code
-    quality). The metrics retrieved from classification models were
-    also compared. Finally, the code quality effect on the time to close a PR
-    was compared between the languages (using the metrics from regressors).
+   The results from $\chi^2$ tests were compared to identify
+   the possible difference between the languages (in terms of code
+   quality). The metrics retrieved from classification models were
+   also compared. Finally, the code quality effect on the time to close a PR
+   was compared between the languages (using the metrics from regressors).
 * Evaluation
   The following chapter is dedicated to the findings from my research.  The first
   five subchapters focus on individual programming languages --- here I am
   giving the answers to the first four research questions.  The last research
-  question (*RQ5*) is answered afterward. At the end of this chapter, I am
+  question (RQ_5) is answered afterward. At the end of this chapter, I am
   discussing possible threats to validity that could eventually influence the
   outcomes of my study.
 ** Python
@@ -1378,47 +1388,47 @@
   To conclude, the poor code quality seems to have a small negative impact on the
   pull request acceptance. However, there seems to be no effect on the time it
   takes to close a PR.
-*** Related work
-    Best of my knowledge, there is only one study[[cite:quality]] about the effect of quality flaws
-    on the pull request acceptance. Lenarduzzi et al. analyzed 28 well-known Java projects.
-    I reused the script they provided for PR classification and also applied similar statistical
-    techniques so that my findings could be compared with theirs.
-    The $\chi^2$ test of independence yielded similar results (they obtained $\phi_c = 0.12$).
-    My classification models have slightly better performance (mean $AUROC$ is higher by $0.023$).
-    The difference in performance can be caused by various factors --- project
-    selection and the ratio of accepted pull requests (only 53 % of PRs they studied were accepted).
-    The code quality was evaluated using the same linter (PMD). However, I also took into
-    account issues that were fixed by the PR. Moreover, a different technique was used to identify
-    issues that were introduced in the PR (they used diff-files provided by GitHub API).
-    Similar to my findings, Lenarduzzi et al. did not identify any particular issues that have a significant
-    effect on the acceptance.
+** Comparison with related work
+   Best of my knowledge, there is only one study[[cite:quality]] about the effect of quality flaws
+   on the pull request acceptance. Lenarduzzi et al. analyzed 28 well-known Java projects.
+   I reused the script they provided for PR classification and also applied similar statistical
+   techniques so that my findings could be compared with theirs.
+   The $\chi^2$ test of independence yielded similar results (they obtained $\phi_c = 0.12$).
+   My classification models have slightly better performance (mean $AUROC$ is higher by $0.023$).
+   The difference in performance can be caused by various factors --- project
+   selection and the ratio of accepted pull requests (only 53 % of PRs they studied were accepted).
+   The code quality was evaluated using the same linter (PMD). However, I also took into
+   account issues that were fixed by the PR. Moreover, a different technique was used to identify
+   issues that were introduced in the PR (they used diff-files provided by GitHub API).
+   Similar to my findings, Lenarduzzi et al. did not identify any particular issues that have a significant
+   effect on the acceptance.
 
-    I extended the work of Lenarduzzi with an analysis of four new programming
-    languages (Python, Kotlin, Haskell, and C/C++).  I also added the analysis
-    of the delivery time of pull requests, and as far as I know, this is the first
-    study that researches the relationship between the code quality and the time it
-    takes to close a pull request.
-*** Future work
-    I consider my work complete. However, there is still plenty of
-    possibilities for how to improve and expand my work.
-    Several improvements can be made to obtain more reliable data for analysis.
-    If the pull request is not merged using GitHub, then the PR is incorrectly classified as rejected.
-    It is possible to utilize some heuristics that will recognize merging through plain Git utilities.
+   I extended the work of Lenarduzzi with an analysis of four new programming
+   languages (Python, Kotlin, Haskell, and C/C++).  I also added the analysis
+   of the delivery time of pull requests, and as far as I know, this is the first
+   study that researches the relationship between the code quality and the time it
+   takes to close a pull request.
+** Future work
+   I consider my work complete. However, there is still plenty of
+   possibilities for how to improve and expand my work.
+   Several improvements can be made to obtain more reliable data for analysis.
+   If the pull request is not merged using GitHub, then the PR is incorrectly classified as rejected.
+   It is possible to utilize some heuristics that will recognize merging through plain Git utilities.
 
-    For the proper quality evaluation, the linter choice is essential. Each
-    linter is focused on some specific set of issues, and this can introduce
-    some form of bias. It would be beneficial to use multiple linters for one
-    programming language. The linters used for C/C++ and Kotlin are not very
-    sophisticated.  However, adding a more advanced linter for C/C++ is
-    complicated --- the state-of-the-art linters require information about
-    compiler flags. This information cannot always be retrieved automatically
-    (from makefiles).  Therefore, a lot of pull requests require manual
-    customization.
+   For the proper quality evaluation, the linter choice is essential. Each
+   linter is focused on some specific set of issues, and this can introduce
+   some form of bias. It would be beneficial to use multiple linters for one
+   programming language. The linters used for C/C++ and Kotlin are not very
+   sophisticated.  However, adding a more advanced linter for C/C++ is
+   complicated --- the state-of-the-art linters require information about
+   compiler flags. This information cannot always be retrieved automatically
+   (from makefiles).  Therefore, a lot of pull requests require manual
+   customization.
 
-    Some projects use linters as part of the /continuous integration/ or
-    during the build process. Additional research needs to be performed to
-    understand if the maintainers of those projects are more strict about the
-    code quality, and therefore the effect on the PR acceptance is larger.
+   Some projects use linters as part of the /continuous integration/ or
+   during the build process. Additional research needs to be performed to
+   understand if the maintainers of those projects are more strict about the
+   code quality, and therefore the effect on the PR acceptance is larger.
 * Appendix
   :PROPERTIES:
   :UNNUMBERED: t
@@ -1435,11 +1445,11 @@
    unable to analyze those files).
 
    The retrieved data about the pull request were subsequently analyzed in order
-   to answer my research questions. For the classification (*RQ_2*) was used the Python
+   to answer my research questions. For the classification (RQ_2) was used the Python
    script[fn::https://figshare.com/s/d47b6f238b5c92430dd7] (=pr_classification.py=) provided by Lenurdazzi
    et al.[[cite:quality]].
 
-   I also created the script (=pr_reqression.py=) that runs the regression algorithms on the data in order to answer *RQ_4*.
+   I also created the script (=pr_reqression.py=) that runs the regression algorithms on the data in order to answer RQ_4.
    This script is written in Python and it uses scikit-learn[fn::https://scikit-learn.org/stable/index.html] library.
 
    The rest of the analysis was done using the =analysis.R=. This small R program imports the data
