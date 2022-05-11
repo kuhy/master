@@ -633,21 +633,21 @@
 ** Chi-square tests
    Import pull requests from all languages and run chi-square tests:
    #+BEGIN_SRC R
-     prsAll %>% map(~tribble(~V, ~p, ~Type,
-                             #
-                             cramersV(to_contingency_table(.x)),
-                             chisq.test(to_contingency_table(.x))$p.value,
-                             "All",
-                             #
-                             cramersV(to_contingency_table(only_modified(.x))),
-                             chisq.test(to_contingency_table(only_modified(.x)))$p.value,
-                             "Only modified")
-                    ) %>% bind_rows(.id = "Language") %>% mutate(Independent = (p > 0.05))
+     chisqtAll <- prsAll %>% map(~tribble(~V, ~p, ~Type,
+                                 #
+                                 cramersV(to_contingency_table(.x)),
+                                 chisq.test(to_contingency_table(.x))$p.value,
+                                 "All",
+                                 #
+                                 cramersV(to_contingency_table(only_modified(.x))),
+                                 chisq.test(to_contingency_table(only_modified(.x)))$p.value,
+                                 "Filtered")
+                                 ) %>% bind_rows(.id = "Language") %>% mutate(Independent = (p > 0.05))
    #+END_SRC
 
    Plot the Cramer's V for all languages:
    #+BEGIN_SRC R
-     tikz(filename="all_cramers_v.tex", width=10, height=8)
+     tikz(filename="all_cramers_v.tex", width=8, height=4)
      chisqtAll %>% ggplot(aes(x=Type, y=V, fill=Independent)) + geom_bar(stat="identity", position="dodge") +
          facet_grid(~ Language) + ylab("Cramer's V")
      dev.off()
@@ -665,7 +665,7 @@
 
    Create box plot with /AUC mean/ for each language:
    #+BEGIN_SRC R
-     tikz(filename="all_auc.tex", width=10, height=8)
+     tikz(filename="all_auc.tex", width=8, height=4)
      allClassificationMetrics %>% ggplot(aes(x=Language, y=AUC_mean)) + labs(y="AUC mean") +
          geom_boxplot() + geom_point(aes(col=Classifier), size=5)
      dev.off()
@@ -683,7 +683,7 @@
 
    Create box plot with /MAE/ for each language:
    #+BEGIN_SRC R
-     tikz(filename="all_mae.tex", width=10, height=8)
+     tikz(filename="all_mae.tex", width=8, height=4)
      allRegressionMetrics %>% mutate_at("MAE", function(mae) mae / 86400) %>% ggplot(aes(x=Language, y=MAE)) + labs(y="MAE (days)") +
          geom_boxplot() + geom_point(aes(col=Regressor), size=5)
      dev.off()

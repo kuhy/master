@@ -1118,12 +1118,7 @@
    However, the cation is in order because the code quality for each language is
    evaluated differently, as discussed before.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/all_cramers_v}
-   }
-   \caption{Comparison of Cramer's V}\label{fig:all_v}
-   \end{figure}
+     \tikzFigure{results/}{all_cramers_v}{Comparison of Cramer's V}{fig:all_v}
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{fig:all_v}, in all studied languages, the
    presence of some issue have a negative effect on the PR acceptance (in terms
@@ -1153,12 +1148,7 @@
    and also based on the results from classification algorithms). There is no language
    that significantly differs from others.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/all_auc}
-   }
-   \caption{AUC for differenct languages (ROC)}
-   \end{figure}\label{fig:all_auc}
+     \tikzFigure{results/}{all_auc}{AUC for differenct languages (ROC)}{fig:all_auc}
    #+END_EXPORT
 
    As discussed in the previous chapter, there seems to be no connection between
@@ -1169,12 +1159,7 @@
    that most of the pull requests are closed within the first two weeks (83 % of Kotlin
    PRs and 76% of Python PRs).
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/all_mae}
-   }
-   \caption{Mean absolute error for prediction of time to close a PR}
-   \end{figure}
+     \tikzFigure{results/}{all_mae}{Mean absolute error for prediction of time to close a PR}{fig:all_mae}
    #+END_EXPORT
 ** Threats to validity
    The validity of my research is endangered by several things.
