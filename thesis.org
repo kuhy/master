@@ -669,12 +669,7 @@
    Pull requests were more accepted in less popular projects, as can be seen in
    the following scatterplot:
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/python/stars_and_acceptance}
-   }
-   \caption{Stars and pull request acceptance}
-   \end{figure}
+     \tikzFigure{results/python/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:python_stars}
    #+END_EXPORT
 
    On average, one pull request introduced 5.36 issues and fixed 2.44 issues;
@@ -682,12 +677,7 @@
    pull request introduced 7.86 issues and fixed 4.43 on average.
    5 % trimmed mean was used to compute these values.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \inputTikz{results/python/}{pr_quality_heat_map}
-   }
-   \caption{Pull requests and quality}
-   \end{figure}
+     \tikzFigure{results/python/}{pr_quality_heat_map}{Pull requests and quality}{fig:python_quality}
    #+END_EXPORT
 
    In the analyzed pull requests, Pylint detected 222 different issues.
@@ -710,12 +700,7 @@
    They are 24 more PRs that fixed the warning =super-init-not-called= than the
    PRs that introduced it.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/python/issues_types_and_prs}
-   }
-   \caption{Pylint issues and \% of PRs which fixed/introduced them}
-   \end{figure}
+     \tikzFigure{results/python/}{issues_types_and_prs}{Pylint issues and \% of PRs which fixed/introduced them}{fig:python_types}
    #+END_EXPORT
 
    The most important Pylint issue in regards to the PR acceptance is the
@@ -726,10 +711,7 @@
    =0.027= syntax errors, and the average accepted pull request even fixed =0.001=
    syntax errors.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/python/issue_importance}
-   \caption{Ten most important Pylint issues}
-   \end{figure}
+     \tikzFigure{results/python/}{issue_importance}{Ten most important Pylint issues}{fig:python_importance}
    #+END_EXPORT
 
    When only introduced issues were considered, the list
@@ -744,22 +726,14 @@
 
    In order to visualize the difference in quality between accepted and rejected PRs, I created PCA scatter plot:
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/python/acceptance_pca}
-   \caption{PCA scatter plot}
-   \end{figure}
+     \tikzFigure{results/python/}{acceptance_pca}{PCA scatter plot}{fig:python_pca}
    #+END_EXPORT
    In the PCA scatter plot, there is no visible difference between rejected and accepted pull requests.
 
    To understand if the presence of some issue in the PR influences its acceptance, I created contingency matrices
    and performed a $\chi^2$ test of independence:
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/python/acceptance_ct}
-   }
-   \caption{Relation between presence of issue and PR acceptance}\label{fig:python_ct}
-   \end{figure}
+     \tikzFigure{results/python/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:python_ct}
    #+END_EXPORT
 
    As can be seen in Figure\nbsp{}\ref{fig:python_ct}, the observed number of
@@ -798,12 +772,7 @@
    Like int the Python projects, the pull request from the less popular project
    were more likely to be accepted than pull requests from more popular projects.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/java/stars_and_acceptance}
-   }
-   \caption{Stars and pull request acceptance}
-   \end{figure}
+     \tikzFigure{results/java/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:java_stars}
    #+END_EXPORT
 
    Only 1366 pull requests (from the total of 8887 pull requests) did not change
@@ -812,12 +781,7 @@
    Most of the introduced issues were issues related to the code style. In total,
    all of the pull requests introduced over a million code-style issues.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \inputTikz{results/java/}{pr_quality_heat_map}
-   }
-   \caption{Pull requests and quality}
-   \end{figure}
+     \tikzFigure{results/java/}{pr_quality_heat_map}{Pull requests and quality}{fig:java_quality}
    #+END_EXPORT
 
    The issue that was introduced in the largest number of pull requests is
@@ -829,12 +793,7 @@
    very same issues.
 
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/java/issues_types_and_prs}
-   }
-   \caption{PMD issues and \% of PRs which fixed/introduced them}\label{fig:pmd_issues_prs}
-   \end{figure}
+     \tikzFigure{results/java/}{issues_types_and_prs}{PMD issues and \% of PRs which fixed/introduced them}{fig:java_types}
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{fig:pmd_issues_prs}, the documentation issues
    tend to appear in a large number of pull requests (24 % on average). Moreover,
@@ -843,10 +802,7 @@
    percent of pull requests.
 
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/java/issue_importance}
-   \caption{Ten most important PMD issues}
-   \end{figure}
+     \tikzFigure{results/java/}{issue_importance}{Ten most important PMD issues}{fig:java_importance}
    #+END_EXPORT
    The most important PMD issue is =JUnitAssertionsShouldIncludeMessage=. The
    average importance of this issue is only 0.6 %. However, the AdaBoost
@@ -862,22 +818,14 @@
 
    The PCA scatter plot for Java pull requests looks as follows:
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/java/acceptance_pca}
-   \caption{PCA scatter plot}
-   \end{figure}
+     \tikzFigure{results/java/}{acceptance_pca}{PCA scatter plot}{fig:java_pca}
    #+END_EXPORT
    In the PCA scatter plot, there is no visible difference between rejected/accepted pull requests.
 
    To understand the relationship between acceptance and the introduction of a quality issue,
    the $\chi^2$ test was performed.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/java/acceptance_ct}
-   }
-   \caption{Relation between presence of issue and PR acceptance}
-   \end{figure}
+     \tikzFigure{results/java/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:java_ct}
    #+END_EXPORT
    The $p = \num{9.132e-14} < \alpha$ and $\phi_c = 0.079$; therefore, there is
    a weak relation between acceptance and issue presence. Similar results were
@@ -911,12 +859,7 @@
    The trend that maintainers of popular projects reject more pull requests can
    also be observed in the Kotlin community.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/kotlin/stars_and_acceptance}
-   }
-   \caption{Stars and pull request acceptance}
-   \end{figure}
+     \tikzFigure{results/kotlin/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:kotlin_stars}
    #+END_EXPORT
 
    Only 20 different issues were detected by the /ktlint/ in the analyzed projects;
@@ -934,19 +877,11 @@
    On the other end of the spectrum, the rule =no-line-break-after-else= was violated only once.
 
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \inputTikz{results/kotlin/}{pr_quality_heat_map}
-   }
-   \caption{Pull requests and quality}
-   \end{figure}
+     \tikzFigure{results/kotlin/}{pr_quality_heat_map}{Pull requests and quality}{fig:kotlin_quality}
    #+END_EXPORT
 
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/kotlin/issue_importance}
-   \caption{Ten most important ktlint issues}
-   \end{figure}
+     \tikzFigure{results/kotlin/}{issue_importance}{Ten most important ktlint issues}{fig:kotlin_importance}
    #+END_EXPORT
    The issue with the highest importance average is =dot-spacing=.
    The Bagging classifier gives 1.7 % importance to this issue. The importance obtained from other
@@ -971,10 +906,7 @@
    The first principal component explains almost all variance in the code quality of pull requests.
    However, the difference between rejected/accepted pull requests is not apparent from the PCA plot:
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/kotlin/acceptance_pca}
-   \caption{PCA scatter plot}
-   \end{figure}
+     \tikzFigure{results/kotlin/}{acceptance_pca}{PCA scatter plot}{fig:kotlin_pca}
    #+END_EXPORT
 
    To understand the link between acceptance and the introduction of some
@@ -984,12 +916,7 @@
    Furthermore, three classifiers (/Bagging/, /GradientBoost/, and /RandomForest/)
    have AUC for ROC curve above 60, and the average AUC is $57.58$.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/kotlin/acceptance_ct}
-   }
-   \caption{Relation between presence of issue and PR acceptance}
-   \end{figure}
+     \tikzFigure{results/kotlin/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:kotlin_ct}
    #+END_EXPORT
    However, taking into account solely the PRs that only modified some source
    code, the $p = 0.627$, thus the acceptance and issue presence are independent
@@ -1019,12 +946,7 @@
    20 projects are not sufficient to make such conclusions about the whole
    population of Haskell projects.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/haskell/stars_and_acceptance}
-   }
-   \caption{Stars and pull request acceptance}
-   \end{figure}
+     \tikzFigure{results/haskell/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:haskell_stars}
    #+END_EXPORT
 
    The 6949 pull requests were analyzed. Interestingly, in over 60
@@ -1036,12 +958,7 @@
    These facts can indicate that a large
    number of submitted pull requests follow high-quality standards.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \inputTikz{results/haskell/}{pr_quality_heat_map}
-   }
-   \caption{Pull requests and quality}
-   \end{figure}
+     \tikzFigure{results/haskell/}{pr_quality_heat_map}{Pull requests and quality}{fig:haskell_quality}
    #+END_EXPORT
 
    Seventy-eight percent of pull requests were accepted, and the average pull request introduced
@@ -1054,12 +971,7 @@
    pull requests; and another 105 issue types were detected in the analyzed code, but no PR introduced
    any of those issues.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/haskell/issues_types_and_prs}
-   }
-   \caption{HLint issues and \% of PRs which fixed/introduced them}
-   \end{figure}
+     \tikzFigure{results/haskell/}{issues_types_and_prs}{HLint issues and \% of PRs which fixed/introduced them}{fig:haskell_types}
    #+END_EXPORT
 
    The most important Haskell issue is the suggestion =Use-if=. However, no classifier gives this
@@ -1067,10 +979,7 @@
    This issue was introduced in 18 rejected PRs and fixed in 11. There are 19 accepted PRs that
    introduced =Use-if= and 27 accepted PRs that fixed it.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/haskell/issue_importance}
-   \caption{Ten most important HLint issues}
-   \end{figure}
+     \tikzFigure{results/haskell/}{issue_importance}{Ten most important HLint issues}{fig:haskell_importance}
    #+END_EXPORT
    When only introduced issues were taken into account, the most important issue is =Move-brackets-to-avoid-$= (suggestion).
    The AdaBoost classifier gives this issue 1 % importance, although the average importance is only 0.4 %.
@@ -1081,10 +990,7 @@
    Similar to the results in already analyzed languages, there is no apparent
    difference between accepted and rejected pull requests.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/haskell/acceptance_pca}
-   \caption{PCA scatter plot}
-   \end{figure}
+     \tikzFigure{results/haskell/}{acceptance_pca}{PCA scatter plot}{fig:haskell_pca}
    #+END_EXPORT
 
    For the $\chi^2$ test, the $p = 0.001438 < \alpha = 0.05$ and Cramer's V is only $\phi_c = 0.038$;
@@ -1097,12 +1003,7 @@
    The average AUC computed for ROC curves is around 50 --- the classification algorithms
    were unable to distinguish between the accepted and rejected PRs using the code quality.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/haskell/acceptance_ct}
-   }
-   \caption{Relation between presence of issue and PR acceptance}
-   \end{figure}
+     \tikzFigure{results/haskell/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:haskell_ct}
    #+END_EXPORT
    The 13 projects contain a sufficient number of pull requests; the acceptance and
    the issue presence are not independent only in four of them (there, the issue presence
@@ -1124,12 +1025,7 @@
    In analyzed projects, there is no visible connection between the acceptance
    and the number of stars.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/c_cpp/stars_and_acceptance}
-   }
-   \caption{Stars and pull request acceptance}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:c_cpp_stars}
    #+END_EXPORT
 
    I analyzed 8774 C/C++ pull requests. Seventy-seven percent of them have been accepted.
@@ -1138,12 +1034,7 @@
    The 79 % of pull requests did not change the quality of the source code
    (in terms of the /flawfinder/ quality rules).
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \inputTikz{results/c_cpp/}{pr_quality_heat_map}
-   }
-   \caption{Pull requests and quality}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{pr_quality_heat_map}{Pull requests and quality}{fig:c_cpp_quality}
    #+END_EXPORT
 
    The most common type of issue is the note. The least common are errors. The
@@ -1157,12 +1048,7 @@
    that were present in the analyzed code, but they were not introduced in any
    pull request; 21 of them are errors.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth + 2cm}{!}{%
-     \input{results/c_cpp/issues_types_and_prs}
-   }
-   \caption{flawfinder issues and \% of PRs which fixed/introduced them}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{issues_types_and_prs}{flawfinder issues and \% of PRs which fixed/introduced them}{fig:c_cpp_types}
    #+END_EXPORT
 
    Classification algorithms rank as the most important issue the
@@ -1178,10 +1064,7 @@
    overflows when copying to destination\dots") with average importance of only
    0.9 %. This error is the sixth most important issue.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/c_cpp/issue_importance}
-   \caption{Ten most important flawfinder issues}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{issue_importance}{Ten most important flawfinder issues}{fig:c_cpp_importance}
    #+END_EXPORT
    When considering only fixed issues, the =buffer-read= is the most important issue (note);
    however, the average importance is only 0.28 %.
@@ -1189,10 +1072,7 @@
    The PCA analysis does not reveal any significant difference between the accepted
    and rejected pull requests (in terms of code quality).
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \input{results/c_cpp/acceptance_pca}
-   \caption{PCA scatter plot}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{acceptance_pca}{PCA scatter plot}{fig:c_cpp_pca}
    #+END_EXPORT
 
    Based on the $\chi^2$ test, the presence of an issue in the PR has a small negative impact
@@ -1201,12 +1081,7 @@
    Cramer's V $\phi_c = 0.024$ and $p = 0.1 > \alpha$ --- in this settings, the issue presence
    does not influence acceptance.
    #+BEGIN_EXPORT latex
-   \begin{figure}[H]\centering
-   \resizebox{\textwidth}{!}{%
-     \input{results/c_cpp/acceptance_ct}
-   }
-   \caption{Relation between presence of issue and PR acceptance}
-   \end{figure}
+     \tikzFigure{results/c_cpp/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:c_cpp_ct}
    #+END_EXPORT
    Some small impact impact was discovered when the $\chi^2$ test was performed separately for
    each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
@@ -1457,74 +1332,180 @@
    Script is also used to plot graphs, create tables and then export them directly into the LaTeX.
 ** Projects
    #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Python projects}
-   \centering
-   \begingroup\footnotesize
-   \input{results/python/projects_summary}
-   \endgroup
-   \end{table}
-   #+END_EXPORT
-   #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Java projects}
-   \centering
-   \begingroup\footnotesize
-   \input{results/java/projects_summary}
-   \endgroup
-   \end{table}
-   #+END_EXPORT
-   #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Kotlin projects}
-   \centering
-   \begingroup\footnotesize
-   \input{results/kotlin/projects_summary}
-   \endgroup
-   \end{table}
-   #+END_EXPORT
-   #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Haskell projects}
-   \centering
-   \begingroup\footnotesize
-   \input{results/haskell/projects_summary}
-   \endgroup
-   \end{table}
-   #+END_EXPORT
-   #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{C/C++ projects}
-   \centering
-   \begingroup\footnotesize
-   \input{results/c_cpp/projects_summary}
-   \endgroup
-   \end{table}
+     \begin{table}[htbp]
+     \caption{Python projects}
+     \centering
+     \begingroup\scriptsize
+     \input{results/python/projects_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Java projects}
+     \centering
+     \begingroup\scriptsize
+     \input{results/java/projects_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Kotlin projects}
+     \centering
+     \begingroup\scriptsize
+     \input{results/kotlin/projects_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Haskell projects}
+     \centering
+     \begingroup\scriptsize
+     \input{results/haskell/projects_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{C/C++ projects}
+     \centering
+     \begingroup\scriptsize
+     \input{results/c_cpp/projects_summary}
+     \endgroup
+     \end{table}
    #+END_EXPORT
 ** Issue categories
    #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{Pylint issue categories}
-   \centering
-   \begingroup\footnotesize
-   \input{results/python/issue_types_summary}
-   \endgroup
-   \end{table}
+     \begin{table}[htbp]
+     \caption{Pylint issue categories}
+     \centering
+     \begingroup\scriptsize
+     \input{results/python/issue_types_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{PMD issue categories}
+     \centering
+     \begingroup\scriptsize
+     \input{results/java/issue_types_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{HLint issue categories}
+     \centering
+     \begingroup\scriptsize
+     \input{results/haskell/issue_types_summary}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{flawfinder issue categories}
+     \centering
+     \begingroup\scriptsize
+     \input{results/c_cpp/issue_types_summary}
+     \endgroup
+     \end{table}
    #+END_EXPORT
+** Classification metrics
    #+BEGIN_EXPORT latex
-   \begin{table}[htbp]
-   \caption{PMD issue categories}
-   \centering
-   \begingroup\footnotesize
-   \input{results/java/issue_types_summary}
-   \endgroup
-   \end{table}
+     \begin{table}[htbp]
+     \caption{Python classification metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/python/classification_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Java classification metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/java/classification_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Kotlin classification metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/kotlin/classification_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Haskell classification metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/haskell/classification_metrics}
+     \endgroup
+
+     \begin{table}[htbp]
+     \caption{C/C++ classification metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/c_cpp/classification_metrics}
+     \endgroup
+     \end{table}
+    \end{table}
    #+END_EXPORT
-** Model reliability
-   - for regression and classification
-   - check the Lenarduzzi paper
-   - table with recall, precision etc.
-** ROC curves
+*** ROC curves
+    #+BEGIN_EXPORT latex
+      \tikzFigure{results/python/}{roc_curves}{Python classification ROC}{fig:python_roc}
+      \tikzFigure{results/java/}{roc_curves}{Java classification ROC}{fig:java_roc}
+      \tikzFigure{results/kotlin/}{roc_curves}{Kotlin classification ROC}{fig:kotlin_roc}
+      \tikzFigure{results/haskell/}{roc_curves}{Haskell classification ROC}{fig:haskell_roc}
+      \tikzFigure{results/c_cpp/}{roc_curves}{C/C++ classification ROC}{fig:c_cpp_roc}
+    #+END_EXPORT
+** Regression metrics
+   #+BEGIN_EXPORT latex
+     \begin{table}[htbp]
+     \caption{Python regression metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/python/regression_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Java regression metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/java/regression_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Kotlin regression metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/kotlin/regression_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{Haskell regression metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/haskell/regression_metrics}
+     \endgroup
+     \end{table}
+
+     \begin{table}[htbp]
+     \caption{C/C++ regression metrics}
+     \centering
+     \begingroup\scriptsize
+     \input{results/c_cpp/regression_metrics}
+     \endgroup
+     \end{table}
+   #+END_EXPORT
+*** Absolute error density
+    #+BEGIN_EXPORT latex
+      \tikzFigure{results/python/}{regression_absolute_error}{Python AE density}{fig:python_ae}
+      \tikzFigure{results/java/}{regression_absolute_error}{Java AE density}{fig:java_ae}
+      \tikzFigure{results/kotlin/}{regression_absolute_error}{Kotlin AE density}{fig:kotlin_ae}
+      \tikzFigure{results/haskell/}{regression_absolute_error}{Haskell AE density}{fig:haskell_ae}
+      \tikzFigure{results/c_cpp/}{regression_absolute_error}{C/C++ AE density}{fig:c_cpp_ae}
+    #+END_EXPORT
 ** TODO Create table that compares already performed studies with my thesis
    - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
      - contains interesting table with factors that influences acceptance
