@@ -1317,7 +1317,7 @@
    Script is also used to plot graphs, create tables and then export them directly into the LaTeX.
 ** Projects
    #+BEGIN_EXPORT latex
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Python projects}
      \centering
      \begingroup\scriptsize
@@ -1325,7 +1325,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Java projects}
      \centering
      \begingroup\scriptsize
@@ -1333,7 +1333,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Kotlin projects}
      \centering
      \begingroup\scriptsize
@@ -1341,7 +1341,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Haskell projects}
      \centering
      \begingroup\scriptsize
@@ -1349,17 +1349,19 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{C/C++ projects}
      \centering
      \begingroup\scriptsize
      \input{results/c_cpp/projects_summary}
      \endgroup
      \end{table}
+
+     \FloatBarrier
    #+END_EXPORT
 ** Issue categories
    #+BEGIN_EXPORT latex
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Pylint issue categories}
      \centering
      \begingroup\scriptsize
@@ -1367,7 +1369,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{PMD issue categories}
      \centering
      \begingroup\scriptsize
@@ -1375,7 +1377,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{HLint issue categories}
      \centering
      \begingroup\scriptsize
@@ -1383,17 +1385,19 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{flawfinder issue categories}
      \centering
      \begingroup\scriptsize
      \input{results/c_cpp/issue_types_summary}
      \endgroup
      \end{table}
+
+     \FloatBarrier
    #+END_EXPORT
 ** Classification metrics
    #+BEGIN_EXPORT latex
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Python classification metrics}
      \centering
      \begingroup\scriptsize
@@ -1401,7 +1405,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Java classification metrics}
      \centering
      \begingroup\scriptsize
@@ -1409,7 +1413,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Kotlin classification metrics}
      \centering
      \begingroup\scriptsize
@@ -1417,33 +1421,37 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Haskell classification metrics}
      \centering
      \begingroup\scriptsize
      \input{results/haskell/classification_metrics}
      \endgroup
+     \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{C/C++ classification metrics}
      \centering
      \begingroup\scriptsize
      \input{results/c_cpp/classification_metrics}
      \endgroup
      \end{table}
-    \end{table}
+
+     \FloatBarrier
    #+END_EXPORT
 *** ROC curves
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/python/}{roc_curves}{Python classification ROC}{fig:python_roc}
-      \tikzFigure{results/java/}{roc_curves}{Java classification ROC}{fig:java_roc}
-      \tikzFigure{results/kotlin/}{roc_curves}{Kotlin classification ROC}{fig:kotlin_roc}
-      \tikzFigure{results/haskell/}{roc_curves}{Haskell classification ROC}{fig:haskell_roc}
-      \tikzFigure{results/c_cpp/}{roc_curves}{C/C++ classification ROC}{fig:c_cpp_roc}
+      \tikzFigure[H]{results/python/}{roc_curves}{Python classification ROC}{fig:python_roc}
+      \tikzFigure[H]{results/java/}{roc_curves}{Java classification ROC}{fig:java_roc}
+      \tikzFigure[H]{results/kotlin/}{roc_curves}{Kotlin classification ROC}{fig:kotlin_roc}
+      \tikzFigure[H]{results/haskell/}{roc_curves}{Haskell classification ROC}{fig:haskell_roc}
+      \tikzFigure[H]{results/c_cpp/}{roc_curves}{C/C++ classification ROC}{fig:c_cpp_roc}
+
+      \FloatBarrier
     #+END_EXPORT
 ** Regression metrics
    #+BEGIN_EXPORT latex
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Python regression metrics}
      \centering
      \begingroup\scriptsize
@@ -1451,7 +1459,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Java regression metrics}
      \centering
      \begingroup\scriptsize
@@ -1459,7 +1467,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Kotlin regression metrics}
      \centering
      \begingroup\scriptsize
@@ -1467,7 +1475,7 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{Haskell regression metrics}
      \centering
      \begingroup\scriptsize
@@ -1475,21 +1483,25 @@
      \endgroup
      \end{table}
 
-     \begin{table}[htbp]
+     \begin{table}[H]
      \caption{C/C++ regression metrics}
      \centering
      \begingroup\scriptsize
      \input{results/c_cpp/regression_metrics}
      \endgroup
      \end{table}
+
+     \FloatBarrier
    #+END_EXPORT
 *** Absolute error density
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/python/}{regression_absolute_error}{Python AE density}{fig:python_ae}
-      \tikzFigure{results/java/}{regression_absolute_error}{Java AE density}{fig:java_ae}
-      \tikzFigure{results/kotlin/}{regression_absolute_error}{Kotlin AE density}{fig:kotlin_ae}
-      \tikzFigure{results/haskell/}{regression_absolute_error}{Haskell AE density}{fig:haskell_ae}
-      \tikzFigure{results/c_cpp/}{regression_absolute_error}{C/C++ AE density}{fig:c_cpp_ae}
+      \tikzFigure[H]{results/python/}{regression_absolute_error}{Python AE density}{fig:python_ae}
+      \tikzFigure[H]{results/java/}{regression_absolute_error}{Java AE density}{fig:java_ae}
+      \tikzFigure[H]{results/kotlin/}{regression_absolute_error}{Kotlin AE density}{fig:kotlin_ae}
+      \tikzFigure[H]{results/haskell/}{regression_absolute_error}{Haskell AE density}{fig:haskell_ae}
+      \tikzFigure[H]{results/c_cpp/}{regression_absolute_error}{C/C++ AE density}{fig:c_cpp_ae}
+
+      \FloatBarrier
     #+END_EXPORT
 ** TODO Create table that compares already performed studies with my thesis
    - Replication Can Improve Prior Results: A GitHub Study of Pull Request Acceptance[[cite:replication]]
