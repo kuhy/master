@@ -11,7 +11,8 @@ texput.log
 *.ind
 # *.pdf
 *.lof
-thesis.tex
+# thesis.tex
+thesis.odt
 *.dvi
 *.blg
 *.aux
