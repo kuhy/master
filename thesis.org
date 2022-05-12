@@ -34,7 +34,8 @@
   acceptance. Furthermore, the regression models were created to predict the
   time required to close a pull request using the code quality. Subsequently,
   the retrieved results were compared between individual languages.
-  The research questions set for this thesis are the following:
+  \newpage{}
+  \noindent{}The research questions set for this thesis are the following:
   - RQ_1 :: Which code issues are typically introduced by the pull requests?
   - RQ_2 :: Are there some particular quality flaws that affect the acceptance of the pull request?
   - RQ_3 :: Is there a relationship between the source code quality and the pull request acceptance?
@@ -381,7 +382,7 @@
    to retrieve data from GitHub. GitHub can be leveraged to obtain
    many interesting metadata, which can possibly influence the acceptance of pull
    requests. All the metadata that are obtained using the scripts are listed
-   in Table [[table:ghdata]].
+   in Table\nbsp{}[[table:ghdata]].
    #+CAPTION: Data retrieved from GitHub
    #+LABEL: table:ghdata
    #+ATTR_LaTeX: :align |llcc| :placement [h] :font \scriptsize
@@ -429,7 +430,7 @@
    To measure the change in the quality of the pull request, the
    =git-contrast= is run on the "head commit" and the "base commit" of the given
    pull request. The =git-contrast= supports several linters; which linter will be
-   used is determined by the file extension of the tested file (Table [[table:linters]]).
+   used is determined by the file extension of the tested file (Table\nbsp{}[[table:linters]]).
    #+CAPTION: Linters supported by =git-contrast=
    #+LABEL: table:linters
    #+ATTR_LaTeX: :align |lcll| :font \scriptsize
@@ -471,7 +472,7 @@
    #+BEGIN_EXPORT latex
      \FloatBarrier
    #+END_EXPORT
-** Projects selection
+** Project selection
    In total, 100 projects were selected written in five different
    programming languages (20 projects for each language).  The analyzed GitHub
    projects were selected based on the following criteria:
@@ -666,12 +667,28 @@
    also compared. Finally, the code quality effect on the time to close a PR
    was compared between the languages (using the metrics from regressors).
 * Evaluation
-  This chapter is dedicated to the findings from my research.  The first
-  five subchapters focus on individual programming languages --- Python, Java, Kotlin, Haskell, and C/C++.
-  In these subchapters, I am giving the answers to the first four research questions.  The last research
-  question (RQ_5) is answered afterward. At the end of this chapter, I am
+  This chapter is dedicated to the findings from my research. The first
+  five subchapters focus on individual programming languages (see Table\nbsp{}[[table:languages]]).
+  In these subchapters, I am giving the answers to the first four research questions.
+  The last research question (RQ_5) is answered afterward. At the end of this chapter, I am
   discussing possible threats to validity that could eventually influence the
   outcomes of my study.
+  #+CAPTION: Analyzed programming languages
+  #+LABEL: table:languages
+  #+ATTR_LaTeX: :align |lcll| :font \scriptsize
+  |----------+-------------------+--------------+----------|
+  | Language | Analyzed projects | Analyzed PRs | Accepted |
+  |----------+-------------------+--------------+----------|
+  |----------+-------------------+--------------+----------|
+  | [[Python][Python]]   |                20 |         9452 | 73 %     |
+  | [[Java][Java]]     |                20 |         8887 | 73 %     |
+  | [[Kotlin][Kotlin]]   |                20 |         7514 | 80 %     |
+  | [[Haskell][Haskell]]  |                20 |         6949 | 78 %     |
+  | [[C/C++][C/C++]]    |                20 |         8774 | 77 %     |
+  |----------+-------------------+--------------+----------|
+  #+BEGIN_EXPORT latex
+    \FloatBarrier
+  #+END_EXPORT
 ** Python
    In order to analyze the influence of code quality on the pull request
    acceptance, 20 projects from the Python ecosystem were selected.
@@ -686,7 +703,7 @@
     pull request introduced 7.86 issues and fixed 4.43 on average.
     5% trimmed mean was used to compute these values.
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/python/}{pr_quality_heat_map}{Pull requests and quality}{fig:python_quality}
+      \tikzFigure{results/python/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:python_quality}
     #+END_EXPORT
 
     In the analyzed pull requests, Pylint detected 222 different issues.
@@ -703,7 +720,7 @@
     requests but did not influence their quality (the number of these issues was not
     changed by any pull request). 13 issues were introduced/fixed in only one
     pull request, and 10 of them are issues classified as errors. The most common
-    error is =import-error= (24 % of PRs); however, I suspect that there will be
+    error is =import-error= (24 % of PRs); however, there will probably be
     many false positives that arise due to linting in the isolated
     environment. Sixty issues were fixed in more PRs than they were introduced.
     They are 24 more PRs that fixed the warning =super-init-not-called= than the
@@ -793,7 +810,7 @@
     Most of the introduced issues were issues related to the code style. In total,
     all of the pull requests introduced over a million code-style issues.
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/java/}{pr_quality_heat_map}{Pull requests and quality}{fig:java_quality}
+      \tikzFigure{results/java/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:java_quality}
     #+END_EXPORT
 
     The issue that was introduced in the largest number of pull requests is
@@ -840,7 +857,7 @@
     #+BEGIN_EXPORT latex
       \tikzFigure{results/java/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:java_ct}
     #+END_EXPORT
-    The $p = \num{9.132e-14} < \alpha$ and $\phi_c = 0.079$; therefore, there is
+    $p = \num{9.132e-14} < \alpha$ and $\phi_c = 0.079$; therefore, there is
     a weak relation between acceptance and issue presence. Similar results were
     obtained when only PRs that solely modified the source code of the main language were
     considered and also when the test was performed individually for each issue category.
@@ -881,6 +898,13 @@
     Only 20 different issues were detected by the /ktlint/ in the analyzed projects;
     however, this is expected since the /ktlint/ is focused only on a small set of quality issues.
 
+    A typical Kotlin pull request introduced nine issues and fixed four.
+    As can be seen in Figure\nbsp{}\ref{fig:kotlin_quality}, thirty-three percent
+    of pull requests did not introduce nor fix an issue.
+    #+BEGIN_EXPORT latex
+      \tikzFigure{results/kotlin/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:kotlin_quality}
+    #+END_EXPORT
+
     The =indent= is the issue that was introduced in the largest number of pull requests (2598). It is the
     only issue that was introduced in more than a thousand pull requests. It is also the issue
     that was fixed in the largest number of pull requests. The official Kotlin convention is
@@ -891,11 +915,6 @@
 
     Other often violated /ktlint/ rules are =no-wildcard-imports=, =final-newline=, and =import-ordering=.
     On the other end of the spectrum, the rule =no-line-break-after-else= was violated only once.
-
-    - *TODO*: reference figure "Pull requests and quality"
-    #+BEGIN_EXPORT latex
-      \tikzFigure{results/kotlin/}{pr_quality_heat_map}{Pull requests and quality}{fig:kotlin_quality}
-    #+END_EXPORT
 *** Research Question 2
     #+BEGIN_EXPORT latex
       \tikzFigure{results/kotlin/}{issue_importance}{Ten most important ktlint issues}{fig:kotlin_importance}
@@ -927,17 +946,17 @@
     #+END_EXPORT
 
     To understand the link between acceptance and the introduction of some
-    quality issue, I performed the $\chi^2$ test on Kotlin dataset (see Figure\nbsp{}\ref{fig:kotlin_ct}).
+    quality issue, I performed the $\chi^2$ test of independence (between presence of some issue and PR acceptance)
+    on Kotlin dataset (see Figure\nbsp{}\ref{fig:kotlin_ct}).
     The $p < \num{2.2e-16}$ and $\phi_c \approx 0.095$; therefore, the presence of some issue has a small
-    negative effect on acceptance (similarly to the Java and Python).
+    negative effect on acceptance (similarly to Java and Python).
     Furthermore, three classifiers (/Bagging/, /GradientBoost/, and /RandomForest/)
     have AUC for ROC curve above 60, and the average AUC is $57.58$.
     #+BEGIN_EXPORT latex
       \tikzFigure{results/kotlin/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:kotlin_ct}
     #+END_EXPORT
     However, taking into account solely the PRs that only modified some source
-    code, the $p = 0.627$, thus the acceptance and issue presence are independent
-    (in this context).
+    code, $p = 0.627$, thus the acceptance and issue presence are independent.
 
     Only 12 of the projects have a sufficient number of pull requests to evaluate
     the $\chi^2$ test. There are four projects where the presence of some issue
@@ -955,7 +974,8 @@
       \FloatBarrier
     #+END_EXPORT
 ** Haskell
-   Haskell is the only purely functional programming language that was analyzed.
+   Haskell is the only purely functional programming language that was studied.
+   In total, 6949 pull requests were analyzed, and seventy-eight percent of them were accepted PRs.
    The 18 out of 20 selected Haskell projects have under the 5000 stars. There
    are only two exceptions: PureScript with 7632 stars and Pandoc, which has over
    15000 stars. The Pandoc has the also smallest percentage of accepted pull
@@ -969,15 +989,15 @@
      \tikzFigure{results/haskell/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:haskell_stars}
    #+END_EXPORT
 *** Research Question 1
-    The 6949 pull requests were analyzed. Interestingly, in over 60
-    % of pull requests, no change in the code quality was detected (see Figure\nbsp{}\ref{fig:haskell_quality}).
+    As mention before, 6949 pull requests were analyzed. Interestingly, in over sixty
+    percent of pull requests, no change in the code quality was detected (see Figure\nbsp{}\ref{fig:haskell_quality}).
     Moreover, the /HLint/ is able to recognize a large number of different issues (321 issue
     types were detected in selected pull requests). On the other hand, some issues
     were counted twice because they appeared as a suggestion but also as a warning (in the different contexts).
     These facts can indicate that a large
     number of submitted pull requests follow high-quality standards.
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/haskell/}{pr_quality_heat_map}{Pull requests and quality}{fig:haskell_quality}
+      \tikzFigure{results/haskell/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:haskell_quality}
     #+END_EXPORT
 
     Seventy-eight percent of pull requests were accepted, and the average pull request introduced
@@ -1042,22 +1062,23 @@
    The C and C++ programming languages are analyzed together because they share
    a lot of similarities.  This usually enables use of the same linter for both
    languages. Moreover, it is not uncommon that projects that are written in C++
-   also contain some C code and vice versa.  The nine selected projects have more
-   code written in C, while the rest of the 11 projects is more C++-oriented.
+   also contain some C code and vice versa.
+   The nine selected projects have more code written in C, while the rest of the
+   11 projects is more C++-oriented. In total, I analyzed 8774 pull requests
+   from twenty different projects. Seventy-seven percent of pull requests have been accepted.
 
-   In analyzed projects, there is no visible connection between the acceptance
+   In studied projects, there is no visible connection between the acceptance
    and the number of stars (Figure\nbsp{}\ref{fig:c_cpp_stars}).
    #+BEGIN_EXPORT latex
      \tikzFigure{results/c_cpp/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:c_cpp_stars}
    #+END_EXPORT
 *** Research Question 1
-    I analyzed 8774 C/C++ pull requests. Seventy-seven percent of them have been accepted.
     The typical pull request introduces 0.25 issues and fixes 0.12 issues; the typical
     rejected PR introduces 0.79 issues, and the typical accepted PR only 0.15 issues (see Figure\nbsp{}\ref{fig:c_cpp_quality}).
     The 79 % of pull requests did not change the quality of the source code
     (in terms of the /flawfinder/ quality rules).
     #+BEGIN_EXPORT latex
-      \tikzFigure{results/c_cpp/}{pr_quality_heat_map}{Pull requests and quality}{fig:c_cpp_quality}
+      \tikzFigure{results/c_cpp/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:c_cpp_quality}
     #+END_EXPORT
 
     The most common type of issue is the note (Figure\nbsp{}\ref{fig:c_cpp_types}).
@@ -1108,7 +1129,7 @@
     #+BEGIN_EXPORT latex
       \tikzFigure{results/c_cpp/}{acceptance_ct}{Relationship between presence of issue and PR acceptance}{fig:c_cpp_ct}
     #+END_EXPORT
-    Some small impact impact was discovered when the $\chi^2$ test was performed separately for
+    Some small impact was discovered when the $\chi^2$ test was performed separately for
     each issue category (the $p < \num{2.2e-16}$ and $\phi_c \approx 0.1$ for each category).
     Furthermore, in 6 out of 11 projects which have enough data to perform and evaluate the $\chi^2$ test,
     the presence of some issue in the PR has a negative effect on the PR acceptance.
@@ -1143,10 +1164,11 @@
    trained models predict the acceptance of PR or time to close a PR;
    and these metrics can be compared across different programming languages.
    On top of that, the results from the $\chi^2$ test can also be compared.
-   However, the cation is in order because the code quality for each language is
+   However, the caution is in order because the code quality for each language is
    evaluated differently, as discussed before.
    #+BEGIN_EXPORT latex
-     \tikzFigure{results/}{all_cramers_v}{Comparison of Cramer's V}{fig:all_v}
+     \tikzFigure{results/}{all_cramers_v}{Comparison of Cramer's V between languages\protect\footnotemark}{fig:all_v}
+     \footnotetext{Color indicates the result from the $\chi^2$ test of independence.}
    #+END_EXPORT
    As can be seen in Figure\nbsp{}\ref{fig:all_v}, in all studied languages, the
    presence of some issue have a negative effect on the PR acceptance (in terms
@@ -1155,14 +1177,13 @@
    language and the highest effect for C/C++.  On the other hand,
    taking into account solely the PRs that only modified some source code of the
    primary language, the $\chi^2$ test indicates that the presence of issue and PR
-   acceptance are independent in the case of the C/C++ and Kotlin. This is a possible
-   threat to validity.
+   acceptance are independent in the case of the C/C++ and Kotlin.
 
    The effect of code quality on acceptance was also studied using
    classification algorithms.  One of the metrics that were used to measure the
    performance of the classification models is the "area under the ROC curve"
-   (AUC). When using this metric to evaluate models, the Haskell is once again
-   the language when the code quality is least important
+   (AUC). When using this metric to evaluate models, Haskell is once again
+   the language in which the code quality is least important
    (Figure\nbsp{}\ref{fig:all_auc}). The average AUC for Haskell models is around
    0.5 --- the trained models are no better than random guessing.
    The models for the Kotlin are ranked with the highest AUC score and therefore
@@ -1176,7 +1197,7 @@
    and also based on the results from classification algorithms). There is no language
    that significantly differs from others.
    #+BEGIN_EXPORT latex
-     \tikzFigure{results/}{all_auc}{AUC for differenct languages (ROC)}{fig:all_auc}
+     \tikzFigure{results/}{all_auc}{AUC for different languages (ROC)}{fig:all_auc}
    #+END_EXPORT
 
    As discussed in the previous chapter, there seems to be no connection between
@@ -1191,15 +1212,15 @@
      \FloatBarrier
    #+END_EXPORT
 ** Threats to validity
-   The validity of my research is endangered by several things.
+   The validity of my research is endangered by several threats.
    At first, the selection of the projects is one of the factors that influence
    the outcomes of the research. This study is focused primarily on popular
    projects. The rationale behind the project selection is explained in the own dedicated
-   subchapter. It is possible that projects selected using different metrics can yield
+   chapter (Chapter [[Project selection]]). It is possible that projects selected using different metrics can yield
    varying results.
 
    Another possible threat to validity is the selection of pull requests.
-   It is usually not doable to examine all the pull requests of some project.
+   In many cases, it is not feasible to examine all the pull requests of a project.
    For the projects with a huge number of PRs, the time and computational resources are
    the limiting factors. Moreover, to examine the rejected pull requests, the forked
    repository with the required commits needs to be available. This is not always the case.
@@ -1234,7 +1255,7 @@
 
    Lastly, there are several factors that influence PR acceptance.
    Some of them were discussed in previous chapters (number of commits, submitter's status, etc.).
-   The one factor that influences the acceptance is a number of lines that were changed[[cite:social]].
+   One factor that influences the acceptance is the number of lines that were changed[[cite:social]].
    The more lines are added/changed, the higher the probability that the pull request will be
    rejected, but the chance that some quality issue will be introduced is also higher.
    In this case, it is difficult to distinguish if the pull request was rejected because
@@ -1318,6 +1339,10 @@
    during the build process. Additional research needs to be performed to
    understand if the maintainers of those projects are more strict about the
    code quality, and therefore the effect on the PR acceptance is larger.
+   #+BEGIN_EXPORT latex
+     \clearpage
+     \newgeometry{top=2.5cm}
+   #+END_EXPORT
 * Appendix
   :PROPERTIES:
   :UNNUMBERED: t
@@ -1351,32 +1376,29 @@
 ** Additional plots and tables
    This chapter contains tables that summarize the information about used projects and issue categories.
    Furthermore, the chapter visualizes metrics that were used to evaluate classification and regression algorithms.
-   #+BEGIN_EXPORT latex
-     \newpage
-     \newgeometry{top=2.5cm}
-   #+END_EXPORT
 *** Projects summary
     The following tables contain information about analyzed projects. Columns named /Introduced/Fixed issues/ indicate
     the average number of issues per pull request, and the values were computed using a 5% trimmed mean.
     #+BEGIN_EXPORT latex
 
-      \begin{table}[H]
-      \caption{Python projects}
-      \centering
-      \begingroup\scriptsize
-      \input{results/python/projects_summary}
-      \endgroup
-      \end{table}
+      \noindent\begin{minipage}{\textwidth}
+        \begin{table}[H]
+        \caption{Python projects}
+        \centering
+        \begingroup\scriptsize
+        \input{results/python/projects_summary}
+        \endgroup
+        \end{table}
 
-      \begin{table}[H]
-      \caption{Java projects}
-      \centering
-      \begingroup\scriptsize
-      \input{results/java/projects_summary}
-      \endgroup
-      \end{table}
+        \begin{table}[H]
+        \caption{Java projects}
+        \centering
+        \begingroup\scriptsize
+        \input{results/java/projects_summary}
+        \endgroup
+        \end{table}
+      \end{minipage}
 
-      \newpage
       \noindent\begin{minipage}{\textwidth}
         \begin{table}[H]
         \caption{Kotlin projects}
@@ -1394,7 +1416,6 @@
         \endgroup
         \end{table}
       \end{minipage}
-      \newpage
 
       \begin{table}[H]
       \caption{C/C++ projects}
@@ -1559,6 +1580,7 @@
       \tikzFigure[H]{results/c_cpp/}{regression_absolute_error}{C/C++ AE density}{fig:c_cpp_ae}
       \FloatBarrier
 
+      \clearpage
       \restoregeometry
 
       \pagestyle{headings}
