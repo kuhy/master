@@ -310,36 +310,41 @@
     PR and the PR quality. Further comparison is at the end of the thesis.
 * Data mining
   #+BEGIN_EXPORT latex
-  \begin{figure}[htb]\centering
-  \begin{tikzpicture}
-  \node (n1) [align=center] {Project name};
+    \begin{figure}[H]\centering
+    \begin{munibox}[left=5pt,right=5pt,top=5pt,bottom=5pt]
+    \resizebox{\textwidth - 10pt}{!}{%
+      \begin{tikzpicture}
+      \node (n1) [align=center] {Project name};
 
-  \node (n2) [box, above=2cm of n1, align=center] {\texttt{gh\_db.py}\\(\texttt{gh\_rest.py})};
-  \node (n3) [cloud, draw, above=of n2, align=center, inner sep=-3mm] {GHTorrent database\\(GitHub REST API)};
-  \node (c1) [container, fit=(n2)(n3)] {};
+      \node (n2) [box, above=2cm of n1, align=center] {\texttt{gh\_db.py}\\(\texttt{gh\_rest.py})};
+      \node (n3) [cloud, draw, above=of n2, align=center, inner sep=-3mm] {GHTorrent database\\(GitHub REST API)};
+      \node (c1) [container, fit=(n2)(n3)] {};
 
-  \node (n4) [right=2cm of n2, align=center, margin] {Pull requests\\information};
+      \node (n4) [right=2cm of n2, align=center, margin] {Pull requests\\information};
 
-  \node (n5) [box, right=of n4] {\texttt{git-contrast}};
-  \node (n6) [cloud, draw, above=of n5] {Linters};
-  \node (c2) [container, fit=(n5)(n6)] {};
+      \node (n5) [box, right=of n4] {\texttt{git-contrast}};
+      \node (n6) [cloud, draw, above=of n5] {Linters};
+      \node (c2) [container, fit=(n5)(n6)] {};
 
-  \node (c3) [container, thick, fit=(c1)(c2)] {};
+      \node (c3) [container, thick, fit=(c1)(c2)] {};
 
-  \node (n7) [below=2.5cm of n5, align=center] {JSON};
+      \node (n7) [below=2.5cm of n5, align=center] {JSON};
 
-  \node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
+      \node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
 
-  \draw[->] (n1) to (n2);
-  \draw[<->] (n2) to (n3);
-  \draw[->] (n2) to (n4);
-  \draw[->] (n4) to (n5);
-  \draw[<->] (n5) to (n6);
-  \draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
-  \draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Pull requests\\code quality} (n7);
-  \end{tikzpicture}
-  \caption{The \texttt{pr\_quality.py} workflow}\label{fig:mining_workflow}
-  \end{figure}
+      \draw[->] (n1) to (n2);
+      \draw[<->] (n2) to (n3);
+      \draw[->] (n2) to (n4);
+      \draw[->] (n4) to (n5);
+      \draw[<->] (n5) to (n6);
+      \draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
+      \draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont]
+                {Pull requests\\code quality} (n7);
+      \end{tikzpicture}
+    }
+    \end{munibox}
+    \caption{The \texttt{pr\_quality.py} workflow}\label{fig:mining_workflow}
+    \end{figure}
   #+END_EXPORT
   Information about the pull requests is retrieved using the =pr_quality.py=
   script. This script takes the names of the projects that will be analyzed as the
@@ -379,7 +384,7 @@
    in Table [[table:ghdata]].
    #+CAPTION: Data retrieved from GitHub
    #+LABEL: table:ghdata
-   #+ATTR_LaTeX: :align |llcc| :placement [h]
+   #+ATTR_LaTeX: :align |llcc| :placement [h] :font \scriptsize
    |--------------------+---------------------------+------------+--------------|
    | Level              | Metadata                  | =gh_db.py= | =gh_rest.py= |
    |--------------------+---------------------------+------------+--------------|
@@ -410,6 +415,9 @@
    statistical analysis.  Others are not meant to be used as a part of the
    analysis itself but are kept here for better orientation, and some of them
    are needed for the =git-contrast= tool, such as "Head commit", "Base commit", etc.
+  #+BEGIN_EXPORT latex
+    \FloatBarrier
+  #+END_EXPORT
 ** Evaluating code quality
    =git-contrast= is the command-line application that I implemented in order to
    be able to analyze the code quality of the given pull request. The =git-contrast=
@@ -424,7 +432,7 @@
    used is determined by the file extension of the tested file (Table [[table:linters]]).
    #+CAPTION: Linters supported by =git-contrast=
    #+LABEL: table:linters
-   #+ATTR_LaTeX: :align |lcll|
+   #+ATTR_LaTeX: :align |lcll| :font \scriptsize
    |--------------+---------+----------------------+-----------------------|
    | Linter       | Version | Programming language | File extensions       |
    |--------------+---------+----------------------+-----------------------|
@@ -477,7 +485,6 @@
    - The project is using GitHub to merge pull requests (for most of the pull requests).
    - The project is a library, program, or collection of programs. Repositories whose primary purpose is
      to store configuration files, documentation, books, etc., were ignored.
-** TODO Computational resources
 * Data analysis
   In this chapter, I am explaining which statistical methods were chosen in
   order to answer the research questions. RQ_1--RQ_4 were

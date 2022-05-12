@@ -1,4 +1,4 @@
-% Created 2022-05-12 Thu 13:54
+% Created 2022-05-12 Thu 15:23
 % Intended LaTeX compiler: pdflatex
 \documentclass[digital,oneside,oldtable,nolof,nolot,nocover]{fithesis4}
                            
@@ -11,7 +11,7 @@
 \begin{document}
 
 \chapter{Introduction}
-\label{sec:orge456693}
+\label{sec:org70c3bc9}
 \emph{Does code quality influence the acceptance of pull requests?} Although many
 project maintainers view code quality as the most important factor regarding
 pull request acceptance~\cite{integrator}, a recent study by Lenarduzzi et al.
@@ -53,21 +53,21 @@ The research questions set for this thesis are the following:
 \end{description}
 
 This thesis first discusses code quality and its link to the pull-based
-development model (Chapter~\ref{sec:org3c6013d}).
+development model (Chapter~\ref{sec:org65ccf31}).
 After that, the various factors that influence the pull request acceptance are
-mentioned (Chapter~\ref{sec:org83c819e}). The next part of the thesis
+mentioned (Chapter~\ref{sec:org1367f72}). The next part of the thesis
 is dedicated to the research design. At first, I state how the data about the
 project was retrieved and which methods were used to evaluate the code quality
-of individual pull requests (Chapter~\ref{sec:org91f0159}). Then, the used
-statistical methods are introduced (Chapter~\ref{sec:org71ac403}). Furthermore,
+of individual pull requests (Chapter~\ref{sec:orgf8b1f22}). Then, the used
+statistical methods are introduced (Chapter~\ref{sec:org807b16d}). Furthermore,
 the retrieved results are evaluated separately for each programming language
-(Chapter~\ref{sec:org502a2ae}). Towards the end, results are compared between
+(Chapter~\ref{sec:orgc57a942}). Towards the end, results are compared between
 languages, and potential threats to validity are discussed. Finally, I
 summarize my findings and compare them to the findings of Lenarduzzi et al.
-(Chapter~\ref{sec:org979254a}). Moreover, the potential extensions of my work are
+(Chapter~\ref{sec:orgcce3be9}). Moreover, the potential extensions of my work are
 proposed.
 \chapter{Code quality in pull-based development}
-\label{sec:org3c6013d}
+\label{sec:org65ccf31}
 The pull-based development model created novel ways how developers can
 interact with each other. Instead of pushing code changes (patches) into
 one central repository, developers can work in a more decentralized and
@@ -102,7 +102,7 @@ and analyze the pull request in regard to their code quality. How the code
 quality can be analyzed and how the GitHub platforms contribute to the quality of
 the code itself is discussed in the following chapters.
 \section{Measuring code quality}
-\label{sec:orgac6613a}
+\label{sec:orgb425696}
 Code quality is a very important aspect of every program --- software with high
 code quality has a competitive advantage, is more stable, and is also more
 maintainable than software that is poorly written.
@@ -175,7 +175,7 @@ used as a metric to evaluate the code quality of the given pull request.  The
 same approach was used by Lenarduzzi et al.~\cite{quality} during the evaluation
 of the pull requests code quality.
 \section{GitHub and code quality}
-\label{sec:org3f44e88}
+\label{sec:org613503d}
 GitHub brings many features that may potentially improve code quality.
 GitHub has a built-in bug tracker which can be used to report issues found in the code.
 Because the issues can be reported by users outside of the core development team,
@@ -201,7 +201,7 @@ open-source projects in regards to the usage of static analysis tools.  They
 found out that incorporating a static analysis tool in a build process
 reduces the defect density.
 \chapter{Pull request acceptance}
-\label{sec:org83c819e}
+\label{sec:org1367f72}
 Pull request acceptance is a problem that has been studied multiple
 times. Several surveys were performed in order to understand why pull requests
 are being rejected.
@@ -234,7 +234,7 @@ identified the following levels of social and technical factors that influence
 the acceptance of the PR --- \emph{repository level}, \emph{submitter level}, and the
 \emph{pull request level}.
 \section{Repository level}
-\label{sec:org2f48310}
+\label{sec:orge757c39}
 The \emph{repository level} is interested in the aspects of the repository itself,
 such as the repository age, number of collaborators, or number of stars on
 the GitHub.
@@ -250,7 +250,7 @@ significantly lower acceptance rate~\cite{social}.
 The popularity of the project also influences the acceptance rate ---
 projects with more stars have more rejected PRs~\cite{social}.
 \section{Submitter level}
-\label{sec:org137df75}
+\label{sec:org43af517}
 The \emph{submitter level} is concerned about the submitter's status in the
 general community and his status in the project itself. There are several
 parameters that can be considered when evaluating the submitter's status.
@@ -280,7 +280,7 @@ extroversion are traits that have positive effects on PR acceptance. The
 chance that PR will be accepted is also higher when the submitter and closer
 have different personalities~\cite{personality}.
 \section{Pull request level}
-\label{sec:orgf466e77}
+\label{sec:org7dc35ba}
 The \emph{pull request level} is interested in the data about
 PR itself.  For instance, on the \emph{PR level}, one can study if there is
 a correlation between PR acceptance and the number of GitHub comments in
@@ -303,7 +303,7 @@ The code quality is an essential factor on the \emph{pull request level}, and it
 is this study's main interest.  The code quality as the acceptance factor is
 examined in the following subchapter.
 \subsection*{Code quality}
-\label{sec:org461bf4d}
+\label{sec:org5002c14}
 One of the instruments that ensure that the code has high quality is testing.
 Proper testing is a crucial part of every project. Testing plays a
 significant role in discovering bugs and therefore leads to higher code
@@ -332,35 +332,40 @@ The key difference (from my thesis) is that they analyzed only projects written
 in Java. Furthermore, my thesis investigates the connection between the time to close a
 PR and the PR quality. Further comparison is at the end of the thesis.
 \chapter{Data mining}
-\label{sec:org91f0159}
-\begin{figure}[htb]\centering
-\begin{tikzpicture}
-\node (n1) [align=center] {Project name};
+\label{sec:orgf8b1f22}
+\begin{figure}[H]\centering
+\begin{munibox}[left=5pt,right=5pt,top=5pt,bottom=5pt]
+\resizebox{\textwidth - 10pt}{!}{%
+  \begin{tikzpicture}
+  \node (n1) [align=center] {Project name};
 
-\node (n2) [box, above=2cm of n1, align=center] {\texttt{gh\_db.py}\\(\texttt{gh\_rest.py})};
-\node (n3) [cloud, draw, above=of n2, align=center, inner sep=-3mm] {GHTorrent database\\(GitHub REST API)};
-\node (c1) [container, fit=(n2)(n3)] {};
+  \node (n2) [box, above=2cm of n1, align=center] {\texttt{gh\_db.py}\\(\texttt{gh\_rest.py})};
+  \node (n3) [cloud, draw, above=of n2, align=center, inner sep=-3mm] {GHTorrent database\\(GitHub REST API)};
+  \node (c1) [container, fit=(n2)(n3)] {};
 
-\node (n4) [right=2cm of n2, align=center, margin] {Pull requests\\information};
+  \node (n4) [right=2cm of n2, align=center, margin] {Pull requests\\information};
 
-\node (n5) [box, right=of n4] {\texttt{git-contrast}};
-\node (n6) [cloud, draw, above=of n5] {Linters};
-\node (c2) [container, fit=(n5)(n6)] {};
+  \node (n5) [box, right=of n4] {\texttt{git-contrast}};
+  \node (n6) [cloud, draw, above=of n5] {Linters};
+  \node (c2) [container, fit=(n5)(n6)] {};
 
-\node (c3) [container, thick, fit=(c1)(c2)] {};
+  \node (c3) [container, thick, fit=(c1)(c2)] {};
 
-\node (n7) [below=2.5cm of n5, align=center] {JSON};
+  \node (n7) [below=2.5cm of n5, align=center] {JSON};
 
-\node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
+  \node [below left, inner sep=3mm] at (current bounding box.north east) {\texttt{pr\_quality.py}};
 
-\draw[->] (n1) to (n2);
-\draw[<->] (n2) to (n3);
-\draw[->] (n2) to (n4);
-\draw[->] (n4) to (n5);
-\draw[<->] (n5) to (n6);
-\draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
-\draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Pull requests\\code quality} (n7);
-\end{tikzpicture}
+  \draw[->] (n1) to (n2);
+  \draw[<->] (n2) to (n3);
+  \draw[->] (n2) to (n4);
+  \draw[->] (n4) to (n5);
+  \draw[<->] (n5) to (n6);
+  \draw[->] (n2) edge node[sloped, below, align=center, font=\fontsize{8pt}{8pt}\selectfont] {Project\\information} (n7);
+  \draw[->] (n5) edge node[right, yshift=-4mm, align=center, font=\fontsize{8pt}{8pt}\selectfont]
+            {Pull requests\\code quality} (n7);
+  \end{tikzpicture}
+}
+\end{munibox}
 \caption{The \texttt{pr\_quality.py} workflow}\label{fig:mining_workflow}
 \end{figure}
 Information about the pull requests is retrieved using the \texttt{pr\_quality.py}
@@ -394,15 +399,16 @@ the pull requests. This is where the \texttt{git-contrast} comes into play.
 of the given pull request using the external linters. This application is
 further discussed in the following sections.
 \section{GitHub metadata}
-\label{sec:org38cedfc}
+\label{sec:orgc00f0b6}
 As stated before, the scripts \texttt{gh\_db.py} and \texttt{gh\_rest.py} are used
 to retrieve data from GitHub. GitHub can be leveraged to obtain
 many interesting metadata, which can possibly influence the acceptance of pull
 requests. All the metadata that are obtained using the scripts are listed
-in Table \ref{tab:org6b08987}.
+in Table \ref{tab:orge3472cb}.
 \begin{table}[h]
-\caption{\label{tab:org6b08987}Data retrieved from GitHub}
+\caption{\label{tab:orge3472cb}Data retrieved from GitHub}
 \centering
+\scriptsize
 \begin{tabular}{|llcc|}
 \hline
 Level & Metadata & \texttt{gh\_db.py} & \texttt{gh\_rest.py}\\
@@ -436,8 +442,9 @@ Metadata like ``Number of stars'' or ``Time opened'' are required for the
 statistical analysis.  Others are not meant to be used as a part of the
 analysis itself but are kept here for better orientation, and some of them
 are needed for the \texttt{git-contrast} tool, such as ``Head commit'', ``Base commit'', etc.
+\FloatBarrier
 \section{Evaluating code quality}
-\label{sec:orgaa914b8}
+\label{sec:org28f765a}
 \texttt{git-contrast} is the command-line application that I implemented in order to
 be able to analyze the code quality of the given pull request. The \texttt{git-contrast}
 expects two commit hashes on the input and returns the information about the
@@ -448,10 +455,11 @@ then written to the standard output.
 To measure the change in the quality of the pull request, the
 \texttt{git-contrast} is run on the ``head commit'' and the ``base commit'' of the given
 pull request. The \texttt{git-contrast} supports several linters; which linter will be
-used is determined by the file extension of the tested file (Table \ref{tab:orge4d7aab}).
+used is determined by the file extension of the tested file (Table \ref{tab:org8092335}).
 \begin{table}[htbp]
-\caption{\label{tab:orge4d7aab}Linters supported by \texttt{git-contrast}}
+\caption{\label{tab:org8092335}Linters supported by \texttt{git-contrast}}
 \centering
+\scriptsize
 \begin{tabular}{|lcll|}
 \hline
 Linter & Version & Programming language & File extensions\\
@@ -493,7 +501,7 @@ dangerous functions. This is done using the built-in database of functions with
 well-known problems. Linter uses the following risk levels: note, warning, and error.
 \end{description}
 \section{Projects selection}
-\label{sec:org0163e19}
+\label{sec:org9bc4fff}
 In total, 100 projects were selected written in five different
 programming languages (20 projects for each language).  The analyzed GitHub
 projects were selected based on the following criteria:
@@ -512,10 +520,8 @@ primary language and the data about PR needs to be publicly available.
 \item The project is a library, program, or collection of programs. Repositories whose primary purpose is
 to store configuration files, documentation, books, etc., were ignored.
 \end{itemize}
-\section{{\bfseries\sffamily TODO} Computational resources}
-\label{sec:org6ff6fe1}
 \chapter{Data analysis}
-\label{sec:org71ac403}
+\label{sec:org807b16d}
 In this chapter, I am explaining which statistical methods were chosen in
 order to answer the research questions. RQ\textsubscript{1}--RQ\textsubscript{4} were
 analyzed separately for each programming language; therefore, also the
@@ -523,7 +529,7 @@ techniques that will be discussed were applied separately.  Only the last
 research question discuss multiple languages at the same time and compares
 results retrieved from the individual analysis of each language.
 \section{RQ\textsubscript{1}: Which code issues are typically introduced by the pull requests?}
-\label{sec:org7063ce5}
+\label{sec:orgea963d7}
 At first, in order to answer the RQ\textsubscript{1}, I summarized the retrieved data for each project
 --- I counted how many suitable pull requests were analyzed and
 how many of them were accepted/rejected. Then I created a scatter plot between the number of
@@ -544,7 +550,7 @@ that shows which issue category is the most common.
 These steps were applied individually for each programming language to determine
 how does the average PR look line in terms of code quality.
 \section{RQ\textsubscript{2}: Are there some particular quality flaws that affect the acceptance of the pull request?}
-\label{sec:org9e04f23}
+\label{sec:orgc15b32d}
 In order to discover issues that affect the acceptance of pull requests
 most, the classification models were created.  The aim of these models is to
 classify pull requests into two groups (accepted PRs and rejected PRs) by
@@ -623,7 +629,7 @@ they provided was used to run the classification algorithms. It was only
 slightly modified to improve the user interface. Furthermore, the option
 to filter only fixed/introduced issues was added.
 \section{RQ\textsubscript{3}: Is there a relationship between the source code quality and the pull request acceptance?}
-\label{sec:orgd1d92a8}
+\label{sec:orgc5f5ff6}
 At first, the PCA (principal component analysis) scatter plot was created to
 visualize the difference between accepted and rejected pull requests.
 
@@ -663,7 +669,7 @@ It is important to note that p-values were not adjusted in any way.
 The metrics obtained from classification algorithms were also used to
 determine if the code quality has some impact on PR acceptance.
 \section{RQ\textsubscript{4}: Does code quality influence the time required to close a pull request?}
-\label{sec:org5139943}
+\label{sec:orgf119cc6}
 In order to find the possible link between the code quality and the time it
 takes to close a PR, regression algorithms were used. At first, the
 dataset was split into two parts --- training and test set.  After that, the
@@ -691,7 +697,7 @@ Following methods were used for both classification and regression:
 \textbf{DecisionTree}, \textbf{RandomForest}, \textbf{AdaBoost}, \textbf{Bagging}, and \textbf{GradientBoost}.
 \end{description}
 \section{RQ\textsubscript{5}: Is code quality impact higher in projects that are using some particular programming language?}
-\label{sec:org78d836d}
+\label{sec:orgce6a5cd}
 The RQ\textsubscript{3} discusses the impact of code quality on individual
 programming languages. The findings from the RQ\textsubscript{3} for each
 language are compared in the RQ\textsubscript{5}. This comparison is a complicated
@@ -704,7 +710,7 @@ quality). The metrics retrieved from classification models were
 also compared. Finally, the code quality effect on the time to close a PR
 was compared between the languages (using the metrics from regressors).
 \chapter{Evaluation}
-\label{sec:org502a2ae}
+\label{sec:orgc57a942}
 The following chapter is dedicated to the findings from my research.  The first
 five subchapters focus on individual programming languages --- here I am
 giving the answers to the first four research questions.  The last research
@@ -712,7 +718,7 @@ question (RQ\textsubscript{5}) is answered afterward. At the end of this chapter
 discussing possible threats to validity that could eventually influence the
 outcomes of my study.
 \section{Python}
-\label{sec:org1e04be8}
+\label{sec:orgba51c19}
 In order to analyze the influence of code quality on the pull request
 acceptance, 20 projects from the Python ecosystem were selected.
 In total, 9452 pull requests were analyzed, and 73 \% of these PRs were accepted.
@@ -802,7 +808,7 @@ This means that trained models are worse at predicting the time than a constant 
 Similar results were obtained when only introduced issues were considered and also when only
 fixed issues were considered.
 \section{Java}
-\label{sec:orgf7ad933}
+\label{sec:org80124d6}
 The next programming language that was analyzed is Java. In total, the 8887
 pull requests were linted, and 73 \% of these pull requests were accepted.
 On average, the one pull request introduced 20 new PMD issues but,
@@ -879,7 +885,7 @@ practice. The other models (when considering only rejected/fixed issues) yielded
 similar results. To conclude, the found quality issues do not seem to have an
 effect on the time to close a pull request.
 \section{Kotlin}
-\label{sec:org7ba855e}
+\label{sec:orgdad0553}
 The 20 projects were also selected from the Kotlin ecosystem.
 The average analyzed pull request was from a project that has ten thousand
 stars and introduced nine issues and fixed only four. The 7514 pull requests
@@ -953,7 +959,7 @@ on the dataset, taking into consideration that 89 \% of pull requests were
 closed within one month. The mean absolute error for other models was similar
 to the \(MAE\) obtained for linear regression.
 \section{Haskell}
-\label{sec:orgc1739db}
+\label{sec:org317a0fd}
 Haskell is the only purely functional programming language that was analyzed.
 The 18 out of 20 selected Haskell projects have under the 5000 stars. There
 are only two exceptions: PureScript with 7632 stars and Pandoc, which has over
@@ -1023,7 +1029,7 @@ were three models with positive \(R^2\): Bagging (0.0315), ElasticNet (0.0085), 
 However, all of them have high mean absolute error: Bagging (\(2193658 \approx 25\text{ days}\)),
 ElasticNet (2255678), and RandomForest (2201347).
 \section{C/C++}
-\label{sec:org35fd253}
+\label{sec:org6e9866a}
 The C and C++ programming languages are analyzed together because they share
 a lot of similarities.  This usually enables use of the same linter for both
 languages. Moreover, it is not uncommon that projects that are written in C++
@@ -1093,7 +1099,7 @@ days) --- therefore, this model also cannot be used to predict the time to
 close a PR.  Models considering only rejected issues and also models
 considering only accepted issues have yielded similar results.
 \section{Programming languages and code quality impact}
-\label{sec:orgf8be2ca}
+\label{sec:org86fcfe3}
 Comparing the code quality of projects written in different programming
 languages is a difficult task.  Each language has different programming
 constructs, syntax, and type system. For instance, Python, which is
@@ -1153,7 +1159,7 @@ that most of the pull requests are closed within the first two weeks (83 \% of K
 PRs and 76\% of Python PRs).
 \tikzFigure{results/}{all_mae}{Mean absolute error for prediction of time to close a PR}{fig:all_mae}
 \section{Threats to validity}
-\label{sec:orgad972ac}
+\label{sec:org0d7c650}
 The validity of my research is endangered by several things.
 At first, the selection of the projects is one of the factors that influence
 the outcomes of the research. This study is focused primarily on popular
@@ -1203,7 +1209,7 @@ rejected, but the chance that some quality issue will be introduced is also high
 In this case, it is difficult to distinguish if the pull request was rejected because
 of the code quality or because the changes are too big.
 \chapter{Conclusion}
-\label{sec:org979254a}
+\label{sec:orgcce3be9}
 I analyzed 41576 pull requests from 100 projects written in 5 different
 programming languages (Python, Java, Kotlin, Haskell, C/C++) to study the
 relationship between the code quality and pull request acceptance.  The
@@ -1242,7 +1248,7 @@ To conclude, the poor code quality seems to have a small negative impact on the
 pull request acceptance. However, there seems to be no effect on the time it
 takes to close a PR.
 \section{Comparison with related work}
-\label{sec:org69a64dc}
+\label{sec:org729350c}
 Best of my knowledge, there is only one study~\cite{quality} about the effect of quality flaws
 on the pull request acceptance. Lenarduzzi et al. analyzed 28 well-known Java projects.
 I reused the script they provided for PR classification and also applied similar statistical
@@ -1263,7 +1269,7 @@ of the delivery time of pull requests, and as far as I know, this is the first
 study that researches the relationship between the code quality and the time it
 takes to close a pull request.
 \section{Future work}
-\label{sec:org1559483}
+\label{sec:orgbe0bf28}
 I consider my work complete. However, there is still plenty of
 possibilities for how to improve and expand my work.
 Several improvements can be made to obtain more reliable data for analysis.
@@ -1285,13 +1291,13 @@ during the build process. Additional research needs to be performed to
 understand if the maintainers of those projects are more strict about the
 code quality, and therefore the effect on the PR acceptance is larger.
 \chapter*{Appendix}
-\label{sec:org3dc1d42}
+\label{sec:org7dc9df6}
 \addcontentsline{toc}{chapter}{Appendix}
 \pagestyle{plain}
 This appendix contains additional plots and tables. It also discusses the scripts that were
 used for statistical analysis of pull requests.
 \section*{Scripts used for analysis}
-\label{sec:orgee057be}
+\label{sec:org773af6b}
 In order to simplify the analysis of retrieved data, I created the script (\texttt{pr\_process.py}) that
 takes multiple JSON files with the data about each individual project and
 converts them into the CSV files. Each row in the CSV file represents some
@@ -1312,13 +1318,13 @@ The rest of the analysis was done using the \texttt{analysis.R}. This small R pr
 generated by other scripts. These data are then analyzed using various statistical methods.
 The script is also used to plot graphs, create tables and then export them directly into the \LaTeX{}.
 \section*{Additional plots and tables}
-\label{sec:org1735be9}
+\label{sec:orga060968}
 This chapter contains tables that summarize the information about used projects and issue categories.
 Furthermore, the chapter visualizes metrics that were used to evaluate classification and regression algorithms.
 \newpage
 \newgeometry{top=2.5cm}
 \subsection*{Projects summary}
-\label{sec:orgf698c2a}
+\label{sec:org8bcc39a}
 The following tables contain information about analyzed projects. Columns named \emph{Introduced/Fixed issues} indicate
 the average number of issues per pull request, and the values were computed using a 5\% trimmed mean.
 
@@ -1368,7 +1374,7 @@ the average number of issues per pull request, and the values were computed usin
 
 \FloatBarrier
 \subsection*{Issue categories}
-\label{sec:org0fd25ef}
+\label{sec:org1e9c608}
 The Following tables show the issue types and the total number of issues that
 were fixed/introduced and belong to the given category. Furthermore, tables
 show how many pull requests fixed/introduced issues of the given category.
@@ -1406,7 +1412,7 @@ show how many pull requests fixed/introduced issues of the given category.
 
 \FloatBarrier
 \subsection*{Classification metrics}
-\label{sec:org7cf5ad3}
+\label{sec:org6763049}
 Following metrics were used to evaluate classification algorithms.
 \begin{table}[H]
 \caption{Python classification metrics}
@@ -1450,7 +1456,7 @@ Following metrics were used to evaluate classification algorithms.
 
 \FloatBarrier
 \subsection*{ROC curves}
-\label{sec:org3e671f5}
+\label{sec:orgc587128}
 For each classifier, the \emph{receiver operating characteristic curve} (ROC) was plotted. The average values
 over folds were used for the ROC.
 \tikzFigure[H]{results/python/}{roc_curves}{Python classification ROC}{fig:python_roc}
@@ -1461,7 +1467,7 @@ over folds were used for the ROC.
 
 \FloatBarrier
 \subsection*{Regression metrics}
-\label{sec:org1822a06}
+\label{sec:orgcd892e4}
 Following metrics were used to evaluate regression algorithms. EV stands for \emph{explained variance}
 --- this metric is similar to \(R^2\), but subtracts mean error from the sum of squared residuals.
 \begin{table}[H]
@@ -1506,7 +1512,7 @@ Following metrics were used to evaluate regression algorithms. EV stands for \em
 
 \FloatBarrier
 \subsection*{Absolute error density}
-\label{sec:org13e25bd}
+\label{sec:org69ad4ca}
 The regression models were evaluated on a testing data set. For every predicted value, the absolute error was computed.
 The following figures show the density curves for absolute errors.
 \tikzFigure[H]{results/python/}{regression_absolute_error}{Python AE density}{fig:python_ae}
