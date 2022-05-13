@@ -8,4 +8,4 @@ This repository contains the following files and folders:
 - [[file:scripts][Scripts]] :: Folder that contains scripts used during my work.
   - This folder contains README with information how to execute these scripts.
 - [[file:projects][Projects]] :: Folder with the project's data (data about code quality).
-  - This data was retrieved using the =pr_quality= script.
+  - This data was retrieved using the =pr_quality.py=.

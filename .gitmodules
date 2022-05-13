@@ -1,0 +1,3 @@
+[submodule "scripts/git-contrast"]
+	path = scripts/git-contrast
+	url = https://github.com/kuhy/git-contrast
