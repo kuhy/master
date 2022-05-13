@@ -1,4 +1,12 @@
 #!/usr/bin/env -S python3 -u
+"""
+Analyze the code quality of pull requests of given projects.
+
+This scripts retrieves the data about GitHub projects
+using the gh_db.py or gh_rest.py script.
+
+The code quality is determined using the git-contrast.
+"""
 import click
 import datetime
 import functools
@@ -14,6 +22,7 @@ import time
 
 def obtain_project_data_from_database(db_name: str, db_user: str,
                                       db_password: str, user: str, repo: str):
+    """Obtain data about given repository using the GHTorrent database."""
     print(f"Obtaining information about {user}/{repo} via GHTorrent database.")
     output = subprocess.check_output(["python", "gh_db.py", "-d", db_name,
                                       "-u", db_user, "-p", db_password,
@@ -23,6 +32,7 @@ def obtain_project_data_from_database(db_name: str, db_user: str,
 
 def obtain_project_data_from_rest(gh_user: str, gh_token: str, user: str,
                                   repo: str):
+    """Obtain data about given repository using the GitHub REST API."""
     print(f"Obtaining information about {user}/{repo} via GitHub REST API.")
     output = subprocess.check_output(["python", "gh_rest.py", "-u", gh_user,
                                       "-t", gh_token, user, repo])
@@ -30,6 +40,10 @@ def obtain_project_data_from_rest(gh_user: str, gh_token: str, user: str,
 
 
 def make_commit_accesible(repo, remote, commit_sha):
+    """Make the given commit available in the repository.
+
+    It fetches the data from the remote repository.
+    """
     try:
         repo.commit(commit_sha)
         return True
@@ -56,6 +70,10 @@ def make_commit_accesible(repo, remote, commit_sha):
 
 
 def analyze_project(project_data, tmp_dir):
+    """Analyze the code quality of project's pull requests.
+
+    The code quality is evaluated using the git-contrast tool.
+    """
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') +
           " Starting analyzing project " + project_data["name"] + ".")
     start_time = time.time()
@@ -128,6 +146,7 @@ def analyze_project(project_data, tmp_dir):
               type=click.Path(exists=True, file_okay=False))
 @click.pass_context
 def cli(ctx, tmp_dir_path: str = None):
+    """Analyze the code quality of pull requests of given projects."""
     ctx.ensure_object(dict)
     ctx.obj["tmp_dir_path"] = tmp_dir_path
 
@@ -138,6 +157,7 @@ def cli(ctx, tmp_dir_path: str = None):
 @click.option("--db-password", "-p", required=True, prompt="Database password")
 @click.pass_context
 def db(ctx, db_name: str, db_user: str, db_password: str):
+    """Subcommand that uses gh_db.py to obtain metadata about projects."""
     analyze_projects(functools.partial(obtain_project_data_from_database,
                                        db_name, db_user, db_password),
                      ctx.obj["tmp_dir_path"])
@@ -148,11 +168,13 @@ def db(ctx, db_name: str, db_user: str, db_password: str):
 @click.option("--gh-token", "-t", required=True)
 @click.pass_context
 def rest(ctx, gh_user: str, gh_token: str):
+    """Subcommand that uses gh_rest.py to obtain metadata about projects."""
     analyze_projects(functools.partial(obtain_project_data_from_rest, gh_user,
                                        gh_token), ctx.obj["tmp_dir_path"])
 
 
 def analyze_projects(obtain_project_data, tmp_dir_path: str = None):
+    """Analyze the code quality of pull requests of given projects."""
     tmp_dir = tempfile.mkdtemp(dir=tmp_dir_path)
     for line in sys.stdin.readlines():
         project_data = obtain_project_data(*line.rstrip().split("/"))

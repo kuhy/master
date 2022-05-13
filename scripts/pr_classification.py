@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Train classification models on the given pull requests data."""
 
 # !!! DISCLAIMER !!!
 #
@@ -48,6 +49,10 @@ matplotlib.use("PDF")
 
 
 def cross_validate_and_plot(clf, X, y, column_names, name, number_of_cores):
+    """Train the model using the given regression algorithm.
+
+    It uses given dataset to train and evaluate the model.
+    """
     num_folds = 5
 
     cv = StratifiedKFold(n_splits=num_folds)
@@ -380,6 +385,7 @@ def cross_validate_and_plot(clf, X, y, column_names, name, number_of_cores):
 
 
 def make_sure_folder_exists(path):
+    """Create folder if it not exists."""
     folder = os.path.dirname(path)
     if not os.path.isdir(folder):
         os.makedirs(folder)
@@ -395,6 +401,7 @@ def make_sure_folder_exists(path):
 def cli(csv_file_path: str, output_folder_path: str,
         only_introduced_issues: bool, only_fixed_issues: bool,
         number_of_cores: int):
+    """Train classification models on the given pull requests data."""
     if only_introduced_issues and only_fixed_issues:
         raise click.UsageError("Flags '--only_introduced_issues' and "
                                "'--only_fixed_issues' are mutually exclusive.")

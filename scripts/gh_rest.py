@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Obtain data about given repository using the GitHub REST API.
+
+WARNING: The user needs to provide GitHub API token.
+"""
+
 import click
 import datetime
 import json
@@ -9,6 +14,7 @@ GH_URL = "https://api.github.com"
 
 
 def obtain_project_data(project_name: str, gh_user: str, gh_token: str):
+    """Obtain data about project using the GitHub REST API."""
     data = json.loads(requests.get(f"{GH_URL}/repos/{project_name}",
                                    auth=(gh_user, gh_token)).text)
     project_data = {}
@@ -26,6 +32,7 @@ def obtain_project_data(project_name: str, gh_user: str, gh_token: str):
 
 
 def obtain_prs_data(project_name: str, gh_user: str, gh_token: str):
+    """Obtain data about project pull requests."""
     prs_data = []
     i = 1
     while True:
@@ -64,6 +71,7 @@ def obtain_prs_data(project_name: str, gh_user: str, gh_token: str):
 @click.option("--gh-user", "-u", required=True)
 @click.option("--gh-token", "-t", required=True)
 def cli(user: str, repo: str, gh_user: str, gh_token: str):
+    """Obtain data about given repository using the GitHub REST API."""
     project_data = obtain_project_data(user + '/' + repo, gh_user, gh_token)
     print(json.dumps(project_data))
 

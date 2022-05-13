@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Train regression models on the given pull requests data."""
 
 import click
 import datetime
@@ -23,6 +24,10 @@ from sklearn.tree import DecisionTreeRegressor
 
 def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
                              model, model_name):
+    """Train the model using the given regression algorithm.
+
+    It uses given datasets to train and evaluate the model.
+    """
     # Train the model.
     model.fit(X_train, y_train)
 
@@ -77,6 +82,7 @@ def train_and_evaluate_model(X_train, X_test, y_train, y_test, column_names,
 def cli(csv_file_path: str, output_folder_path: str,
         only_introduced_issues: bool, only_fixed_issues: bool,
         number_of_cores: int):
+    """Train regression models on the given pull requests data."""
     if only_introduced_issues and only_fixed_issues:
         raise click.UsageError("Flags '--only_introduced_issues' and "
                                "'--only_fixed_issues' are mutually exclusive.")

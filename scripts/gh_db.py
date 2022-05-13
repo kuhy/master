@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Obtain data about given repository using the GHTorrent database.
+
+WARNING: The GHTorrent database needs to be running on the system.
+"""
+
 import click
 import json
 import mysql.connector
@@ -6,6 +11,7 @@ import time
 
 
 def obtain_project_data(project_name: str, db):
+    """Obtain data about project using the GHTorrent database."""
     project_data = {}
     project_data["name"] = project_name
 
@@ -56,6 +62,7 @@ def obtain_project_data(project_name: str, db):
 def obtain_pr_data(pr_id: int, head_repo_id: int, head_commit_id: int,
                    base_repo_id: int, base_commit_id: int, github_pr_id:
                    int, db):
+    """Obtain data about the pull request."""
     if not head_repo_id:
         return  # head repository was deleted
 
@@ -129,6 +136,7 @@ def obtain_pr_data(pr_id: int, head_repo_id: int, head_commit_id: int,
 
 
 def obtain_submitter_data(submitter_id: int, project_id: int, db):
+    """Obtain data about the given user."""
     submitter_data = {}
 
     cur = db.cursor()
@@ -155,6 +163,7 @@ def obtain_submitter_data(submitter_id: int, project_id: int, db):
 @click.option("--db-user", "-u", required=True)
 @click.option("--db-password", "-p", required=True, prompt="Database password")
 def cli(user: str, repo: str, db_name: str, db_user: str, db_password: str):
+    """Obtain data about given repository using the GHTorrent database."""
     db = mysql.connector.connect(user=db_user, password=db_password,
                                  database=db_name)
     project_data = obtain_project_data(user + '/' + repo, db)
