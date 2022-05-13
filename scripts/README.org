@@ -1,0 +1,33 @@
+In order to retrieve the data about the PR quality, following prerequisites needs to be met:
+- the =git-contrast= is installed
+- the GHTorrent database is installed and properly configured (or you need to have GitHub REST token)
+
+The data about GitHub project can be then retrieved using this commands:
+#+BEGIN_SRC sh
+  echo "user/project" | ./pr_quality.py db -d $DATABASE_NAME -u $DATABASE_USER -p $DATABASE_PASSWORD
+#+END_SRC
+
+Or alternatively (using directly GitHub REST API):
+#+BEGIN_SRC sh
+  echo "user/project" | ./pr_quality.py rest -u $GH_USER -t $GH_TOKEN
+#+END_SRC
+This command will generate folder that contains JSON files.
+
+The retrieved JSON files needs to be converted into the CSV (for further analysis):
+#+BEGIN_SRC sh
+  ./pr_process.py $FOLDER_WITH_JSONS
+#+END_SRC
+
+The other scripts can be then executed on the CSV file.
+
+The classification algorithms can be executed as follows:
+#+BEGIN_SRC sh
+  mkdir $OUTPUT_FOLDER
+  ./pr_classification.py $CSV_FILE $OUTPUT_FOLDER
+#+END_SRC
+
+The =pr_regression.py= is used in the same way as =pr_classification.py=.
+
+The =pr_analysis.R= is not meant to be run from the command-line.
+It serves as a collection of R commands that can be used to analyze the given CSV file.
+It can be also used to further analyze results from =pr_regression.py= and =pr_classification.py=.
