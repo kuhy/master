@@ -418,6 +418,7 @@
   with the information about the project, such as the number of stars, number of
   contributors, or information about pull requests and their commits.
 
+  # WARNING: hyphenation hack
   An alternative script that can be used by =pr_qality.py= is =gh_re-= =st.py=.
   This script uses the GitHub REST API directly. The advantage of this
   script is that it can retrieve the newest data from GitHub. Unfortunately,
@@ -1425,6 +1426,7 @@
   This appendix contains additional plots and tables. It also discusses the scripts that were
   used for statistical analysis of pull requests.
 ** Scripts used for analysis
+   # WARNING: hyphenation hack
    In order to simplify the analysis of retrieved data, I created the script (=pr_pro-= =cess.py=) that
    takes multiple JSON files with the data about each individual project and
    converts them into the CSV files. Each row in the CSV file represents some
