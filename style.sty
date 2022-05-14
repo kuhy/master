@@ -6,23 +6,25 @@
   department = Department of Computer Systems and Communications,
   type       = mgr,
   gender     = m,
-  advisor    = Assistant professor Bruno Rossi,
+  advisor    = {Bruno Rossi,\,PhD},
   keywords   = {%
-      code quality, pull request, static code analysis
+      source code quality, pull request, static code analysis, mining software repositories
   },
   abstract   = {%
-      The high code quality makes the software more robust and sustainable and
+      High source code quality makes the software more robust and sustainable and
       decreases technical debt. This thesis investigates the effect of code quality
-      on the pull request acceptance and on pull request evaluation latency. This
+      on pull request acceptance and on pull request evaluation latency. This
       will help us understand if the project maintainers pay sufficient attention
       to the code quality. To unravel the code quality influence, I analyzed one hundred
       open-source projects from five different programming languages: Python, Java,
-      Kotlin, Haskell, and C/C++. The code quality of the individual pull
+      Kotlin, Haskell, and C/C++. This is the most extensive study in terms of programming
+      languages and projects analyzed. The code quality of the individual pull
       requests was evaluated using static code analysis. Several machine learning
       models were utilized to predict the pull request acceptance based on the code
-      quality. The poor code quality seems to have a slight negative impact on the
-      pull request acceptance. However, there seems to be no effect on the time
-      required to close a pull request.
+      quality. Similar results were found for all of the programming languages ---
+      lower code quality seems to contribute to lower pull request acceptance.
+      However, in all languages, this impact on acceptance was only small.
+      Moreover, there seems to be no effect on the time required to close a pull request.
   },
   thanks     = {%
       I would like to thank my supervisor, Bruno Rossi,
@@ -31,7 +33,8 @@
       comments on this thesis.\\[0.7cm]
       \noindent
       Computational resources were supplied by the project
-      ``e-Infrastruktura CZ'' supported by the Ministry of Education,
+      ``e-Infrastruktura CZ'' (\texttt{e-INFRA CZ LM2018140})
+      supported by the Ministry of Education,
       Youth and Sports of the Czech Republic. This thesis would not
       have been possible without this project.
   },
