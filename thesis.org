@@ -960,15 +960,15 @@
    The 20 projects were also selected from the Kotlin ecosystem.
    The average analyzed pull request was from a project that has ten thousand
    stars and introduced nine issues and fixed only four. The 7514 pull requests
-   were analyzed (using the /ktlint/ linter), and 80 % of them were accepted.
+   were analyzed (using the ktlint linter), and 80 % of them were accepted.
    The trend that maintainers of popular projects reject more pull requests can
    also be observed in the Kotlin community (Figure\nbsp{}\ref{fig:kotlin_stars}).
    #+BEGIN_EXPORT latex
      \tikzFigure{results/kotlin/}{stars_and_acceptance}{Stars and pull request acceptance}{fig:kotlin_stars}
    #+END_EXPORT
 *** Research Question 1
-    Only 20 different issues were detected by the /ktlint/ in the analyzed projects;
-    however, this is expected since the /ktlint/ is focused only on a small set of quality issues.
+    Only 20 different issues were detected by the ktlint in the analyzed projects;
+    however, this is expected since the ktlint is focused only on a small set of quality issues.
 
     A typical Kotlin pull request introduced nine issues and fixed four.
     As can be seen in Figure\nbsp{}\ref{fig:kotlin_quality}, thirty-three percent
@@ -985,7 +985,7 @@
     the code quality of more than half of the pull requests. However, this can be caused by projects
     whose standards do not follow the official recommendations.
 
-    Other often violated /ktlint/ rules are =no-wildcard-imports=, =final-newline=, and =import-ordering=.
+    Other often violated ktlint rules are =no-wildcard-imports=, =final-newline=, and =import-ordering=.
     On the other end of the spectrum, the rule =no-line-break-after-else= was violated only once.
 *** Research Question 2
     #+BEGIN_EXPORT latex
@@ -1000,7 +1000,7 @@
     Therefore the impact of this issue is disputable.
 
     It is worth mentioning that the fourth most important issue does not have a name
-    (given by /ktlint/).  This issue usually indicates an invalid Kotlin file.  This
+    (given by ktlint).  This issue usually indicates an invalid Kotlin file.  This
     issue has high importance (relative to the other issues) also when the only
     fixed and also when only introduced issues were taken into account during the
     classification. This issue was introduced by 90 rejected PRs and by 51
@@ -1038,11 +1038,11 @@
     To analyze the relationship between the code quality and the time that is required to
     close a PR, I applied several regression techniques also to the Kotlin
     dataset.  For linear regression, $R^2 = 0.164$; therefore, the trained model is
-    able to explain 16 % of the variance in the time to close a PR. The $MAE =
+    able to explain 16 % of the variance in the time to close a PR. The $\text{MAE } =
     2375121 \approx 27\text{ days}$; therefore, the model does not perform so well
-    on the dataset, taking into consideration that 89 % of pull requests were
+    on the dataset, taking into consideration that 89 percent of pull requests were
     closed within one month. The mean absolute error for other models was similar
-    to the $MAE$ obtained for linear regression.
+    to the MAE obtained for linear regression.
     #+BEGIN_EXPORT latex
       \FloatBarrier
     #+END_EXPORT
@@ -1064,7 +1064,7 @@
 *** Research Question 1
     As mentioned before, 6949 pull requests were analyzed. Interestingly, in over sixty
     percent of pull requests, no change in the code quality was detected (see Figure\nbsp{}\ref{fig:haskell_quality}).
-    Despite the fact, the /HLint/ is able to recognize a large number of different issues (321 issue
+    Despite the fact, the HLint is able to recognize a large number of different issues (321 issue
     types were detected in selected pull requests). On the other hand, some issues
     were counted twice because they appeared as a suggestion but also as a warning (in the different contexts).
     These facts can indicate that a large
@@ -1127,7 +1127,7 @@
     has a small negative impact on the acceptance). For the aeson project,
     the Cramer's V is $0.282$ --- the association is "medium".
 *** Research Question 4
-    The issues detected by /HLint/ do not seem to have an impact on the time it takes to close a pull request.
+    The issues detected by HLint do not seem to have an impact on the time it takes to close a pull request.
     All trained models have negative $R^2$. When only fixed issues were used for regression, there
     were three models with positive $R^2$: Bagging (0.0315), ElasticNet (0.0085), and RandomForest (0.0229).
     However, all of them have high mean absolute error: Bagging ($2193658 \approx 25\text{ days}$),
@@ -1153,13 +1153,13 @@
     The typical pull request introduces 0.25 issues and fixes 0.12 issues; the typical
     rejected PR introduces 0.79 issues, and the typical accepted PR only 0.15 issues (see Figure\nbsp{}\ref{fig:c_cpp_quality}).
     The 79 % of pull requests did not change the quality of the source code
-    (in terms of the /flawfinder/ quality rules).
+    (in terms of the flawfinder quality rules).
     #+BEGIN_EXPORT latex
       \tikzFigure{results/c_cpp/}{pr_quality_heat_map}{Pull requests and quality (heat map)}{fig:c_cpp_quality}
     #+END_EXPORT
 
     The most common type of issue is the note (Figure\nbsp{}\ref{fig:c_cpp_types}).
-    The least common are errors. The /flawfinder/ was able to identify 137 different issues in the studied
+    The least common are errors. The flawfinder was able to identify 137 different issues in the studied
     PRs. All of the top ten issues (in terms of the number of PRs which introduced
     them) are notes. The most common note is =buffer-char= ("Statically-sized
     arrays can be improperly restricted leading to potential overflows or other
@@ -1189,7 +1189,7 @@
       \tikzFigure{results/c_cpp/}{issue_importance}{Ten most important flawfinder issues}{fig:c_cpp_importance}
     #+END_EXPORT
     When considering only fixed issues, the =buffer-read= is the most important issue (note);
-    however, the average importance is only 0.28 %.
+    however, the average importance is only 0.28 percent.
 *** Research Question 3
     The PCA analysis (Figure\nbsp{}\ref{fig:c_cpp_pca})
     does not reveal any significant difference between the accepted
@@ -1216,7 +1216,7 @@
 *** Research Question 4
     In the case of C/C++, the time to close a pull request seems not to be related
     to found issues.  All the models have negative $R^2$, except the ElasticNet
-    regressor. For the ElasticNet, $MAE = 4681624$ (the mean absolute error is 54
+    regressor. For the ElasticNet, $\text{MAE } = 4681624$ (the mean absolute error is 54
     days) --- therefore, this model also cannot be used to predict the time to
     close a PR.  Models considering only rejected issues and also models
     considering only accepted issues have yielded similar results.
@@ -1232,10 +1232,10 @@
    language with a strong, static type system.
 
    Moreover, every linter is different and has a unique set of rules.  The
-   /ktlint/ is focused on code clarity and community conventions, whereas
-   /flawfinder/ checks code for potentially dangerous functions. Furthermore,
-   the /PMD/ is a more general-oriented linter that contains a large set of
-   rules for the Java programming language, and the /HLint/ is oriented mainly
+   ktlint is focused on code clarity and community conventions, whereas
+   flawfinder checks code for potentially dangerous functions. Furthermore,
+   the PMD is a more general-oriented linter that contains a large set of
+   rules for the Java programming language, and the HLint is oriented mainly
    on code simplification and spotting redundancies.
 
    On the other hand, there are some metrics that evaluate how effectively
