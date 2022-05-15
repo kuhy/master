@@ -1,5 +1,6 @@
 #+TITLE: Source Code Quality Impact @@latex:\\@@ on Pull Requests Acceptance
 #+AUTHOR: Ondřej Kuhejda
+#+OPTIONS: ':t
 #+LANGUAGE: en
 * Introduction
   /Does code quality influence the acceptance of pull requests?/ Although many
